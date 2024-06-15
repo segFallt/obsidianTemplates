@@ -1,0 +1,244 @@
+{
+  "main": {
+    "id": "51e4db6feceed7ce",
+    "type": "split",
+    "children": [
+      {
+        "id": "c3ee4309943a6d9f",
+        "type": "tabs",
+        "dimension": 70.73333333333333,
+        "children": [
+          {
+            "id": "1369b8e7566bbc5a",
+            "type": "leaf",
+            "pinned": true,
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "views/Task Query.md",
+                "mode": "preview",
+                "source": false
+              },
+              "pinned": true
+            }
+          },
+          {
+            "id": "83fbb064bb6b8727",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "Utility/Templates/Daily Note.md",
+                "mode": "source",
+                "source": false
+              }
+            }
+          }
+        ],
+        "currentTab": 1
+      },
+      {
+        "id": "cea466b2349a137b",
+        "type": "tabs",
+        "dimension": 29.26666666666667,
+        "children": [
+          {
+            "id": "1c8c804435d63803",
+            "type": "leaf",
+            "state": {
+              "type": "outline",
+              "state": {
+                "file": "Utility/Templates/Daily Note.md"
+              }
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "vertical"
+  },
+  "left": {
+    "id": "3be6a674379ff552",
+    "type": "split",
+    "children": [
+      {
+        "id": "16da8dba3fd3b8fc",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "a35d17b27aa5ae89",
+            "type": "leaf",
+            "state": {
+              "type": "file-explorer",
+              "state": {
+                "sortOrder": "alphabetical"
+              }
+            }
+          },
+          {
+            "id": "8223a9db8dc5194a",
+            "type": "leaf",
+            "state": {
+              "type": "bookmarks",
+              "state": {}
+            }
+          },
+          {
+            "id": "aee3780bb9f4e0f1",
+            "type": "leaf",
+            "state": {
+              "type": "search",
+              "state": {
+                "query": "tag:#waiting",
+                "matchingCase": false,
+                "explainSearch": false,
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical"
+              }
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "horizontal",
+    "width": 249.5
+  },
+  "right": {
+    "id": "1aa677f745516874",
+    "type": "split",
+    "children": [
+      {
+        "id": "9d50ddd932a1659d",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "dded01c739e71b85",
+            "type": "leaf",
+            "state": {
+              "type": "backlink",
+              "state": {
+                "file": "Utility/Templates/Daily Note.md",
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical",
+                "showSearch": false,
+                "searchQuery": "",
+                "backlinkCollapsed": false,
+                "unlinkedCollapsed": true
+              }
+            }
+          },
+          {
+            "id": "4598681d9108fe06",
+            "type": "leaf",
+            "state": {
+              "type": "outgoing-link",
+              "state": {
+                "file": "Utility/Templates/Daily Note.md",
+                "linksCollapsed": false,
+                "unlinkedCollapsed": true
+              }
+            }
+          },
+          {
+            "id": "45890f7f0909abd3",
+            "type": "leaf",
+            "state": {
+              "type": "tag",
+              "state": {
+                "sortOrder": "frequency",
+                "useHierarchy": true
+              }
+            }
+          },
+          {
+            "id": "8565cec0f41b5334",
+            "type": "leaf",
+            "state": {
+              "type": "outline",
+              "state": {
+                "file": "Utility/Templates/Daily Note.md"
+              }
+            }
+          },
+          {
+            "id": "dd7ebcc1836efb84",
+            "type": "leaf",
+            "state": {
+              "type": "all-properties",
+              "state": {
+                "sortOrder": "frequency",
+                "showSearch": false,
+                "searchQuery": ""
+              }
+            }
+          },
+          {
+            "id": "456619ccdaf4f607",
+            "type": "leaf",
+            "state": {
+              "type": "advanced-tables-toolbar",
+              "state": {}
+            }
+          }
+        ],
+        "currentTab": 4
+      }
+    ],
+    "direction": "horizontal",
+    "width": 373.5,
+    "collapsed": true
+  },
+  "left-ribbon": {
+    "hiddenItems": {
+      "switcher:Open quick switcher": false,
+      "graph:Open graph view": false,
+      "canvas:Create new canvas": false,
+      "daily-notes:Open today's daily note": false,
+      "command-palette:Open command palette": false,
+      "table-editor-obsidian:Advanced Tables Toolbar": false,
+      "templater-obsidian:Templater": false
+    }
+  },
+  "active": "83fbb064bb6b8727",
+  "lastOpenFiles": [
+    "Utility/Templates/New Project.md",
+    "views/Projects.md",
+    "Utility/Templates/Daily Note.md",
+    "Projects/Untitled.md",
+    "Utility/Templates/Recurring Meeting - Page.md",
+    "Utility/Templates/Recurring Meeting - Daily Entry.md",
+    "views/Task Query.md",
+    "Utility/Templates/Single Meeting.md",
+    "Utility/Templates/New Inbox Note.md",
+    "views/Recurring Meeting Index.md",
+    "views/Inbox.md",
+    "Inbox/ah.md",
+    "Projects/new.md",
+    "views/Single Meeting Index.md",
+    "views/test.md",
+    "Inbox/Guide to Understanding and Managing Agile Projects.md",
+    "task views/This Week.md",
+    "task views/Past Due.md",
+    "task views/Due Today.md",
+    "task views/All Upcoming.md",
+    "meetings/single/Architect Transition - Checkpoint.md",
+    "meetings/recurring/[INT] Sync on Margin Enhancements.md",
+    "Projects/Architect KT.md",
+    "meetings/recurring/Architect KT (meeting).md",
+    "meetings/single/Discussing Material Cost Override Automated Email Report with Jenef.md",
+    "meetings/recurring/new meeting.md",
+    "Projects/Material Cost Override/Pasted image 20240429165609.png",
+    "Utility/Scripts/Dataview/mentions-table.js",
+    "Utility/Scripts/Dataview",
+    "Utility/Scripts/New folder",
+    "Utility/Scripts",
+    "Utility/New folder",
+    "Utility",
+    "New folder",
+    "views",
+    "reference",
+    "daily notes"
+  ]
+}

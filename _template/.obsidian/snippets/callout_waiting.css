@@ -1,0 +1,4 @@
+.callout[data-callout="waiting"] {
+    --callout-color: 255, 248, 46;
+    --callout-icon: clock;
+}
