@@ -6,8 +6,8 @@ tags:
   - "#project"
 ---
 
-
 # Project Mentions
 ```dataviewjs
 await dv.view("Scripts/Dataview/mentions-table", 3)
 ```
+---
