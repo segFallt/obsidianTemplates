@@ -1,0 +1,4 @@
+.callout[data-callout="someday"] {
+    --callout-color: 0, 115, 255;
+    --callout-icon: bed-single;
+}
