@@ -49,7 +49,7 @@ obsidianUIMode: preview
 
 
 ## \#Someday
-> [!waiting] Someday
+> [!someday] Someday
 > ```dataview
 > TASK
 > WHERE !completed AND contains(tags, "#someday")
