@@ -1,15 +1,17 @@
 ---
 date: <% tp.date.now("YYYY-MM-DDTHH:mm:ss") %>
-template_destination_folder: meetings/single
 ---
 
-## Notes
+# Invitation Message
+
+
+# Notes
 - 
 
 
-## Open Questions
+# Open Questions
 - 
 
 
-## Action Items
+# Action Items
 - 

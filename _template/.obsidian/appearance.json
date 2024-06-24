@@ -1,6 +1,9 @@
 {
   "accentColor": "",
   "enabledCssSnippets": [
-    "callout_waiting"
+    "callout_waiting",
+    "callout_calendar",
+    "someday",
+    "callout_someday"
   ]
 }
