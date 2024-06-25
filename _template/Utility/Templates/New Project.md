@@ -1,7 +1,7 @@
 ---
 start-date: <% tp.date.now() %>
 end-date: 
-status: 
+status: Active
 tags:
   - "#project"
 ---
