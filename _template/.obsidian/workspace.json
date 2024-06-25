@@ -4,21 +4,15 @@
     "type": "split",
     "children": [
       {
-        "id": "55a2f1e81f7a19ad",
+        "id": "ed7331521732ca65",
         "type": "tabs",
         "children": [
           {
-            "id": "bbc27757a66e314c",
+            "id": "180b2dd4cf1755f4",
             "type": "leaf",
-            "pinned": true,
             "state": {
-              "type": "markdown",
-              "state": {
-                "file": "views/Task Query.md",
-                "mode": "preview",
-                "source": false
-              },
-              "pinned": true
+              "type": "empty",
+              "state": {}
             }
           }
         ]
@@ -185,8 +179,6 @@
       "templater-obsidian:Templater": false
     }
   },
-  "active": "bbc27757a66e314c",
-  "lastOpenFiles": [
-    
-  ]
+  "active": "a35d17b27aa5ae89",
+  "lastOpenFiles": []
 }
