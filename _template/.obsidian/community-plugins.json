@@ -4,5 +4,7 @@
   "obsidian-tasks-plugin",
   "templater-obsidian",
   "tag-wrangler",
-  "obsidian-view-mode-by-frontmatter"
+  "obsidian-view-mode-by-frontmatter",
+  "cmdr",
+  "quickadd"
 ]

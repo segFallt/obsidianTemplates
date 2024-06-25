@@ -38,8 +38,14 @@ obsidianUIMode: preview
 > not done
 > ```
 
+## No Due Date
+> [!check] Upcoming
+> ```tasks
+> (no due date)
+> not done
+> ```
 
-
+# Tagged
 ## \#Waiting
 > [!waiting] Waiting
 > ```dataview

@@ -1,13 +1,13 @@
 ---
 start-date: <% tp.date.now() %>
 end-date: 
-status: 
+status: Active
 tags:
   - "#project"
 ---
 
 # Project Mentions
 ```dataviewjs
-await dv.view("Scripts/Dataview/mentions-table", 3)
+await dv.view("scripts/dataview/mentions-table", 3)
 ```
 ---

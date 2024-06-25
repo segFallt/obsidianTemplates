@@ -4,7 +4,7 @@ obsidianUIMode: preview
 ```dataview
 TABLE WITHOUT ID 
 file.link AS "Item", file.ctime as "Created", file.mtime as "Last Modified" 
-FROM "Inbox"
+FROM "inbox"
 WHERE status != "Complete"
 SORT file.mtime DESC
 ```
@@ -15,7 +15,7 @@ SORT file.mtime DESC
 ```dataview
 TABLE WITHOUT ID 
 file.link AS "Item", file.ctime as "Created", file.mtime as "Last Modified" 
-FROM "Inbox"
+FROM "inbox"
 WHERE status = "Complete"
 SORT file.mtime DESC
 ```
