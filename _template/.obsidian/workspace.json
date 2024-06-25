@@ -4,11 +4,11 @@
     "type": "split",
     "children": [
       {
-        "id": "ed7331521732ca65",
+        "id": "6e7d8d21957f3916",
         "type": "tabs",
         "children": [
           {
-            "id": "180b2dd4cf1755f4",
+            "id": "4fb1fc40e8f3c569",
             "type": "leaf",
             "state": {
               "type": "empty",
@@ -97,7 +97,6 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "views/Task Query.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -114,7 +113,6 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "views/Task Query.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -136,9 +134,7 @@
             "type": "leaf",
             "state": {
               "type": "outline",
-              "state": {
-                "file": "views/Task Query.md"
-              }
+              "state": {}
             }
           },
           {
@@ -176,9 +172,19 @@
       "daily-notes:Open today's daily note": false,
       "command-palette:Open command palette": false,
       "table-editor-obsidian:Advanced Tables Toolbar": false,
-      "templater-obsidian:Templater": false
+      "templater-obsidian:Templater": false,
+      "obsidian-projects:Open projects": false
     }
   },
-  "active": "a35d17b27aa5ae89",
-  "lastOpenFiles": []
+  "active": "4fb1fc40e8f3c569",
+  "lastOpenFiles": [
+    "views/Projects.md",
+    "views/Recurring Meeting Index.md",
+    "views/Single Meeting Index.md",
+    "views/Task Query.md",
+    "views/Inbox.md",
+    "meetings/single/Untitled.md",
+    "meetings/recurring/Untitled.md",
+    "projects/Untitled.md"
+  ]
 }
