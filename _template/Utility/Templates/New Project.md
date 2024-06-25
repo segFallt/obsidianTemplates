@@ -8,6 +8,6 @@ tags:
 
 # Project Mentions
 ```dataviewjs
-await dv.view("Scripts/Dataview/mentions-table", 3)
+await dv.view("scripts/dataview/mentions-table", 3)
 ```
 ---
