@@ -4,7 +4,7 @@
       "id": "86ac20bd-04a7-48c9-802e-ee69c463a4a9",
       "name": "Meeting - Recurring",
       "type": "Template",
-      "command": false,
+      "command": true,
       "templatePath": "utility/templates/Recurring Meeting - Page.md",
       "fileNameFormat": {
         "enabled": false,
@@ -34,7 +34,7 @@
       "id": "0a2a4774-9583-44c2-b98e-fcb7db2bfe43",
       "name": "Meeting - Single",
       "type": "Template",
-      "command": false,
+      "command": true,
       "templatePath": "utility/templates/Single Meeting.md",
       "fileNameFormat": {
         "enabled": false,
@@ -64,7 +64,7 @@
       "id": "882a5b1a-2655-4c37-841a-fa5d8ca6b033",
       "name": "Project - New",
       "type": "Template",
-      "command": false,
+      "command": true,
       "templatePath": "utility/templates/New Project.md",
       "fileNameFormat": {
         "enabled": false,
@@ -94,7 +94,7 @@
       "id": "3dadef8b-f0b6-4120-b611-e0e69be2e496",
       "name": "Inbox - New",
       "type": "Template",
-      "command": false,
+      "command": true,
       "templatePath": "utility/templates/New Inbox Note.md",
       "fileNameFormat": {
         "enabled": false,
