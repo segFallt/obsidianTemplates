@@ -4,15 +4,19 @@
     "type": "split",
     "children": [
       {
-        "id": "6e7d8d21957f3916",
+        "id": "5bef084801042c9b",
         "type": "tabs",
         "children": [
           {
-            "id": "4fb1fc40e8f3c569",
+            "id": "58080527ba9c3096",
             "type": "leaf",
             "state": {
-              "type": "empty",
-              "state": {}
+              "type": "markdown",
+              "state": {
+                "file": "views/Task Query.md",
+                "mode": "preview",
+                "source": false
+              }
             }
           }
         ]
@@ -53,7 +57,7 @@
             "state": {
               "type": "search",
               "state": {
-                "query": "AzureAPIMLoginPopupDev",
+                "query": "[\"obsidianUIMode\"]",
                 "matchingCase": false,
                 "explainSearch": false,
                 "collapseAll": false,
@@ -97,6 +101,7 @@
             "state": {
               "type": "backlink",
               "state": {
+                "file": "views/Task Query.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -113,6 +118,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
+                "file": "views/Task Query.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -134,7 +140,9 @@
             "type": "leaf",
             "state": {
               "type": "outline",
-              "state": {}
+              "state": {
+                "file": "views/Task Query.md"
+              }
             }
           },
           {
@@ -176,15 +184,8 @@
       "obsidian-projects:Open projects": false
     }
   },
-  "active": "4fb1fc40e8f3c569",
+  "active": "58080527ba9c3096",
   "lastOpenFiles": [
-    "views/Projects.md",
-    "views/Recurring Meeting Index.md",
-    "views/Single Meeting Index.md",
-    "views/Task Query.md",
-    "views/Inbox.md",
-    "meetings/single/Untitled.md",
-    "meetings/recurring/Untitled.md",
-    "projects/Untitled.md"
+    "views/Inbox.md"
   ]
 }
