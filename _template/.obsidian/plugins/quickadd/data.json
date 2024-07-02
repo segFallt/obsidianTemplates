@@ -126,7 +126,7 @@
   "devMode": false,
   "templateFolderPath": "utility/templates",
   "announceUpdates": true,
-  "version": "1.9.1",
+  "version": "1.9.2",
   "disableOnlineFeatures": true,
   "ai": {
     "defaultModel": "Ask me",
