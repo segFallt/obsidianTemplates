@@ -1,4 +1,5 @@
 ---
+notesDirectory: projects/notes
 start-date: <% tp.date.now() %>
 end-date: 
 status: Active
