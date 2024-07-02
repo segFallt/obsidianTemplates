@@ -119,9 +119,31 @@
       "openFileInMode": "default",
       "fileExistsMode": "Increment the file name",
       "setFileExistsBehavior": false
+    },
+    {
+      "id": "bed17231-efe8-4dae-9d54-78321c81634e",
+      "name": "Create Project Note",
+      "type": "Macro",
+      "command": true,
+      "macroId": "0c75809d-eb76-46c3-a665-8f7db769167e"
     }
   ],
-  "macros": [],
+  "macros": [
+    {
+      "name": "Create Project Note",
+      "id": "0c75809d-eb76-46c3-a665-8f7db769167e",
+      "commands": [
+        {
+          "name": "create-project-note",
+          "type": "UserScript",
+          "id": "d02aaa36-43b9-40c1-82c9-aa96c787c6f7",
+          "path": "utility/scripts/quickadd/create-project-note.js",
+          "settings": {}
+        }
+      ],
+      "runOnStartup": false
+    }
+  ],
   "inputPrompt": "single-line",
   "devMode": false,
   "templateFolderPath": "utility/templates",
