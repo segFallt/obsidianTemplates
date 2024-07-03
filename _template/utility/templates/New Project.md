@@ -8,11 +8,13 @@ tags:
 ---
 
 # Project Related Notes
-```button
-name Add New Related Project Note
-type command
-action QuickAdd: Create Project Note
-color default
+```meta-bind-button
+style: primary
+label: Create Project Note
+id: create-project-note
+action:
+  type: js
+  file: utility/scripts/quickadd/trigger_quickadd.js
 ```
 
 ```dataview
