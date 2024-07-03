@@ -1,7 +1,12 @@
 ---
 obsidianUIMode: preview
 ---
-
+```button
+name Add New Project
+type command
+action QuickAdd: Project - New
+color default
+```
 # Active Projects
 ```dataview
 TABLE WITHOUT ID 

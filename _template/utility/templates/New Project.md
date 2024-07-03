@@ -8,6 +8,12 @@ tags:
 ---
 
 # Project Related Notes
+```button
+name Add New Related Project Note
+type command
+action QuickAdd: Create Project Note
+color default
+```
 
 ```dataview
 LIST
