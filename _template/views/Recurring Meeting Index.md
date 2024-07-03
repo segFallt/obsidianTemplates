@@ -1,6 +1,14 @@
 ---
 obsidianUIMode: preview
 ---
+
+```button
+name New Recurring Meeting
+type command
+action QuickAdd: Meeting - Recurring
+color default
+```
+
 # Active
 ```dataview
 TABLE WITHOUT ID 

@@ -1,0 +1,3 @@
+---
+relatedProject: "[[<% tp.file.title %>]]"
+---

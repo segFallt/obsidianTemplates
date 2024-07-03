@@ -1,6 +1,64 @@
 {
   "version": 2,
-  "projects": [],
+  "projects": [
+    {
+      "fieldConfig": {},
+      "defaultName": "",
+      "templates": [],
+      "excludedNotes": [],
+      "isDefault": false,
+      "dataSource": {
+        "kind": "folder",
+        "config": {
+          "path": "projects",
+          "recursive": false
+        }
+      },
+      "newNotesFolder": "projects/notes",
+      "views": [
+        {
+          "config": {},
+          "filter": {
+            "conjunction": "and",
+            "conditions": []
+          },
+          "colors": {
+            "conditions": []
+          },
+          "sort": {
+            "criteria": []
+          },
+          "id": "7b8ac130-2248-4356-ba82-8beb270c0c8b",
+          "name": "Table",
+          "type": "table"
+        },
+        {
+          "config": {
+            "groupByField": "status",
+            "includeFields": [
+              "tags",
+              "start-date"
+            ]
+          },
+          "filter": {
+            "conjunction": "and",
+            "conditions": []
+          },
+          "colors": {
+            "conditions": []
+          },
+          "sort": {
+            "criteria": []
+          },
+          "id": "240f23c7-9cd9-4568-868c-0a10ab550891",
+          "name": "Board",
+          "type": "board"
+        }
+      ],
+      "id": "2a873eb2-de19-4a97-8942-a8df50cab075",
+      "name": "projects"
+    }
+  ],
   "archives": [],
   "preferences": {
     "projectSizeLimit": 1000,
