@@ -2,11 +2,13 @@
 obsidianUIMode: preview
 ---
 
-```button
-name New Meeting
-type command
-action QuickAdd: Meeting - Single
-color default
+```meta-bind-button
+style: primary
+label: Create Project Note
+id: create-project-note
+action:
+  type: js
+  file: utility/scripts/quickadd/trigger_quickadd_create_meeting_single.js
 ```
 
 ```dataview
