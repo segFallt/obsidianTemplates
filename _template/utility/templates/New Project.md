@@ -10,7 +10,7 @@ tags:
 # Project Related Notes
 ```meta-bind-button
 style: primary
-label: Create Project Note
+label: New Project Note
 id: create-project-note
 action:
   type: js

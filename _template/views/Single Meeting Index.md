@@ -4,7 +4,7 @@ obsidianUIMode: preview
 
 ```meta-bind-button
 style: primary
-label: Create Project Note
+label: New Single Meeting
 id: create-project-note
 action:
   type: js
