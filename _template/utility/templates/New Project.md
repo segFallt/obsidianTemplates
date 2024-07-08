@@ -30,3 +30,9 @@ await dv.view("scripts/dataview/mentions-table", 1)
 ```
 
 ---
+
+
+```dataviewjs
+await dv.view("scripts/dataview/related-project-note-table")
+```
+
