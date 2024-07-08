@@ -1,11 +1,13 @@
 ---
 obsidianUIMode: preview
 ---
-```button
-name Add New Project
-type command
-action QuickAdd: Project - New
-color default
+```meta-bind-button
+style: primary
+label: New Project
+id: create-project-note
+action:
+  type: js
+  file: utility/scripts/quickadd/trigger_quickadd_create_project.js
 ```
 # Active Projects
 ```dataview

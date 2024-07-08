@@ -5,9 +5,8 @@
   "templater-obsidian",
   "tag-wrangler",
   "obsidian-view-mode-by-frontmatter",
-  "cmdr",
   "quickadd",
   "obsidian-projects",
-  "obsidian-advanced-uri",
-  "buttons"
+  "obsidian-meta-bind-plugin",
+  "js-engine"
 ]

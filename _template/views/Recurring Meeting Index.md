@@ -2,11 +2,13 @@
 obsidianUIMode: preview
 ---
 
-```button
-name New Recurring Meeting
-type command
-action QuickAdd: Meeting - Recurring
-color default
+```meta-bind-button
+style: primary
+label: New Recurring Meeting
+id: create-project-note
+action:
+  type: js
+  file: utility/scripts/quickadd/trigger_quickadd_create_meeting_recurring.js
 ```
 
 # Active
