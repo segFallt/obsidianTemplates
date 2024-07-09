@@ -6,7 +6,8 @@ if (input) {
 dv.table(
 	["Note", "Location"],
 	dv.pages("[[" + dv.current().file.name + "]]")
+		// .where(b => !dv.func.contains(b.relatedProject, dv.current().file.link))
 		// Sort by YAML created field, but check whether there are multiple created dates
-		.sort(b => moment(Array.isArray(b.created) ? b.created[0] : b.created), 'desc')
+		.sort(b => b.file.mtime, 'desc')
 		.map(b => [b.file.link, b.file.folder.replace(/\//g, ' ‣ ').replace(/^\d+ (.+)/, '$1')])
 )
