@@ -7,7 +7,8 @@ tags:
   - "#project"
 ---
 
-# Project Related Notes
+
+
 ```meta-bind-button
 style: primary
 label: New Project Note
@@ -17,22 +18,7 @@ action:
   file: utility/scripts/quickadd/trigger_quickadd_create_project_note.js
 ```
 
-```dataview
-LIST
-WHERE contains(relatedProject, this.file.link)
-```
-
----
-
-# Project Mentions
 ```dataviewjs
-await dv.view("scripts/dataview/mentions-table", 1)
-```
-
----
-
-
-```dataviewjs
-await dv.view("scripts/dataview/related-project-note-table")
+await dv.view("scripts/dataview/related-project-note-table", 1)
 ```
 
