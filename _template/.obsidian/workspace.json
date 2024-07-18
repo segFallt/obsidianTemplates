@@ -4,19 +4,21 @@
     "type": "split",
     "children": [
       {
-        "id": "5bef084801042c9b",
+        "id": "9b59eb0ac53677a9",
         "type": "tabs",
         "children": [
           {
-            "id": "58080527ba9c3096",
+            "id": "6cff6652356e09f1",
             "type": "leaf",
+            "pinned": true,
             "state": {
               "type": "markdown",
               "state": {
                 "file": "views/Task Query.md",
                 "mode": "preview",
                 "source": false
-              }
+              },
+              "pinned": true
             }
           }
         ]
@@ -184,8 +186,8 @@
       "obsidian-projects:Open projects": false
     }
   },
-  "active": "58080527ba9c3096",
+  "active": "6cff6652356e09f1",
   "lastOpenFiles": [
-    "views/Inbox.md"
+    "views/Task Query.md"
   ]
 }
