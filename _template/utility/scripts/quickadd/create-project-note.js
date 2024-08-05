@@ -62,6 +62,6 @@ module.exports = async (params) => {
   });
 
   // Open the new file in a new tab
-  const leaf = app.workspace.splitActiveLeaf();
+  const leaf = app.workspace.getLeaf('tab');
   await leaf.openFile(newFile);
 };
