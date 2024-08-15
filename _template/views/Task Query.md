@@ -38,10 +38,10 @@ obsidianUIMode: preview
 > not done
 > ```
 
-## No Due Date
+## No Due Date or Tag
 > [!check] Upcoming
 > ```tasks
-> (no due date)
+> (no due date) AND (no tags)
 > not done
 > ```
 
