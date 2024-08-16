@@ -3,21 +3,21 @@ obsidianUIMode: preview
 ---
 
 
-## Today
+# Today
 > [!check] Due Today
 > ```tasks
 > due today
 > not done
 > ```
 
-## Past Due
+# Past Due
 > [!warning] Past Due
 > ```tasks
 > due before today
 > not done
 > ```
 
-## Tomorrow
+# Tomorrow
 > [!check] Due Tomorrow
 > ```tasks
 > due tomorrow
@@ -31,18 +31,24 @@ obsidianUIMode: preview
 > not done
 > ```
 
-## All Upcoming
+# All Upcoming
 > [!check] Upcoming
 > ```tasks
 > due after today
 > not done
 > ```
 
-## No Due Date or Tag
+# No Due Date or Tag
 > [!check] Upcoming
 > ```tasks
 > (no due date) AND (no tags)
 > not done
+> ```
+
+# Completed
+> [!check]- Done
+> ```tasks
+> done
 > ```
 
 # Tagged
