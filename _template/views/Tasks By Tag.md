@@ -2,9 +2,8 @@
 obsidianUIMode: preview
 ---
 > [!check] Tasks by Tag
-> ```dataview
-> TASK
-> WHERE !completed AND length(tags) > 0
-> SORT due DESC
-> GROUP BY tags
+> ```tasks
+> not done
+> filter by function task.tags.length > 0
+> group by function task.tags
 > ```
