@@ -20,6 +20,34 @@
               },
               "pinned": true
             }
+          },
+          {
+            "id": "bd84bd463c70f387",
+            "type": "leaf",
+            "pinned": true,
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "views/Tasks By Tag.md",
+                "mode": "preview",
+                "source": false
+              },
+              "pinned": true
+            }
+          },
+          {
+            "id": "a8be8578b69f0399",
+            "type": "leaf",
+            "pinned": true,
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "views/Projects.md",
+                "mode": "preview",
+                "source": false
+              },
+              "pinned": true
+            }
           }
         ]
       }
@@ -188,6 +216,8 @@
   },
   "active": "6cff6652356e09f1",
   "lastOpenFiles": [
+    "views/Projects.md",
+    "views/Tasks By Tag.md",
     "views/Task Query.md"
   ]
 }
