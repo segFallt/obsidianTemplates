@@ -5,6 +5,7 @@
     "tags": "tags",
     "end-date": "date",
     "date": "datetime",
-    "start-date": "date"
+    "start-date": "date",
+    "relatedProject": "multitext"
   }
 }
