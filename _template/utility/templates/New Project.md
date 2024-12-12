@@ -17,7 +17,6 @@ action:
   type: js
   file: utility/scripts/quickadd/trigger_quickadd_create_project_note.js
 ```
-
 ```dataviewjs
 await dv.view("scripts/dataview/related-project-note-table", 1)
 ```
