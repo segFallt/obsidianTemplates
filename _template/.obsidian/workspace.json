@@ -8,7 +8,7 @@
         "type": "tabs",
         "children": [
           {
-            "id": "6cff6652356e09f1",
+            "id": "887e4c2c9c6f7555",
             "type": "leaf",
             "pinned": true,
             "state": {
@@ -18,11 +18,13 @@
                 "mode": "preview",
                 "source": false
               },
-              "pinned": true
+              "pinned": true,
+              "icon": "lucide-file",
+              "title": "Task Query"
             }
           },
           {
-            "id": "bd84bd463c70f387",
+            "id": "279784eea732a65a",
             "type": "leaf",
             "pinned": true,
             "state": {
@@ -32,21 +34,21 @@
                 "mode": "preview",
                 "source": false
               },
-              "pinned": true
+              "pinned": true,
+              "icon": "lucide-file",
+              "title": "Tasks By Tag"
             }
           },
           {
-            "id": "a8be8578b69f0399",
+            "id": "d0b166d862eedab5",
             "type": "leaf",
             "pinned": true,
             "state": {
-              "type": "markdown",
-              "state": {
-                "file": "views/Projects.md",
-                "mode": "preview",
-                "source": false
-              },
-              "pinned": true
+              "type": "obsidian-projects",
+              "state": {},
+              "pinned": true,
+              "icon": "projects-icon",
+              "title": "Projects"
             }
           }
         ]
@@ -70,7 +72,9 @@
               "type": "file-explorer",
               "state": {
                 "sortOrder": "alphabetical"
-              }
+              },
+              "icon": "lucide-folder-closed",
+              "title": "Files"
             }
           },
           {
@@ -78,7 +82,9 @@
             "type": "leaf",
             "state": {
               "type": "bookmarks",
-              "state": {}
+              "state": {},
+              "icon": "lucide-bookmark",
+              "title": "Bookmarks"
             }
           },
           {
@@ -87,13 +93,15 @@
             "state": {
               "type": "search",
               "state": {
-                "query": "[\"obsidianUIMode\"]",
+                "query": "membe",
                 "matchingCase": false,
                 "explainSearch": false,
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical"
-              }
+              },
+              "icon": "lucide-search",
+              "title": "Search"
             }
           }
         ]
@@ -108,14 +116,16 @@
             "type": "leaf",
             "state": {
               "type": "bookmarks",
-              "state": {}
+              "state": {},
+              "icon": "lucide-bookmark",
+              "title": "Bookmarks"
             }
           }
         ]
       }
     ],
     "direction": "horizontal",
-    "width": 283.5
+    "width": 294.5
   },
   "right": {
     "id": "1aa677f745516874",
@@ -131,15 +141,17 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "views/Task Query.md",
-                "collapseAll": false,
+                "file": "reference/git cheat sheet.md",
+                "collapseAll": true,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
                 "showSearch": false,
                 "searchQuery": "",
                 "backlinkCollapsed": false,
                 "unlinkedCollapsed": true
-              }
+              },
+              "icon": "links-coming-in",
+              "title": "Backlinks for git cheat sheet"
             }
           },
           {
@@ -148,10 +160,12 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "views/Task Query.md",
+                "file": "reference/git cheat sheet.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
-              }
+              },
+              "icon": "links-going-out",
+              "title": "Outgoing links from git cheat sheet"
             }
           },
           {
@@ -162,7 +176,9 @@
               "state": {
                 "sortOrder": "frequency",
                 "useHierarchy": true
-              }
+              },
+              "icon": "lucide-tags",
+              "title": "Tags"
             }
           },
           {
@@ -172,7 +188,9 @@
               "type": "outline",
               "state": {
                 "file": "views/Task Query.md"
-              }
+              },
+              "icon": "lucide-list",
+              "title": "Outline of Task Query"
             }
           },
           {
@@ -184,7 +202,9 @@
                 "sortOrder": "frequency",
                 "showSearch": false,
                 "searchQuery": ""
-              }
+              },
+              "icon": "lucide-archive",
+              "title": "All properties"
             }
           },
           {
@@ -192,7 +212,9 @@
             "type": "leaf",
             "state": {
               "type": "advanced-tables-toolbar",
-              "state": {}
+              "state": {},
+              "icon": "lucide-file",
+              "title": "Plugin no longer active"
             }
           }
         ],
@@ -200,7 +222,7 @@
       }
     ],
     "direction": "horizontal",
-    "width": 373.5
+    "width": 270.5
   },
   "left-ribbon": {
     "hiddenItems": {
@@ -214,10 +236,10 @@
       "obsidian-projects:Open projects": false
     }
   },
-  "active": "6cff6652356e09f1",
+  "active": "887e4c2c9c6f7555",
   "lastOpenFiles": [
-    "views/Projects.md",
     "views/Tasks By Tag.md",
+    "views/Projects.md",
     "views/Task Query.md"
   ]
 }
