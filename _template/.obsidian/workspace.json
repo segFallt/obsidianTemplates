@@ -50,8 +50,25 @@
               "icon": "projects-icon",
               "title": "Projects"
             }
+          },
+          {
+            "id": "e8220ab98993f783",
+            "type": "leaf",
+            "pinned": true,
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "views/Projects.md",
+                "mode": "preview",
+                "source": false
+              },
+              "pinned": true,
+              "icon": "lucide-file",
+              "title": "Projects"
+            }
           }
-        ]
+        ],
+        "currentTab": 3
       }
     ],
     "direction": "vertical"
@@ -187,10 +204,10 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "views/Task Query.md"
+                "file": "views/Projects.md"
               },
               "icon": "lucide-list",
-              "title": "Outline of Task Query"
+              "title": "Outline of Projects"
             }
           },
           {
@@ -236,10 +253,10 @@
       "obsidian-projects:Open projects": false
     }
   },
-  "active": "887e4c2c9c6f7555",
+  "active": "e8220ab98993f783",
   "lastOpenFiles": [
+    "views/Task Query.md",
     "views/Tasks By Tag.md",
-    "views/Projects.md",
-    "views/Task Query.md"
+    "views/Projects.md"
   ]
 }
