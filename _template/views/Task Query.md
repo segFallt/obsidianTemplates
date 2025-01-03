@@ -8,6 +8,7 @@ obsidianUIMode: preview
 > ```tasks
 > due today
 > not done
+> sort by priority
 > ```
 
 # Past Due
@@ -15,6 +16,8 @@ obsidianUIMode: preview
 > ```tasks
 > due before today
 > not done
+> sort by priority
+> sort by due
 > ```
 
 # Tomorrow
@@ -29,6 +32,8 @@ obsidianUIMode: preview
 > ```tasks
 > due this week
 > not done
+> sort by due
+> sort by priority
 > ```
 
 # All Upcoming
@@ -36,6 +41,8 @@ obsidianUIMode: preview
 > ```tasks
 > due after today
 > not done
+> sort by due
+> sort by priority
 > ```
 
 # No Due Date or Tag
@@ -43,6 +50,7 @@ obsidianUIMode: preview
 > ```tasks
 > (no due date) AND (no tags)
 > not done
+
 > ```
 
 # Completed
