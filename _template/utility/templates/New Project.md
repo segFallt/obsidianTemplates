@@ -5,6 +5,7 @@ end-date:
 status: Active
 tags:
   - "#project"
+priority:
 ---
 
 

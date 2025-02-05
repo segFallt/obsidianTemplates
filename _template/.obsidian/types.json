@@ -6,6 +6,7 @@
     "end-date": "date",
     "date": "datetime",
     "start-date": "date",
-    "relatedProject": "multitext"
+    "relatedProject": "multitext",
+    "priority": "number"
   }
 }
