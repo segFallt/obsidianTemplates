@@ -3,7 +3,6 @@
 ## Notes
 - 
 
-## Action Items
-- 
+
 
 ---

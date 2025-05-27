@@ -12,9 +12,3 @@ date: <% tp.date.now("YYYY-MM-DDTHH:mm:ss") %>
 - 
 
 
-# Open Questions
-- 
-
-
-# Action Items
-- 
