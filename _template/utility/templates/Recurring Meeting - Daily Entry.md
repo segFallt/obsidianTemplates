@@ -1,9 +1,8 @@
 # <% tp.date.now() %>
 
-## Notes:
+## Notes
 - 
 
-## Action Items:
-- 
+
 
 ---

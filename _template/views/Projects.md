@@ -12,17 +12,33 @@ action:
 # Active Projects
 ```dataview
 TABLE WITHOUT ID 
-file.link AS "Project", status as "Status", start-date as "Start Date", end-date as "End Date"
+file.link AS "Project", priority as "P", start-date as "Start Date"
 FROM #project AND !"utility"
-WHERE status = "Active" OR status = "New"
-SORT status ASC, file.mtime DESC
+WHERE status = "Active"
+SORT priority ASC, file.mtime DESC
 ```
-
+# On Hold Projects
+```dataview
+TABLE WITHOUT ID 
+file.link AS "Project", priority as "P", start-date as "Start Date", file.mtime as "Mod Date"
+FROM #project AND !"utility"
+WHERE status = "On Hold"
+SORT priority ASC, file.mtime DESC
+```
+# New Projects
+```dataview
+TABLE WITHOUT ID 
+file.link AS "Project", priority as "P"
+FROM #project AND !"utility"
+WHERE status = "New"
+SORT priority ASC, status ASC, file.mtime DESC
+```
+# Complete Projects
 ```dataview
 TABLE WITHOUT ID 
 file.link AS "Project", status as "Status", start-date as "Start Date", end-date as "End Date"
 FROM #project AND !"utility"
-WHERE (status != "Active" and status != "New") OR (end-date != null AND end-date != "")
+WHERE (status = "Complete" ) OR (end-date != null AND end-date != "")
 SORT end-date DESC
 ```
 

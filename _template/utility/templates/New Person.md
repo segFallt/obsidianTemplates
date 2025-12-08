@@ -1,5 +1,8 @@
 ---
 obsidianUIMode: preview
+status: Active
+title: 
+reports-to:
 ---
 
 ```dataviewjs

@@ -17,7 +17,22 @@
       "newNotesFolder": "projects/notes",
       "views": [
         {
-          "config": {},
+          "config": {
+            "fieldConfig": {
+              "name": {
+                "width": 349
+              },
+              "tags": {
+                "hide": true
+              },
+              "notesDirectory": {
+                "hide": true
+              },
+              "related-to": {
+                "hide": true
+              }
+            }
+          },
           "filter": {
             "conjunction": "and",
             "conditions": []
@@ -38,7 +53,59 @@
             "includeFields": [
               "tags",
               "start-date"
-            ]
+            ],
+            "columns": {
+              "New": {
+                "weight": 0
+              },
+              "Active": {
+                "weight": 1,
+                "records": [
+                  "projects/4Runner - tires.md",
+                  "projects/4Runner weather seal.md",
+                  "projects/ansible - update for kubernetes boot order.md",
+                  "projects/Certified Kubernetes Administrator (CKA).md",
+                  "projects/farmer's dog at home recipe.md",
+                  "projects/flux.1.md",
+                  "projects/Gifts 2024.md",
+                  "projects/Investment Updates Sept 2024.md",
+                  "projects/Job Search.md",
+                  "projects/LDAP service.md",
+                  "projects/NAS Build.md",
+                  "projects/political contribution service.md",
+                  "projects/RKE2 - Authentik.md",
+                  "projects/rke2 - DNS.md",
+                  "projects/RKE2 - Flux CD.md",
+                  "projects/rke2 - flux-infrastructure project.md",
+                  "projects/rke2 - longhorn backups.md",
+                  "projects/rke2 - New Image Monitor and Alerts.md",
+                  "projects/rke2 - observability.md",
+                  "projects/rke2 - pihole HA.md",
+                  "projects/rke2 - rss feed reader.md",
+                  "projects/RKE2 - secrets Vault.md",
+                  "projects/rke2 - security hardening.md",
+                  "projects/RKE2 - smtp and Push Notifications.md",
+                  "projects/self hosted journal.md",
+                  "projects/Student Loans Review.md",
+                  "projects/study AI ML.md",
+                  "projects/Suppliment Dosage Review.md",
+                  "projects/vape juice research.md",
+                  "projects/buy - bore sight laser.md",
+                  "projects/Obsidian Template Improvements.md",
+                  "projects/RKE2 - Home-Assistant.md",
+                  "projects/rke2 - homebridge.md",
+                  "projects/rke2 - Steam Headless.md",
+                  "projects/rke2 - Piped Youtube front-end.md",
+                  "projects/rke2 - traefik, cert-manager, and wtf.md"
+                ]
+              },
+              "On Hold": {
+                "weight": 2
+              },
+              "Complete": {
+                "weight": 3
+              }
+            }
           },
           "filter": {
             "conjunction": "and",
@@ -57,6 +124,80 @@
       ],
       "id": "2a873eb2-de19-4a97-8942-a8df50cab075",
       "name": "projects"
+    },
+    {
+      "fieldConfig": {},
+      "defaultName": "",
+      "templates": [
+        "utility/templates/New Project.md"
+      ],
+      "excludedNotes": [],
+      "isDefault": false,
+      "dataSource": {
+        "kind": "folder",
+        "config": {
+          "path": "projects",
+          "recursive": false
+        }
+      },
+      "newNotesFolder": "projects",
+      "views": [
+        {
+          "config": {
+            "fieldConfig": {
+              "tags": {
+                "hide": true
+              },
+              "related-to": {
+                "hide": true
+              },
+              "notesDirectory": {
+                "hide": true
+              },
+              "path": {
+                "hide": true
+              },
+              "name": {
+                "width": 346
+              },
+              "end-date": {
+                "hide": true
+              },
+              "status": {
+                "hide": true
+              }
+            },
+            "orderFields": [
+              "name",
+              "start-date",
+              "end-date",
+              "status"
+            ]
+          },
+          "filter": {
+            "conjunction": "and",
+            "conditions": [
+              {
+                "field": "status",
+                "operator": "is",
+                "enabled": true,
+                "value": "Active"
+              }
+            ]
+          },
+          "colors": {
+            "conditions": []
+          },
+          "sort": {
+            "criteria": []
+          },
+          "id": "b2209ace-4d08-489f-ab06-a763c0750854",
+          "name": "Table",
+          "type": "table"
+        }
+      ],
+      "id": "ddb9ff59-cc82-46e4-9814-9c3af7ce18b5",
+      "name": "Projects - Active"
     }
   ],
   "archives": [],
