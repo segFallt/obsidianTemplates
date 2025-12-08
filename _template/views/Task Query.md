@@ -51,8 +51,6 @@ obsidianUIMode: preview
 > (no due date) AND (no tags)
 > not done
 
-> ```
-
 # Completed
 > [!check]- Done
 > ```tasks
