@@ -2,32 +2,44 @@
 // Displays tasks grouped by project with optional filtering
 //
 // Usage:
-//   await dv.view("scripts/dataview/tasks-by-project")
-//   await dv.view("scripts/dataview/tasks-by-project", { selectedProject: "Name" })
-//   await dv.view("scripts/dataview/tasks-by-project", { showCompleted: false })
+//   await dv.view("scripts/dataview/tasks-by-project", {
+//     selectedProjects: page.selectedProjects,
+//     projectFilter: page.projectFilter
+//   })
 //
 // Input Parameters (optional object):
-//   selectedProject - Exact match filter by project name
-//   projectFilter   - Fuzzy match filter (case-insensitive contains)
-//   showCompleted   - Whether to show completed tasks section (default: true)
+//   selectedProjects - Array of project names to filter (multi-select)
+//   projectFilter    - Fuzzy match filter (case-insensitive contains)
+//   showCompleted    - Whether to show completed tasks section (default: true)
 //
-// If no input provided, reads filter values from calling page's frontmatter
+// Note: Frontmatter values must be passed explicitly from the calling page
+//       since dv.current() context changes in external scripts
 
-// Get filter parameters from input or current page frontmatter
-const page = dv.current();
+// Get filter parameters from input
 const config = input || {};
-const selectedProject = config.selectedProject ?? page.selectedProject;
-const filterText = (config.projectFilter ?? page.projectFilter ?? "").toLowerCase();
+const selectedProjects = config.selectedProjects || [];
+const filterText = (config.projectFilter || "").toLowerCase();
 const showCompleted = config.showCompleted ?? true;
+
+// Normalize selected projects to file names (handles links, paths, or plain names)
+const normalizeToName = (item) => {
+  if (!item) return null;
+  // If it's a Link object, get the path
+  if (item.path) return item.path.split('/').pop().replace(/\.md$/, '');
+  // If it's a string like "[[Name]]" or "Name.md" or just "Name"
+  const str = String(item);
+  return str.replace(/^\[\[/, '').replace(/\]\]$/, '').split('/').pop().replace(/\.md$/, '');
+};
+const selectedNames = selectedProjects.map(normalizeToName).filter(Boolean);
 
 // Query all non-Complete projects
 let projects = dv.pages('#project AND !"utility"')
   .where(p => p.status !== "Complete")
   .sort(p => p.priority, 'asc');
 
-// Apply dropdown filter (exact match)
-if (selectedProject) {
-  projects = projects.where(p => p.file.name === selectedProject);
+// Apply multi-select filter (match any selected project)
+if (selectedNames && selectedNames.length > 0) {
+  projects = projects.where(p => selectedNames.includes(p.file.name));
 }
 
 // Apply text filter (fuzzy match)
