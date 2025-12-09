@@ -15,6 +15,7 @@
     "notes": "text",
     "status": "text",
     "from-idea": "text",
-    "thank-you-sent": "checkbox"
+    "thank-you-sent": "checkbox",
+    "friendlyName": "text"
   }
 }

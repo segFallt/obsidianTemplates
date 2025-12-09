@@ -1,7 +1,9 @@
 ---
 tags:
   - "#gift-idea"
+friendlyName:
 individuals: []
+interests: []
 occasion:
 estimated-cost:
 url:
