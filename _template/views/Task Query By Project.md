@@ -2,15 +2,28 @@
 obsidianUIMode: preview
 selectedProjects: []
 projectFilter: ""
+selectedStatuses:
+  - Active
+showCompletedTasks: false
 ---
 
 # Tasks By Project
 
-**Select Projects:**
+**Filter by Projects:**
 ```meta-bind
 INPUT[listSuggester(optionQuery(#project)):selectedProjects]
 ```
 **Search:** `INPUT[text:projectFilter]`
+
+**Filter by Project Status:**
+```meta-bind
+INPUT[multiSelect(option(New), option(Active), option(On Hold), option(Complete)):selectedStatuses]
+```
+
+**Show Completed Tasks**
+```meta-bind
+INPUT[toggle:showCompletedTasks]
+```
 
 ```meta-bind-button
 style: destructive
@@ -24,6 +37,10 @@ actions:
     bindTarget: projectFilter
     evaluate: false
     value: ""
+  - type: updateMetadata
+    bindTarget: selectedStatuses
+    evaluate: true
+    value: '["Active"]'
 ```
 
 ---
@@ -32,6 +49,8 @@ actions:
 const page = dv.current();
 await dv.view("scripts/dataview/tasks-by-project", {
   selectedProjects: page.selectedProjects,
-  projectFilter: page.projectFilter
+  projectFilter: page.projectFilter,
+  selectedStatuses: page.selectedStatuses,
+  showCompleted: page.showCompletedTasks
 })
 ```
