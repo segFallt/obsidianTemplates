@@ -1,0 +1,36 @@
+properties:
+  file.name:
+    displayName: Gift Idea
+views:
+  - type: table
+    name: all_ideas
+    filters:
+      and:
+        - file.inFolder("gifts/ideas")
+        - file.hasTag("gift-idea")
+    order:
+      - file.name
+      - individuals
+      - occasion
+      - estimated-cost
+      - status
+    sort:
+      - property: file.mtime
+        direction: DESC
+  - type: table
+    name: ideas_by_status
+    filters:
+      and:
+        - file.inFolder("gifts/ideas")
+        - file.hasTag("gift-idea")
+    order:
+      - status
+      - file.name
+      - individuals
+      - occasion
+      - estimated-cost
+    sort:
+      - property: status
+        direction: ASC
+      - property: file.name
+        direction: ASC

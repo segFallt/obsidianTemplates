@@ -1,0 +1,16 @@
+properties:
+  file.name:
+    displayName: Name
+views:
+  - type: table
+    name: all_individuals
+    filters:
+      and:
+        - file.inFolder("individuals")
+        - file.hasTag("individual")
+    order:
+      - file.name
+      - birthday
+    sort:
+      - property: file.name
+        direction: ASC
