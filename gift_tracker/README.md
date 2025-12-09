@@ -5,6 +5,7 @@ A personal gift tracking system built in Obsidian for managing gift ideas, gifts
 ## Features
 
 - **Individuals**: Keep profiles of people you exchange gifts with, including birthdays and interests
+- **Interests**: Maintain a library of interests to tag individuals and gift ideas
 - **Gift Ideas**: Track gift ideas with estimated costs, links, and status
 - **Gifts Given**: Record gifts you've given with date, occasion, cost, and recipient
 - **Gifts Received**: Track gifts received and whether you've sent a thank-you
@@ -23,12 +24,27 @@ A personal gift tracking system built in Obsidian for managing gift ideas, gifts
 3. Select the `gift_tracker` folder
 4. Trust the plugins when prompted
 
+### Creating Interests
+
+Before adding individuals, set up some interests that can be reused across your vault.
+
+1. Open `views/Interests.md` from the file explorer
+2. Click the **New Interest** button
+3. Enter the interest name (e.g., "Photography", "Cooking", "Board Games")
+4. Add optional notes about the interest
+
+Interests are used to:
+- Tag individuals with their hobbies/preferences
+- Associate gift ideas with relevant interests
+- Help find gift ideas based on someone's interests
+
 ### Creating Your First Individual
 
 1. Open `views/Individuals.md` from the file explorer
 2. Click the **New Individual** button
 3. Enter the person's name when prompted
-4. Fill in their birthday and interests
+4. Fill in their birthday
+5. Select interests from your interest library (auto-suggests from existing interests)
 
 ### Adding a Gift Idea
 
@@ -37,6 +53,7 @@ A personal gift tracking system built in Obsidian for managing gift ideas, gifts
 3. Enter a name for the idea
 4. Use the form to select:
    - **For**: Choose from your individuals list
+   - **Interests**: Tag relevant interests (auto-suggests from existing interests)
    - **Occasion**: Select from common occasions
    - **Estimated Cost**: Enter a budget
    - **URL**: Add a product link
@@ -67,6 +84,7 @@ A personal gift tracking system built in Obsidian for managing gift ideas, gifts
 | Folder | Purpose |
 |--------|---------|
 | `individuals/` | People profiles |
+| `interests/` | Interest/hobby records |
 | `gifts/ideas/` | Gift ideas and wishlists |
 | `gifts/given/` | Gifts you've given |
 | `gifts/received/` | Gifts you've received |
@@ -77,6 +95,12 @@ A personal gift tracking system built in Obsidian for managing gift ideas, gifts
 ---
 
 ## Views & Dashboards
+
+### Interests
+A master list of all interests in your vault. Use this to:
+- Add new interests
+- See all available interests at a glance
+- Manage your interest library
 
 ### Individuals
 Shows all people in your gift network. Each individual's page displays:
@@ -103,6 +127,7 @@ Two views:
 
 ### Keyboard Shortcuts
 Open the command palette (`Ctrl/Cmd + P`) and search for:
+- `QuickAdd: Interest - New`
 - `QuickAdd: Individual - New`
 - `QuickAdd: Gift Idea - New`
 - `QuickAdd: Gift Given - New`
@@ -134,6 +159,11 @@ Pre-configured occasions include:
 
 ## Tips
 
+### Managing Interests
+- Create interests before individuals for better organization
+- Use broad categories (e.g., "Outdoor Activities") or specific hobbies (e.g., "Rock Climbing")
+- Interests auto-suggest when editing individuals or gift ideas
+
 ### Linking Multiple People
 A gift can be associated with multiple individuals. Use the suggester to add more than one person.
 
@@ -151,12 +181,15 @@ Open any individual's page to see:
 ### Thank-You Reminders
 The "Needs Thank You" section in Gifts Received helps you track unacknowledged gifts.
 
+### Interest-Based Gift Finding
+Tag gift ideas with interests to easily find relevant ideas when shopping for someone with specific hobbies.
+
 ---
 
 ## Customization
 
 ### Adding Occasions
-Edit `utility/scripts/constants.js` to add custom occasions, then update the suggester options in:
+Edit the suggester options in:
 - `utility/templates/components/gift-idea-properties.md`
 - `utility/templates/components/gift-given-properties.md`
 - `utility/templates/components/gift-received-properties.md`
@@ -173,7 +206,7 @@ This vault uses the following community plugins:
 - **Templater** - Template generation
 - **QuickAdd** - Quick note creation
 - **Meta Bind** - Interactive form controls
-- **Obsidian Projects** - Base views for tables
+- **Bases** - Table views for dashboards
 - **JS Engine** - JavaScript execution for buttons
 
 All plugins are pre-configured and ready to use.

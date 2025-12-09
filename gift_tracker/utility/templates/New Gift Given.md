@@ -1,6 +1,7 @@
 ---
 tags:
   - "#gift-given"
+friendlyName:
 individuals: []
 date: <% tp.date.now() %>
 occasion:

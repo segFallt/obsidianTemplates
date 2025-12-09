@@ -31,11 +31,11 @@
       "setFileExistsBehavior": false
     },
     {
-      "id": "a1b2c3d4-2222-2222-2222-222222222222",
-      "name": "Gift Idea - New",
+      "id": "a1b2c3d4-6666-6666-6666-666666666666",
+      "name": "Interest - New",
       "type": "Template",
       "command": true,
-      "templatePath": "utility/templates/New Gift Idea.md",
+      "templatePath": "utility/templates/New Interest.md",
       "fileNameFormat": {
         "enabled": false,
         "format": ""
@@ -43,7 +43,7 @@
       "folder": {
         "enabled": true,
         "folders": [
-          "gifts/ideas"
+          "interests"
         ],
         "chooseWhenCreatingNote": false,
         "createInSameFolderAsActiveFile": false,
@@ -59,66 +59,27 @@
       "openFileInMode": "default",
       "fileExistsMode": "Increment the file name",
       "setFileExistsBehavior": false
+    },
+    {
+      "id": "a1b2c3d4-2222-2222-2222-222222222222",
+      "name": "Gift Idea - New",
+      "type": "Macro",
+      "command": true,
+      "macroId": "b1c2d3e4-2222-2222-2222-222222222222"
     },
     {
       "id": "a1b2c3d4-3333-3333-3333-333333333333",
       "name": "Gift Given - New",
-      "type": "Template",
+      "type": "Macro",
       "command": true,
-      "templatePath": "utility/templates/New Gift Given.md",
-      "fileNameFormat": {
-        "enabled": false,
-        "format": ""
-      },
-      "folder": {
-        "enabled": true,
-        "folders": [
-          "gifts/given"
-        ],
-        "chooseWhenCreatingNote": false,
-        "createInSameFolderAsActiveFile": false,
-        "chooseFromSubfolders": false
-      },
-      "appendLink": false,
-      "openFileInNewTab": {
-        "enabled": false,
-        "direction": "vertical",
-        "focus": true
-      },
-      "openFile": true,
-      "openFileInMode": "default",
-      "fileExistsMode": "Increment the file name",
-      "setFileExistsBehavior": false
+      "macroId": "b1c2d3e4-3333-3333-3333-333333333333"
     },
     {
       "id": "a1b2c3d4-4444-4444-4444-444444444444",
       "name": "Gift Received - New",
-      "type": "Template",
+      "type": "Macro",
       "command": true,
-      "templatePath": "utility/templates/New Gift Received.md",
-      "fileNameFormat": {
-        "enabled": false,
-        "format": ""
-      },
-      "folder": {
-        "enabled": true,
-        "folders": [
-          "gifts/received"
-        ],
-        "chooseWhenCreatingNote": false,
-        "createInSameFolderAsActiveFile": false,
-        "chooseFromSubfolders": false
-      },
-      "appendLink": false,
-      "openFileInNewTab": {
-        "enabled": false,
-        "direction": "vertical",
-        "focus": true
-      },
-      "openFile": true,
-      "openFileInMode": "default",
-      "fileExistsMode": "Increment the file name",
-      "setFileExistsBehavior": false
+      "macroId": "b1c2d3e4-4444-4444-4444-444444444444"
     },
     {
       "id": "a1b2c3d4-5555-5555-5555-555555555555",
@@ -129,6 +90,48 @@
     }
   ],
   "macros": [
+    {
+      "name": "Create Gift Idea",
+      "id": "b1c2d3e4-2222-2222-2222-222222222222",
+      "commands": [
+        {
+          "name": "create-gift-idea",
+          "type": "UserScript",
+          "id": "c1d2e3f4-2222-2222-2222-222222222222",
+          "path": "utility/scripts/quickadd/create-gift-idea.js",
+          "settings": {}
+        }
+      ],
+      "runOnStartup": false
+    },
+    {
+      "name": "Create Gift Given",
+      "id": "b1c2d3e4-3333-3333-3333-333333333333",
+      "commands": [
+        {
+          "name": "create-gift-given",
+          "type": "UserScript",
+          "id": "c1d2e3f4-3333-3333-3333-333333333333",
+          "path": "utility/scripts/quickadd/create-gift-given.js",
+          "settings": {}
+        }
+      ],
+      "runOnStartup": false
+    },
+    {
+      "name": "Create Gift Received",
+      "id": "b1c2d3e4-4444-4444-4444-444444444444",
+      "commands": [
+        {
+          "name": "create-gift-received",
+          "type": "UserScript",
+          "id": "c1d2e3f4-4444-4444-4444-444444444444",
+          "path": "utility/scripts/quickadd/create-gift-received.js",
+          "settings": {}
+        }
+      ],
+      "runOnStartup": false
+    },
     {
       "name": "Convert Idea to Given",
       "id": "b1c2d3e4-5555-5555-5555-555555555555",

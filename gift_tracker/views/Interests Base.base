@@ -1,0 +1,15 @@
+properties:
+  file.name:
+    displayName: Interest
+views:
+  - type: table
+    name: all_interests
+    filters:
+      and:
+        - file.inFolder("interests")
+        - file.hasTag("interest")
+    order:
+      - file.name
+    sort:
+      - property: file.name
+        direction: ASC

@@ -34,3 +34,21 @@ views:
         direction: ASC
       - property: file.name
         direction: ASC
+  - type: table
+    name: ideas_by_interest
+    filters:
+      and:
+        - file.inFolder("gifts/ideas")
+        - file.hasTag("gift-idea")
+    order:
+      - interests
+      - file.name
+      - individuals
+      - occasion
+      - estimated-cost
+      - status
+    sort:
+      - property: interests
+        direction: ASC
+      - property: file.name
+        direction: ASC

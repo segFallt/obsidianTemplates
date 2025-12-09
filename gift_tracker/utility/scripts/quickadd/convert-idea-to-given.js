@@ -1,7 +1,9 @@
 // convert-idea-to-given.js
 // Creates a new Gift Given note from an existing Gift Idea
-// Copies individuals, occasion, estimated-cost → cost, url, notes
+// Copies individuals, occasion, estimated-cost -> cost, url, notes, store
 // Sets from-idea link to original idea
+// Pre-populates gift name with idea name
+// Sets friendlyName with user-entered name
 
 module.exports = async (params) => {
   const { app, quickAddApi } = params;
@@ -30,8 +32,9 @@ module.exports = async (params) => {
     return;
   }
 
-  // Prompt for the gift name
-  const giftName = await quickAddApi.inputPrompt("Gift name:");
+  // Pre-populate name prompt with idea name (use friendlyName if available, else basename)
+  const defaultName = fm.friendlyName || activeFile.basename;
+  const giftName = await quickAddApi.inputPrompt("Gift name:", defaultName);
   if (!giftName) {
     new Notice('Conversion cancelled.');
     return;
@@ -41,10 +44,11 @@ module.exports = async (params) => {
   const targetFolder = "gifts/given";
   let uniquePath = `${targetFolder}/${giftName}.md`;
 
-  // Check if file exists and add timestamp if needed
-  if (await app.vault.adapter.exists(uniquePath)) {
-    const timestamp = new Date().toISOString().replace(/[:.]/g, '-').slice(0, 19);
-    uniquePath = `${targetFolder}/${giftName}-${timestamp}.md`;
+  // Check if file exists and add numeral suffix if needed
+  let counter = 1;
+  while (await app.vault.adapter.exists(uniquePath)) {
+    counter++;
+    uniquePath = `${targetFolder}/${giftName} ${counter}.md`;
   }
 
   // Ensure folder exists
@@ -72,6 +76,9 @@ module.exports = async (params) => {
 
   // Update frontmatter with data from the idea
   await app.fileManager.processFrontMatter(newFile, (newFm) => {
+    // Set friendlyName with user's entered name
+    newFm.friendlyName = giftName;
+
     // Copy individuals
     if (fm.individuals) {
       newFm.individuals = fm.individuals;
@@ -90,6 +97,11 @@ module.exports = async (params) => {
     // Copy url
     if (fm.url) {
       newFm.url = fm.url;
+    }
+
+    // Copy store if present
+    if (fm.store) {
+      newFm.store = fm.store;
     }
 
     // Copy notes
