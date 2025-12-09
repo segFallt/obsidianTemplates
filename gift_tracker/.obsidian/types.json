@@ -1,0 +1,20 @@
+{
+  "types": {
+    "aliases": "aliases",
+    "tags": "tags",
+    "cssclasses": "multitext",
+    "birthday": "date",
+    "date": "date",
+    "individuals": "multitext",
+    "interests": "multitext",
+    "occasion": "text",
+    "estimated-cost": "number",
+    "cost": "number",
+    "store": "text",
+    "url": "text",
+    "notes": "text",
+    "status": "text",
+    "from-idea": "text",
+    "thank-you-sent": "checkbox"
+  }
+}

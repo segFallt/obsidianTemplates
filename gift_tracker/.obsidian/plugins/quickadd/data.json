@@ -1,0 +1,169 @@
+{
+  "choices": [
+    {
+      "id": "a1b2c3d4-1111-1111-1111-111111111111",
+      "name": "Individual - New",
+      "type": "Template",
+      "command": true,
+      "templatePath": "utility/templates/New Individual.md",
+      "fileNameFormat": {
+        "enabled": false,
+        "format": ""
+      },
+      "folder": {
+        "enabled": true,
+        "folders": [
+          "individuals"
+        ],
+        "chooseWhenCreatingNote": false,
+        "createInSameFolderAsActiveFile": false,
+        "chooseFromSubfolders": false
+      },
+      "appendLink": false,
+      "openFileInNewTab": {
+        "enabled": false,
+        "direction": "vertical",
+        "focus": true
+      },
+      "openFile": true,
+      "openFileInMode": "default",
+      "fileExistsMode": "Increment the file name",
+      "setFileExistsBehavior": false
+    },
+    {
+      "id": "a1b2c3d4-2222-2222-2222-222222222222",
+      "name": "Gift Idea - New",
+      "type": "Template",
+      "command": true,
+      "templatePath": "utility/templates/New Gift Idea.md",
+      "fileNameFormat": {
+        "enabled": false,
+        "format": ""
+      },
+      "folder": {
+        "enabled": true,
+        "folders": [
+          "gifts/ideas"
+        ],
+        "chooseWhenCreatingNote": false,
+        "createInSameFolderAsActiveFile": false,
+        "chooseFromSubfolders": false
+      },
+      "appendLink": false,
+      "openFileInNewTab": {
+        "enabled": false,
+        "direction": "vertical",
+        "focus": true
+      },
+      "openFile": true,
+      "openFileInMode": "default",
+      "fileExistsMode": "Increment the file name",
+      "setFileExistsBehavior": false
+    },
+    {
+      "id": "a1b2c3d4-3333-3333-3333-333333333333",
+      "name": "Gift Given - New",
+      "type": "Template",
+      "command": true,
+      "templatePath": "utility/templates/New Gift Given.md",
+      "fileNameFormat": {
+        "enabled": false,
+        "format": ""
+      },
+      "folder": {
+        "enabled": true,
+        "folders": [
+          "gifts/given"
+        ],
+        "chooseWhenCreatingNote": false,
+        "createInSameFolderAsActiveFile": false,
+        "chooseFromSubfolders": false
+      },
+      "appendLink": false,
+      "openFileInNewTab": {
+        "enabled": false,
+        "direction": "vertical",
+        "focus": true
+      },
+      "openFile": true,
+      "openFileInMode": "default",
+      "fileExistsMode": "Increment the file name",
+      "setFileExistsBehavior": false
+    },
+    {
+      "id": "a1b2c3d4-4444-4444-4444-444444444444",
+      "name": "Gift Received - New",
+      "type": "Template",
+      "command": true,
+      "templatePath": "utility/templates/New Gift Received.md",
+      "fileNameFormat": {
+        "enabled": false,
+        "format": ""
+      },
+      "folder": {
+        "enabled": true,
+        "folders": [
+          "gifts/received"
+        ],
+        "chooseWhenCreatingNote": false,
+        "createInSameFolderAsActiveFile": false,
+        "chooseFromSubfolders": false
+      },
+      "appendLink": false,
+      "openFileInNewTab": {
+        "enabled": false,
+        "direction": "vertical",
+        "focus": true
+      },
+      "openFile": true,
+      "openFileInMode": "default",
+      "fileExistsMode": "Increment the file name",
+      "setFileExistsBehavior": false
+    },
+    {
+      "id": "a1b2c3d4-5555-5555-5555-555555555555",
+      "name": "Convert Idea to Given",
+      "type": "Macro",
+      "command": true,
+      "macroId": "b1c2d3e4-5555-5555-5555-555555555555"
+    }
+  ],
+  "macros": [
+    {
+      "name": "Convert Idea to Given",
+      "id": "b1c2d3e4-5555-5555-5555-555555555555",
+      "commands": [
+        {
+          "name": "convert-idea-to-given",
+          "type": "UserScript",
+          "id": "c1d2e3f4-5555-5555-5555-555555555555",
+          "path": "utility/scripts/quickadd/convert-idea-to-given.js",
+          "settings": {}
+        }
+      ],
+      "runOnStartup": false
+    }
+  ],
+  "inputPrompt": "single-line",
+  "devMode": false,
+  "templateFolderPath": "utility/templates",
+  "announceUpdates": true,
+  "version": "1.13.3",
+  "disableOnlineFeatures": true,
+  "enableRibbonIcon": false,
+  "ai": {
+    "defaultModel": "Ask me",
+    "defaultSystemPrompt": "As an AI assistant within Obsidian, your primary goal is to help users manage their ideas and knowledge more effectively.",
+    "promptTemplatesFolderPath": "",
+    "showAssistant": false,
+    "providers": []
+  },
+  "migrations": {
+    "migrateToMacroIDFromEmbeddedMacro": true,
+    "useQuickAddTemplateFolder": true,
+    "incrementFileNameSettingMoveToDefaultBehavior": true,
+    "mutualExclusionInsertAfterAndWriteToBottomOfFile": true,
+    "setVersionAfterUpdateModalRelease": true,
+    "addDefaultAIProviders": true
+  }
+}

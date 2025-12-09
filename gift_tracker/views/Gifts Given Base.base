@@ -1,0 +1,36 @@
+properties:
+  file.name:
+    displayName: Gift
+views:
+  - type: table
+    name: all_given
+    filters:
+      and:
+        - file.inFolder("gifts/given")
+        - file.hasTag("gift-given")
+    order:
+      - file.name
+      - individuals
+      - date
+      - occasion
+      - cost
+    sort:
+      - property: date
+        direction: DESC
+  - type: table
+    name: given_by_occasion
+    filters:
+      and:
+        - file.inFolder("gifts/given")
+        - file.hasTag("gift-given")
+    order:
+      - occasion
+      - file.name
+      - individuals
+      - date
+      - cost
+    sort:
+      - property: occasion
+        direction: ASC
+      - property: date
+        direction: DESC

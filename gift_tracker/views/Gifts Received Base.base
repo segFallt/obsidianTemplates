@@ -1,0 +1,34 @@
+properties:
+  file.name:
+    displayName: Gift
+views:
+  - type: table
+    name: all_received
+    filters:
+      and:
+        - file.inFolder("gifts/received")
+        - file.hasTag("gift-received")
+    order:
+      - file.name
+      - individuals
+      - date
+      - occasion
+      - thank-you-sent
+    sort:
+      - property: date
+        direction: DESC
+  - type: table
+    name: needs_thank_you
+    filters:
+      and:
+        - file.inFolder("gifts/received")
+        - file.hasTag("gift-received")
+        - thank-you-sent == false
+    order:
+      - file.name
+      - individuals
+      - date
+      - occasion
+    sort:
+      - property: date
+        direction: ASC
