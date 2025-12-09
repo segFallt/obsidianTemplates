@@ -11,10 +11,4 @@ action:
   file: utility/scripts/quickadd/trigger_quickadd_create_meeting_single.js
 ```
 
-```dataview
-TABLE WITHOUT ID 
-file.link AS "Meeting", date as "Date"
-FROM "meetings/single"
-SORT date DESC, time DESC
-```
-
+![[Single Meetings Base.base#meetings]]

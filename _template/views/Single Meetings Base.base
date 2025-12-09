@@ -1,0 +1,15 @@
+properties:
+  file.name:
+    displayName: Meeting
+views:
+  - type: table
+    name: meetings
+    filters:
+      and:
+        - file.inFolder("meetings/single")
+    order:
+      - file.name
+      - date
+    sort:
+      - property: date
+        direction: DESC
