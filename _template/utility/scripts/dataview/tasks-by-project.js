@@ -4,22 +4,28 @@
 // Usage:
 //   await dv.view("scripts/dataview/tasks-by-project", {
 //     selectedProjects: page.selectedProjects,
-//     projectFilter: page.projectFilter
+//     projectFilter: page.projectFilter,
+//     selectedStatuses: page.selectedStatuses
 //   })
 //
 // Input Parameters (optional object):
 //   selectedProjects - Array of project names to filter (multi-select)
 //   projectFilter    - Fuzzy match filter (case-insensitive contains)
+//   selectedStatuses - Array of statuses to include (default: New, Active, On Hold)
 //   showCompleted    - Whether to show completed tasks section (default: true)
 //
 // Note: Frontmatter values must be passed explicitly from the calling page
 //       since dv.current() context changes in external scripts
+
+// Load shared constants
+const CONSTANTS = await dv.io.load("utility/scripts/constants.js");
 
 // Get filter parameters from input
 const config = input || {};
 const selectedProjects = config.selectedProjects || [];
 const filterText = (config.projectFilter || "").toLowerCase();
 const showCompleted = config.showCompleted ?? true;
+const selectedStatuses = config.selectedStatuses || CONSTANTS.DEFAULT_TASK_VIEW_STATUSES;
 
 // Normalize selected projects to file names (handles links, paths, or plain names)
 const normalizeToName = (item) => {
@@ -32,9 +38,9 @@ const normalizeToName = (item) => {
 };
 const selectedNames = selectedProjects.map(normalizeToName).filter(Boolean);
 
-// Query all non-Complete projects
+// Query projects filtered by status
 let projects = dv.pages('#project AND !"utility"')
-  .where(p => p.status !== "Complete")
+  .where(p => selectedStatuses.includes(p.status))
   .sort(p => p.priority, 'asc');
 
 // Apply multi-select filter (match any selected project)
