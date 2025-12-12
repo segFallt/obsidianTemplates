@@ -1,11 +1,12 @@
 ---
-notesDirectory: projects/notes
+notesDirectory:
 start-date: <% tp.date.now() %>
 end-date:
 status: New
 tags:
   - "#project"
 priority:
+convertedFrom:
 ---
 # Properties
 ```meta-bind-embed
