@@ -126,6 +126,36 @@
       "type": "Macro",
       "command": true,
       "macroId": "0c75809d-eb76-46c3-a665-8f7db769167e"
+    },
+    {
+      "id": "f1a2b3c4-d5e6-7890-abcd-ef1234567890",
+      "name": "Person - New",
+      "type": "Template",
+      "command": true,
+      "templatePath": "utility/templates/New Person.md",
+      "fileNameFormat": {
+        "enabled": false,
+        "format": ""
+      },
+      "folder": {
+        "enabled": true,
+        "folders": [
+          "people"
+        ],
+        "chooseWhenCreatingNote": false,
+        "createInSameFolderAsActiveFile": false,
+        "chooseFromSubfolders": false
+      },
+      "appendLink": false,
+      "openFileInNewTab": {
+        "enabled": false,
+        "direction": "vertical",
+        "focus": true
+      },
+      "openFile": true,
+      "openFileInMode": "default",
+      "fileExistsMode": "Increment the file name",
+      "setFileExistsBehavior": false
     }
   ],
   "macros": [
