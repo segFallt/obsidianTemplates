@@ -1,10 +1,19 @@
 ---
 obsidianUIMode: preview
+tags:
+  - "#person"
 status: Active
-title: 
+title:
 reports-to:
+notes:
 ---
+# Profile
+```meta-bind-embed
+[[person-properties]]
+```
 
+---
+# Mentions
 ```dataviewjs
-await dv.view("Scripts/Dataview/mentions-table", 3)
+await dv.view("scripts/dataview/mentions-table", 3)
 ```

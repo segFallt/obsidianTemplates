@@ -13,3 +13,5 @@ views:
     sort:
       - property: date
         direction: DESC
+    columnSize:
+      file.name: 123

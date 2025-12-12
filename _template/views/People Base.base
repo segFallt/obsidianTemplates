@@ -1,0 +1,30 @@
+properties:
+  file.name:
+    displayName: Name
+views:
+  - type: table
+    name: people_all
+    filters:
+      and:
+        - file.inFolder("people")
+        - file.hasTag("person")
+    order:
+      - file.name
+      - title
+      - status
+    sort:
+      - property: file.name
+        direction: ASC
+  - type: table
+    name: people_active
+    filters:
+      and:
+        - file.inFolder("people")
+        - file.hasTag("person")
+        - status == "Active"
+    order:
+      - file.name
+      - title
+    sort:
+      - property: file.name
+        direction: ASC
