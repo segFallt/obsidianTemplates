@@ -109,6 +109,11 @@ Quick capture processing:
 - **Recurring Meetings**: Active and past recurring series
 - **Single Meetings**: One-time meeting notes
 
+### People
+Shows all people organized by status:
+- **Active**: Current contacts
+- **All**: Complete directory
+
 ---
 
 ## Quick Actions
@@ -116,6 +121,7 @@ Quick capture processing:
 ### Keyboard Shortcuts
 Open the command palette (`Ctrl/Cmd + P`) and search for:
 - `QuickAdd: Project - New`
+- `QuickAdd: Person - New`
 - `QuickAdd: Inbox - New`
 - `QuickAdd: Meeting - Single`
 - `QuickAdd: Meeting - Recurring`
@@ -191,11 +197,26 @@ For one-time meetings:
 ## People/Contacts
 
 Create a profile for each person you work with:
-1. Navigate to `people/`
-2. Create a new note with their name
-3. Add title, reports-to, and other details
+1. Open `views/People.md` or use command palette `QuickAdd: Person - New`
+2. Click the **New Person** button
+3. Enter their name when prompted
+4. Fill in the properties:
+   - **Status**: Active or Inactive
+   - **Title**: Job title
+   - **Reports To**: Auto-suggests from existing people
+   - **Notes**: Additional details
 
 Each person's page shows all notes that mention them.
+
+### Using People in Meetings
+
+**Single Meetings**: Add attendees using the auto-suggest field that shows all people with the `#person` tag.
+
+**Recurring Meetings**: Each daily entry has an `attendees::` field. Add people as links:
+```markdown
+attendees:: [[John Smith]], [[Jane Doe]]
+```
+This is a Dataview inline property that can be queried.
 
 ---
 
