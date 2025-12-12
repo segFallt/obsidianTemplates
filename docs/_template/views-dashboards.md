@@ -1,0 +1,595 @@
+# Views & Dashboards
+
+Reference for dashboard pages and their queries.
+
+## Overview
+
+Views are located in `views/` and provide live dashboards using:
+- **Dataview**: SQL-like queries for metadata
+- **Tasks**: Task-specific queries with filtering
+- **Meta Bind**: Interactive buttons
+
+All views use `obsidianUIMode: preview` frontmatter to prevent accidental editing.
+
+## View Reference
+
+### Task Query.md
+
+**Purpose**: Central task management dashboard organized by due date
+
+**Sections**:
+
+| Section | Query Type | Filter |
+|---------|------------|--------|
+| Today | tasks | `due today`, `not done` |
+| Past Due | tasks | `due before today`, `not done` |
+| Tomorrow | tasks | `due tomorrow`, `not done` |
+| This Week | tasks | `due this week`, `not done` |
+| All Upcoming | tasks | `due after today`, `not done` |
+| No Due Date or Tag | tasks | `(no due date) AND (no tags)`, `not done` |
+| Completed | tasks | `done` |
+| #Waiting | dataview | `!completed AND contains(tags, "#waiting")` |
+| #Someday | dataview | `!completed AND contains(tags, "#someday")` |
+
+**Query Examples**:
+
+```markdown
+# Today
+> [!check] Due Today
+> ```tasks
+> due today
+> not done
+> sort by priority
+> ```
+
+# Past Due
+> [!warning] Past Due
+> ```tasks
+> due before today
+> not done
+> sort by priority
+> sort by due
+> ```
+
+# Tagged - #Waiting
+> [!waiting] Waiting
+> ```dataview
+> TASK
+> WHERE !completed AND contains(tags, "#waiting")
+> ```
+```
+
+**Callouts Used**:
+- `[!check]` - Standard task sections
+- `[!warning]` - Past due (urgent)
+- `[!waiting]` - Custom yellow callout (from CSS snippet)
+- `[!someday]` - Custom blue callout (from CSS snippet)
+
+**Sorting**:
+- Priority: Ascending (1 = highest)
+- Due date: Chronological
+
+---
+
+### Tasks By Tag.md
+
+**Purpose**: View all incomplete tasks grouped by their tags
+
+**Query**:
+```markdown
+> [!check] Tasks by Tag
+> ```tasks
+> not done
+> filter by function task.tags.length > 0
+> group by function task.tags
+> ```
+```
+
+**Features**:
+- Only shows tasks with at least one tag
+- Groups tasks under each tag they belong to
+- Useful for context-based task views
+
+---
+
+### Task Query By Project.md
+
+**Purpose**: View tasks organized by project with sub-grouping for project notes
+
+**Features**:
+- Shows tasks from non-Complete projects (New, Active, On Hold)
+- Groups tasks hierarchically by project
+- Sub-groups by project notes within each project
+- Completed tasks shown in a separate section per project
+- **Interactive filtering** via dropdown and text search
+
+**Query Type**: External DataviewJS script
+
+**Script**: `utility/scripts/dataview/tasks-by-project.js`
+
+**Frontmatter Properties**:
+```yaml
+---
+obsidianUIMode: preview
+selectedProjects: []   # Bound to multi-select filter (array)
+projectFilter: ""      # Bound to text search filter
+---
+```
+
+**Filter UI**:
+```markdown
+**Select Projects:**
+```meta-bind
+INPUT[listSuggester(optionQuery(#project)):selectedProjects]
+```
+**Search:** `INPUT[text:projectFilter]`
+```
+
+Note: `listSuggester` requires a code block, not inline syntax.
+
+| Filter | Type | Behavior |
+|--------|------|----------|
+| Select Projects | Multi-select list | Shows all #project files, filters to selected projects |
+| Search | Text | Fuzzy matches project names (case-insensitive) |
+
+**DataviewJS Call**:
+```markdown
+```dataviewjs
+const page = dv.current();
+await dv.view("scripts/dataview/tasks-by-project", {
+  selectedProjects: page.selectedProjects,
+  projectFilter: page.projectFilter
+})
+```
+```
+
+Frontmatter values are passed explicitly to the external script. See [scripts-automation.md](./scripts-automation.md#tasks-by-projectjs) for full script documentation
+
+---
+
+### Projects.md
+
+**Purpose**: Project portfolio dashboard with status-based views
+
+**Button**:
+```markdown
+```meta-bind-button
+style: primary
+label: New Project
+id: create-project-note
+action:
+  type: js
+  file: utility/scripts/quickadd/trigger_quickadd_create_project.js
+```
+```
+
+**Sections**:
+
+#### Active Projects
+```dataview
+TABLE WITHOUT ID
+file.link AS "Project", priority as "P", start-date as "Start Date"
+FROM #project AND !"utility"
+WHERE status = "Active"
+SORT priority ASC, file.mtime DESC
+```
+
+#### On Hold Projects
+```dataview
+TABLE WITHOUT ID
+file.link AS "Project", priority as "P", start-date as "Start Date", file.mtime as "Mod Date"
+FROM #project AND !"utility"
+WHERE status = "On Hold"
+SORT priority ASC, file.mtime DESC
+```
+
+#### New Projects
+```dataview
+TABLE WITHOUT ID
+file.link AS "Project", priority as "P"
+FROM #project AND !"utility"
+WHERE status = "New"
+SORT priority ASC, status ASC, file.mtime DESC
+```
+
+#### Complete Projects
+```dataview
+TABLE WITHOUT ID
+file.link AS "Project", status as "Status", start-date as "Start Date", end-date as "End Date"
+FROM #project AND !"utility"
+WHERE (status = "Complete" ) OR (end-date != null AND end-date != "")
+SORT end-date DESC
+```
+
+**Key Query Patterns**:
+- `FROM #project AND !"utility"` - All #project tagged files, excluding utility folder
+- `TABLE WITHOUT ID` - Hide file path column
+- `file.link AS "Project"` - Clickable link with alias
+- `priority as "P"` - Short column header
+
+---
+
+### Inbox.md
+
+**Purpose**: Quick capture processing dashboard
+
+**Button**:
+```markdown
+```meta-bind-button
+style: primary
+label: New Inbox Note
+id: create-project-note
+action:
+  type: js
+  file: utility/scripts/quickadd/trigger_quickadd_create_inbox_note.js
+```
+```
+
+**Sections**:
+
+#### Active
+```dataview
+TABLE WITHOUT ID
+file.link AS "Item", file.ctime as "Created", file.mtime as "Last Modified"
+FROM "inbox"
+WHERE status != "Complete"
+SORT file.mtime DESC
+```
+
+#### Inactive
+```dataview
+TABLE WITHOUT ID
+file.link AS "Item", file.ctime as "Created", file.mtime as "Last Modified"
+FROM "inbox"
+WHERE status = "Complete"
+SORT file.mtime DESC
+```
+
+**Key Query Patterns**:
+- `FROM "inbox"` - Only files in inbox folder
+- `file.ctime` - File creation time
+- `file.mtime` - File modification time
+
+---
+
+### Recurring Meeting Index.md
+
+**Purpose**: Track recurring meeting series
+
+**Button**:
+```markdown
+```meta-bind-button
+style: primary
+label: New Recurring Meeting
+id: create-project-note
+action:
+  type: js
+  file: utility/scripts/quickadd/trigger_quickadd_create_meeting_recurring.js
+```
+```
+
+**Sections**:
+
+#### Active (No end date)
+```dataview
+TABLE WITHOUT ID
+file.link AS "Meeting", start-date as "Start Date", file.mtime as "Modified"
+FROM "meetings/recurring"
+WHERE (end-date = null OR end-date = "")
+SORT file.mtime DESC
+```
+
+#### Past (Has end date)
+```dataview
+TABLE WITHOUT ID
+file.link AS "Meeting", start-date as "Start Date", end-date as "End Date"
+FROM "meetings/recurring"
+WHERE (end-date != null AND end-date != "")
+SORT end-date DESC
+```
+
+**Key Query Patterns**:
+- Null/empty check: `end-date = null OR end-date = ""`
+- Non-null check: `end-date != null AND end-date != ""`
+
+---
+
+### Single Meeting Index.md
+
+**Purpose**: Track one-time meetings
+
+**Button**:
+```markdown
+```meta-bind-button
+style: primary
+label: New Single Meeting
+id: create-project-note
+action:
+  type: js
+  file: utility/scripts/quickadd/trigger_quickadd_create_meeting_single.js
+```
+```
+
+**Query**:
+```dataview
+TABLE WITHOUT ID
+file.link AS "Meeting", date as "Date"
+FROM "meetings/single"
+SORT date DESC, time DESC
+```
+
+---
+
+### Task Dashboard.md
+
+**Purpose**: Advanced task management with interactive filtering and multiple view modes
+
+**Features**:
+- Multiple view modes: Context, Due Date, Priority, Tag
+- Interactive filters: Context, Due Date, Priority, Search, Show Completed
+- Groups tasks hierarchically by source file within each category
+- Clear Filters button to reset all filters
+
+**Query Type**: External DataviewJS script
+
+**Script**: `utility/scripts/dataview/tasks-dashboard.js`
+
+**Frontmatter Properties**:
+```yaml
+---
+obsidianUIMode: preview
+viewMode: context          # context | date | priority | tag
+contextFilter: []          # Array of contexts to show
+dueDateFilter: All         # All | Today | This Week | Overdue | No Date
+priorityFilter: []         # Array of priority levels (1-5)
+showCompleted: false       # Whether to include completed tasks
+searchFilter: ""           # Text search filter
+---
+```
+
+**View Modes**:
+
+| Mode | Grouping | Description |
+|------|----------|-------------|
+| Context | By source folder | Groups by Project, Person, Meeting, Inbox, Daily Notes |
+| Due Date | By date category | Overdue, Today, Tomorrow, This Week, Upcoming, No Date |
+| Priority | By priority level | Urgent (1), High (2), Medium (3), Low (4), Someday (5) |
+| Tag | By task tags | Groups under each tag, plus Untagged section |
+
+**Filter UI**:
+```markdown
+**View Mode:**
+```meta-bind
+INPUT[inlineSelect(option(context, Context), option(date, Due Date), option(priority, Priority), option(tag, Tag)):viewMode]
+```
+
+**Context:**
+```meta-bind
+INPUT[multiSelect(option(Project), option(Person), option(Meeting), option(Inbox), option(Daily Notes)):contextFilter]
+```
+
+**Due Date:**
+```meta-bind
+INPUT[inlineSelect(option(All), option(Today), option(This Week), option(Overdue), option(No Date)):dueDateFilter]
+```
+
+**Priority:**
+```meta-bind
+INPUT[multiSelect(option(1, Urgent), option(2, High), option(3, Medium), option(4, Low), option(5, Someday)):priorityFilter]
+```
+
+**Search:** `INPUT[text:searchFilter]`
+
+**Show Completed:** `INPUT[toggle:showCompleted]`
+```
+
+**Clear Filters Button**:
+```markdown
+```meta-bind-button
+style: default
+label: Clear Filters
+actions:
+  - type: updateMetadata
+    bindTarget: contextFilter
+    evaluate: true
+    value: "[]"
+  - type: updateMetadata
+    bindTarget: dueDateFilter
+    value: "All"
+  - type: updateMetadata
+    bindTarget: priorityFilter
+    evaluate: true
+    value: "[]"
+  - type: updateMetadata
+    bindTarget: searchFilter
+    value: ""
+  - type: updateMetadata
+    bindTarget: showCompleted
+    evaluate: true
+    value: "false"
+```
+```
+
+**DataviewJS Call**:
+```markdown
+```dataviewjs
+const page = dv.current();
+await dv.view("scripts/dataview/tasks-dashboard", {
+  viewMode: page.viewMode,
+  contextFilter: page.contextFilter,
+  dueDateFilter: page.dueDateFilter,
+  priorityFilter: page.priorityFilter,
+  showCompleted: page.showCompleted,
+  searchFilter: page.searchFilter
+});
+```
+```
+
+**Context Detection Logic**:
+Tasks are assigned to contexts based on file path:
+- `projects/` or `projects/notes/` → Project
+- `people/` → Person
+- `meetings/single/` or `meetings/recurring/` → Meeting
+- `inbox/` → Inbox
+- `daily notes/` → Daily Notes
+- Other paths → Other
+
+**Priority Detection**:
+Uses Obsidian Tasks emoji format:
+- ⏫ = Urgent (1)
+- 🔼 = High (2)
+- (no emoji) = Medium (3)
+- 🔽 = Low (4)
+- ⏬ = Someday (5)
+
+See [scripts-automation.md](./scripts-automation.md#tasks-dashboardjs) for full script documentation.
+
+---
+
+### People.md
+
+**Purpose**: People/contacts dashboard
+
+**Button**:
+```markdown
+```meta-bind-button
+style: primary
+label: New Person
+id: create-person
+action:
+  type: js
+  file: utility/scripts/quickadd/trigger_quickadd_create_person.js
+```
+```
+
+**Sections**:
+
+#### Active People
+Embedded from `People Base.base#people_active`
+- Filters: `file.inFolder("people")`, `file.hasTag("person")`, `status == "Active"`
+- Columns: Name, Title
+- Sort: Name ascending
+
+#### All People
+Embedded from `People Base.base#people_all`
+- Filters: `file.inFolder("people")`, `file.hasTag("person")`
+- Columns: Name, Title, Status
+- Sort: Name ascending
+
+**Base File**: `views/People Base.base`
+
+---
+
+## Query Reference
+
+### Tasks Plugin Queries
+
+```tasks
+# Filter by date
+due today
+due tomorrow
+due this week
+due before today
+due after today
+no due date
+
+# Filter by status
+not done
+done
+
+# Filter by tags
+has tag
+no tags
+filter by function task.tags.length > 0
+
+# Compound filters
+(no due date) AND (no tags)
+!completed AND contains(tags, "#waiting")
+
+# Sorting
+sort by priority
+sort by due
+sort by created
+
+# Grouping
+group by function task.tags
+group by due
+group by filename
+```
+
+### Dataview Queries
+
+```dataview
+# Basic table
+TABLE property1, property2
+FROM "folder" OR #tag
+WHERE condition
+SORT field ASC/DESC
+
+# Table without ID column
+TABLE WITHOUT ID
+file.link AS "Name", ...
+
+# Task queries
+TASK
+WHERE !completed AND contains(tags, "#tag")
+
+# File metadata
+file.link    - Clickable link
+file.name    - Filename
+file.folder  - Folder path
+file.ctime   - Creation time
+file.mtime   - Modification time
+
+# Filters
+WHERE status = "Active"
+WHERE priority < 3
+WHERE (end-date = null OR end-date = "")
+
+# Sources
+FROM "folder"
+FROM #tag
+FROM [[Link]]
+FROM "folder" AND #tag
+FROM #tag AND !"exclude"
+```
+
+### Meta Bind Buttons
+
+```markdown
+```meta-bind-button
+style: primary           # primary | default | destructive
+label: Button Text
+id: unique-id
+action:
+  type: js               # js | command | open | input
+  file: path/to/script.js
+```
+```
+
+---
+
+## Creating a New View
+
+1. Create file in `views/` folder
+2. Add frontmatter:
+   ```yaml
+   ---
+   obsidianUIMode: preview
+   ---
+   ```
+3. Add button for related creation action
+4. Add dataview/tasks queries
+5. Use callouts for visual organization
+6. Add to bookmarks in `.obsidian/bookmarks.json`
+7. Document in this file
+
+### View Checklist
+
+- [ ] `obsidianUIMode: preview` in frontmatter
+- [ ] Creation button with trigger script
+- [ ] Queries filter correctly (test with sample data)
+- [ ] Appropriate sorting (priority, date, etc.)
+- [ ] Clear section headers
+- [ ] Added to bookmarks group
+- [ ] Documented here
