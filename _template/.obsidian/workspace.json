@@ -4,11 +4,11 @@
     "type": "split",
     "children": [
       {
-        "id": "9b59eb0ac53677a9",
+        "id": "6e4d10a65c144ab9",
         "type": "tabs",
         "children": [
           {
-            "id": "887e4c2c9c6f7555",
+            "id": "44e32e934b9df867",
             "type": "leaf",
             "pinned": true,
             "state": {
@@ -24,65 +24,23 @@
             }
           },
           {
-            "id": "279784eea732a65a",
+            "id": "2fa7956a4e44980d",
             "type": "leaf",
             "pinned": true,
             "state": {
               "type": "markdown",
               "state": {
-                "file": "views/Tasks By Tag.md",
+                "file": "views/Projects Base View.md",
                 "mode": "preview",
                 "source": false
               },
               "pinned": true,
               "icon": "lucide-file",
-              "title": "Tasks By Tag"
-            }
-          },
-          {
-            "id": "d0b166d862eedab5",
-            "type": "leaf",
-            "pinned": true,
-            "state": {
-              "type": "obsidian-projects",
-              "state": {},
-              "pinned": true,
-              "icon": "projects-icon",
-              "title": "Projects"
-            }
-          },
-          {
-            "id": "e8220ab98993f783",
-            "type": "leaf",
-            "pinned": true,
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "views/Projects.md",
-                "mode": "preview",
-                "source": false
-              },
-              "pinned": true,
-              "icon": "lucide-file",
-              "title": "Projects"
-            }
-          },
-          {
-            "id": "3679902c96896462",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "views/Task Query.md",
-                "mode": "preview",
-                "source": false
-              },
-              "icon": "lucide-file",
-              "title": "Task Query"
+              "title": "Projects Base View"
             }
           }
         ],
-        "currentTab": 4
+        "currentTab": 1
       }
     ],
     "direction": "vertical"
@@ -94,7 +52,7 @@
       {
         "id": "16da8dba3fd3b8fc",
         "type": "tabs",
-        "dimension": 74.69565217391305,
+        "dimension": 68.22157434402332,
         "children": [
           {
             "id": "a35d17b27aa5ae89",
@@ -141,7 +99,7 @@
       {
         "id": "0b85e16cc33dad9a",
         "type": "tabs",
-        "dimension": 25.30434782608696,
+        "dimension": 31.778425655976676,
         "children": [
           {
             "id": "8bf283b8de8a1e60",
@@ -219,13 +177,13 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "views/Task Query.md",
+                "file": "views/Projects Base View.md",
                 "followCursor": false,
                 "showSearch": false,
                 "searchQuery": ""
               },
               "icon": "lucide-list",
-              "title": "Outline of Task Query"
+              "title": "Outline of Projects Base View"
             }
           },
           {
@@ -272,11 +230,32 @@
       "obsidian-projects:Open projects": false
     }
   },
-  "active": "3679902c96896462",
+  "active": "2fa7956a4e44980d",
   "lastOpenFiles": [
-    "views/Projects.md",
     "views/Task Query.md",
+    "views/Projects Base View.md",
+    "views/Single Meeting Index.md",
     "views/Task Query By Project.md",
-    "views/Tasks By Tag.md"
+    "views/Tasks By Tag.md",
+    "views/Inbox.md",
+    "views/People.md",
+    "views/Recurring Meeting Index.md",
+    "README.md.tmp.1847.1765505011145",
+    "README.md.tmp.1847.1765505005491",
+    "README.md.tmp.1847.1765504994818",
+    "meetings/recurring/example.md",
+    "meetings/single/test.md",
+    "people/meeting.md",
+    "people/john doe.md",
+    "people/test person.md",
+    "views/People Base.base",
+    "utility/scripts/quickadd/create-person-from-selection.js",
+    "utility/scripts/quickadd/create-person-from-selection.js.tmp.1847.1765500331505",
+    "utility/templates/Recurring Meeting - Daily Entry.md.tmp.1847.1765500313594",
+    "utility/templates/Single Meeting.md.tmp.1847.1765500302866",
+    "views/People.md.tmp.1847.1765500269280",
+    "views/People Base.base.tmp.1847.1765500258309",
+    "utility/templates/components/person-properties.md",
+    "views/Projects.md"
   ]
 }
