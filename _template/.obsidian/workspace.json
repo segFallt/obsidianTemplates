@@ -4,43 +4,24 @@
     "type": "split",
     "children": [
       {
-        "id": "6e4d10a65c144ab9",
+        "id": "c7c13cbcb8185d8b",
         "type": "tabs",
         "children": [
           {
-            "id": "44e32e934b9df867",
+            "id": "933aeb35b153b0d5",
             "type": "leaf",
-            "pinned": true,
             "state": {
               "type": "markdown",
               "state": {
-                "file": "views/Task Query.md",
-                "mode": "preview",
+                "file": "README.md",
+                "mode": "source",
                 "source": false
               },
-              "pinned": true,
               "icon": "lucide-file",
-              "title": "Task Query"
-            }
-          },
-          {
-            "id": "2fa7956a4e44980d",
-            "type": "leaf",
-            "pinned": true,
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "views/Projects Base View.md",
-                "mode": "preview",
-                "source": false
-              },
-              "pinned": true,
-              "icon": "lucide-file",
-              "title": "Projects Base View"
+              "title": "README"
             }
           }
-        ],
-        "currentTab": 1
+        ]
       }
     ],
     "direction": "vertical"
@@ -177,13 +158,13 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "views/Projects Base View.md",
+                "file": "README.md",
                 "followCursor": false,
                 "showSearch": false,
                 "searchQuery": ""
               },
               "icon": "lucide-list",
-              "title": "Outline of Projects Base View"
+              "title": "Outline of README"
             }
           },
           {
@@ -230,32 +211,8 @@
       "obsidian-projects:Open projects": false
     }
   },
-  "active": "2fa7956a4e44980d",
+  "active": "933aeb35b153b0d5",
   "lastOpenFiles": [
-    "views/Task Query.md",
-    "views/Projects Base View.md",
-    "views/Single Meeting Index.md",
-    "views/Task Query By Project.md",
-    "views/Tasks By Tag.md",
-    "views/Inbox.md",
-    "views/People.md",
-    "views/Recurring Meeting Index.md",
-    "README.md.tmp.1847.1765505011145",
-    "README.md.tmp.1847.1765505005491",
-    "README.md.tmp.1847.1765504994818",
-    "meetings/recurring/example.md",
-    "meetings/single/test.md",
-    "people/meeting.md",
-    "people/john doe.md",
-    "people/test person.md",
-    "views/People Base.base",
-    "utility/scripts/quickadd/create-person-from-selection.js",
-    "utility/scripts/quickadd/create-person-from-selection.js.tmp.1847.1765500331505",
-    "utility/templates/Recurring Meeting - Daily Entry.md.tmp.1847.1765500313594",
-    "utility/templates/Single Meeting.md.tmp.1847.1765500302866",
-    "views/People.md.tmp.1847.1765500269280",
-    "views/People Base.base.tmp.1847.1765500258309",
-    "utility/templates/components/person-properties.md",
-    "views/Projects.md"
+    "README.md"
   ]
 }

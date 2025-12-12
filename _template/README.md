@@ -93,6 +93,13 @@ Central task dashboard organized by:
 - Tagged tasks (#waiting, #someday)
 - Completed tasks
 
+### Task Dashboard
+Advanced task management with interactive filtering:
+- **View Modes**: Context, Due Date, Priority, Tag
+- **Filters**: Context type, due date range, priority level, text search
+- **Show/hide completed tasks**
+- Groups tasks by source file within each category
+
 ### Task Query By Project
 View tasks grouped by project with filters for:
 - Specific projects (multi-select)
