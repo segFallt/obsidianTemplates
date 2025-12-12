@@ -28,8 +28,10 @@ A comprehensive Obsidian vault template for personal productivity, project manag
 1. Open `views/Projects Base View.md` from the file explorer
 2. Click the **New Project** button
 3. Enter a project name when prompted
-4. Fill in the properties:
-   - **Start Date**: When the project begins
+4. The project is created with:
+   - Auto-generated `notesDirectory` (e.g., "My Project" → `projects/notes/my_project`)
+   - Today's date as start date
+5. Fill in the properties:
    - **Priority**: 1 (highest) to 5 (lowest)
    - **Status**: New → Active → On Hold → Complete
 
@@ -236,13 +238,39 @@ Daily notes are created automatically when you open Obsidian. They include secti
 
 ---
 
+## Inbox Workflow
+
+The Inbox is for quick capture of ideas and notes to process later.
+
+### Creating Inbox Items
+1. Open `views/Inbox.md` or use command palette `QuickAdd: Inbox - New`
+2. Click the **New Inbox Note** button
+3. Enter a name and start capturing
+
+### Processing Inbox Items
+Each inbox item has a **Status** property:
+- **Active**: Needs processing
+- **Inactive**: Processed/archived
+
+### Converting to Project
+When an inbox item grows into something bigger:
+1. Open the inbox item
+2. Click **Convert to Project**
+3. Enter a project name (defaults to inbox item name)
+4. A new project is created with:
+   - Auto-generated `notesDirectory` (lowercase snake_case)
+   - Link back to the original inbox item (`convertedFrom`)
+5. The inbox item is marked Inactive with a link to the project (`convertedTo`)
+
+---
+
 ## Tips
 
 ### Quick Capture
 Use the Inbox for anything you need to capture quickly. Process inbox items later by:
 - Moving them to the appropriate folder
-- Converting to projects or tasks
-- Marking as complete
+- Converting to projects using the **Convert to Project** button
+- Marking as Inactive when done
 
 ### Using Filters
 The Task Query By Project view has powerful filters:

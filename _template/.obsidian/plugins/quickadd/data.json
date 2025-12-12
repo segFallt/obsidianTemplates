@@ -75,38 +75,42 @@
     {
       "id": "882a5b1a-2655-4c37-841a-fa5d8ca6b033",
       "name": "Project - New",
-      "type": "Template",
+      "type": "Macro",
       "command": true,
-      "templatePath": "utility/templates/New Project.md",
-      "fileNameFormat": {
-        "enabled": false,
-        "format": ""
+      "macro": {
+        "id": "a1b2c3d4-e5f6-7890-abcd-project123456",
+        "name": "Project - New",
+        "commands": [
+          {
+            "name": "create-project-with-notes-dir",
+            "type": "UserScript",
+            "id": "b2c3d4e5-f6a7-8901-bcde-project789012",
+            "path": "utility/scripts/quickadd/create-project-with-notes-dir.js",
+            "settings": {}
+          }
+        ]
       },
-      "folder": {
-        "enabled": true,
-        "folders": [
-          "projects"
-        ],
-        "chooseWhenCreatingNote": false,
-        "createInSameFolderAsActiveFile": false,
-        "chooseFromSubfolders": false
+      "runOnStartup": false
+    },
+    {
+      "id": "c3d4e5f6-a7b8-9012-cdef-inbox12345678",
+      "name": "Convert Inbox to Project",
+      "type": "Macro",
+      "command": true,
+      "macro": {
+        "id": "d4e5f6a7-b8c9-0123-defa-inbox23456789",
+        "name": "Convert Inbox to Project",
+        "commands": [
+          {
+            "name": "convert-inbox-to-project",
+            "type": "UserScript",
+            "id": "e5f6a7b8-c9d0-1234-efab-inbox34567890",
+            "path": "utility/scripts/quickadd/convert-inbox-to-project.js",
+            "settings": {}
+          }
+        ]
       },
-      "appendLink": false,
-      "openFileInNewTab": {
-        "enabled": false,
-        "direction": "vertical",
-        "focus": true
-      },
-      "openFile": true,
-      "openFileInMode": "default",
-      "fileExistsMode": "Increment the file name",
-      "setFileExistsBehavior": false,
-      "fileOpening": {
-        "location": "tab",
-        "direction": "vertical",
-        "focus": true,
-        "mode": "default"
-      }
+      "runOnStartup": false
     },
     {
       "id": "3dadef8b-f0b6-4120-b611-e0e69be2e496",
@@ -286,6 +290,34 @@
           "type": "UserScript",
           "id": "d02aaa36-43b9-40c1-82c9-aa96c787c6f7",
           "path": "utility/scripts/quickadd/create-project-note.js",
+          "settings": {}
+        }
+      ],
+      "runOnStartup": false
+    },
+    {
+      "name": "Project - New",
+      "id": "a1b2c3d4-e5f6-7890-abcd-project123456",
+      "commands": [
+        {
+          "name": "create-project-with-notes-dir",
+          "type": "UserScript",
+          "id": "b2c3d4e5-f6a7-8901-bcde-project789012",
+          "path": "utility/scripts/quickadd/create-project-with-notes-dir.js",
+          "settings": {}
+        }
+      ],
+      "runOnStartup": false
+    },
+    {
+      "name": "Convert Inbox to Project",
+      "id": "d4e5f6a7-b8c9-0123-defa-inbox23456789",
+      "commands": [
+        {
+          "name": "convert-inbox-to-project",
+          "type": "UserScript",
+          "id": "e5f6a7b8-c9d0-1234-efab-inbox34567890",
+          "path": "utility/scripts/quickadd/convert-inbox-to-project.js",
           "settings": {}
         }
       ],
