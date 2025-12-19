@@ -7,7 +7,7 @@ views:
     filters:
       and:
         - file.inFolder("inbox")
-        - status != "Complete"
+        - status == "Active"
     order:
       - file.name
       - file.ctime
@@ -20,7 +20,7 @@ views:
     filters:
       and:
         - file.inFolder("inbox")
-        - status == "Complete"
+        - status != "Active"
     order:
       - file.name
       - file.ctime

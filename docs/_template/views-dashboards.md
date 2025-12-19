@@ -322,13 +322,16 @@ SORT date DESC, time DESC
 
 ### Task Dashboard.md
 
-**Purpose**: Advanced task management with interactive filtering and multiple view modes
+**Purpose**: Advanced task management with interactive filtering, sorting, and multiple view modes
 
 **Features**:
 - Multiple view modes: Context, Due Date, Priority, Tag
+- **Sorting**: Sort by Due Date or Priority (ascending/descending)
+- **Collapsible filter panels**: Filters organized into expandable sections
+- **Context-specific filters**: Project status, Inbox status, Meeting date
 - Interactive filters: Context, Due Date, Priority, Search, Show Completed
 - Groups tasks hierarchically by source file within each category
-- Clear Filters button to reset all filters
+- Clear Filters button to reset all filters and sorting
 
 **Query Type**: External DataviewJS script
 
@@ -339,11 +342,15 @@ SORT date DESC, time DESC
 ---
 obsidianUIMode: preview
 viewMode: context          # context | date | priority | tag
+sortBy: none               # none | dueDate-asc | dueDate-desc | priority-asc | priority-desc
 contextFilter: []          # Array of contexts to show
 dueDateFilter: All         # All | Today | This Week | Overdue | No Date
 priorityFilter: []         # Array of priority levels (1-5)
 showCompleted: false       # Whether to include completed tasks
 searchFilter: ""           # Text search filter
+projectStatusFilter: []    # Array of project statuses (New, Active, On Hold)
+inboxStatusFilter: All     # All | Active | Inactive
+meetingDateFilter: All     # All | Today | This Week | Past
 ---
 ```
 
@@ -356,6 +363,50 @@ searchFilter: ""           # Text search filter
 | Priority | By priority level | Urgent (1), High (2), Medium (3), Low (4), Someday (5) |
 | Tag | By task tags | Groups under each tag, plus Untagged section |
 
+**Sorting (Context Mode)**:
+
+When sorting is enabled in Context mode, the dashboard performs full hierarchy sorting:
+
+1. **Context groups** are reordered based on the "best" task within each context
+2. **Files within each context** are reordered similarly
+3. **Tasks within each file** are sorted by the selected criteria
+
+| Sort Option | Behavior |
+|-------------|----------|
+| None | Default order (no sorting) |
+| Due Date ↑ | Earliest due dates first; contexts/files with soonest tasks bubble up |
+| Due Date ↓ | Latest due dates first; contexts/files with latest tasks bubble up |
+| Priority ↑ | Highest priority (1=Urgent) first |
+| Priority ↓ | Lowest priority (5=Someday) first |
+
+**Tasks without due dates** are sorted to the end (ascending) or beginning (descending).
+
+**Context-Specific Filters**:
+
+These filters only apply when `viewMode: context` and only affect their respective context types:
+
+| Property | Affects | Values | Behavior |
+|----------|---------|--------|----------|
+| `projectStatusFilter` | Project tasks | New, Active, On Hold | Filter by project's status property |
+| `inboxStatusFilter` | Inbox tasks | All, Active, Inactive | Active = status ≠ Complete |
+| `meetingDateFilter` | Meeting tasks | All, Today, This Week, Past | Filter by meeting's date property |
+
+Tasks from other contexts pass through unfiltered.
+
+**Collapsible Filter Panels**:
+
+Filters are organized into collapsible callouts using Obsidian's syntax:
+
+```markdown
+> [!filter]- Panel Title
+> Filter content here...
+```
+
+The `-` suffix creates a collapsed-by-default callout. Panels:
+- **Context Filters**: Context type, project status, inbox status, meeting date
+- **Date Filters**: Due date range
+- **Priority Filters**: Priority levels
+
 **Filter UI**:
 ```markdown
 **View Mode:**
@@ -363,24 +414,26 @@ searchFilter: ""           # Text search filter
 INPUT[inlineSelect(option(context, Context), option(date, Due Date), option(priority, Priority), option(tag, Tag)):viewMode]
 ```
 
-**Context:**
+**Sort By:**
 ```meta-bind
-INPUT[multiSelect(option(Project), option(Person), option(Meeting), option(Inbox), option(Daily Notes)):contextFilter]
-```
-
-**Due Date:**
-```meta-bind
-INPUT[inlineSelect(option(All), option(Today), option(This Week), option(Overdue), option(No Date)):dueDateFilter]
-```
-
-**Priority:**
-```meta-bind
-INPUT[multiSelect(option(1, Urgent), option(2, High), option(3, Medium), option(4, Low), option(5, Someday)):priorityFilter]
+INPUT[inlineSelect(option(none, None), option(dueDate-asc, Due Date ↑), option(dueDate-desc, Due Date ↓), option(priority-asc, Priority ↑), option(priority-desc, Priority ↓)):sortBy]
 ```
 
 **Search:** `INPUT[text:searchFilter]`
 
 **Show Completed:** `INPUT[toggle:showCompleted]`
+
+> [!filter]- Context Filters
+> **Context Type:** `INPUT[multiSelect(...):contextFilter]`
+> **Project Status:** `INPUT[multiSelect(...):projectStatusFilter]`
+> **Inbox Status:** `INPUT[inlineSelect(...):inboxStatusFilter]`
+> **Meeting Date:** `INPUT[inlineSelect(...):meetingDateFilter]`
+
+> [!filter]- Date Filters
+> **Due Date:** `INPUT[inlineSelect(...):dueDateFilter]`
+
+> [!filter]- Priority Filters
+> **Priority:** `INPUT[multiSelect(...):priorityFilter]`
 ```
 
 **Clear Filters Button**:
@@ -407,6 +460,19 @@ actions:
     bindTarget: showCompleted
     evaluate: true
     value: "false"
+  - type: updateMetadata
+    bindTarget: sortBy
+    value: "none"
+  - type: updateMetadata
+    bindTarget: projectStatusFilter
+    evaluate: true
+    value: "[]"
+  - type: updateMetadata
+    bindTarget: inboxStatusFilter
+    value: "All"
+  - type: updateMetadata
+    bindTarget: meetingDateFilter
+    value: "All"
 ```
 ```
 
@@ -420,7 +486,11 @@ await dv.view("scripts/dataview/tasks-dashboard", {
   dueDateFilter: page.dueDateFilter,
   priorityFilter: page.priorityFilter,
   showCompleted: page.showCompleted,
-  searchFilter: page.searchFilter
+  searchFilter: page.searchFilter,
+  sortBy: page.sortBy,
+  projectStatusFilter: page.projectStatusFilter,
+  inboxStatusFilter: page.inboxStatusFilter,
+  meetingDateFilter: page.meetingDateFilter
 });
 ```
 ```
@@ -441,6 +511,12 @@ Uses Obsidian Tasks emoji format:
 - (no emoji) = Medium (3)
 - 🔽 = Low (4)
 - ⏬ = Someday (5)
+
+**Sorting Implementation**:
+The script uses helper functions for sorting:
+- `getGroupSortKey(tasks, sortBy)`: Calculates a sort key for a group of tasks based on the "best" task (earliest/latest date or highest/lowest priority)
+- `sortTasks(tasks, sortBy)`: Sorts an array of tasks by the specified criteria
+- `renderByContext()` builds sortable groups at each level before rendering
 
 See [scripts-automation.md](./scripts-automation.md#tasks-dashboardjs) for full script documentation.
 
