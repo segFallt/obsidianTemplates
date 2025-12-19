@@ -10,6 +10,12 @@ const dueDateFilter = config.dueDateFilter || "All";
 const priorityFilter = config.priorityFilter || [];
 const showCompleted = config.showCompleted ?? false;
 const searchFilter = (config.searchFilter || "").toLowerCase();
+const sortBy = config.sortBy || "none";
+
+// Context-specific filters (only apply in context mode)
+const projectStatusFilter = config.projectStatusFilter || [];
+const inboxStatusFilter = config.inboxStatusFilter || "All";
+const meetingDateFilter = config.meetingDateFilter || "All";
 
 // Priority emoji mapping
 const PRIORITY_EMOJI = {
@@ -45,6 +51,48 @@ const getTaskPriority = (task) => {
     if (text.includes(emoji)) return priority;
   }
   return 3; // Default to medium
+};
+
+// Get sort key for a group of tasks (used for sorting contexts and files)
+const getGroupSortKey = (tasks, sortBy) => {
+  if (sortBy === "none") return 0;
+  const isDesc = sortBy.endsWith("-desc");
+
+  if (sortBy.startsWith("dueDate")) {
+    const tasksWithDue = tasks.filter(t => t.due);
+    if (tasksWithDue.length === 0) return isDesc ? "0000-00-00" : "9999-99-99";
+    const dates = tasksWithDue.map(t => t.due?.toString() || (isDesc ? "0000-00-00" : "9999-99-99"));
+    return isDesc ? dates.sort().reverse()[0] : dates.sort()[0];
+  }
+
+  if (sortBy.startsWith("priority")) {
+    const priorities = tasks.map(t => getTaskPriority(t));
+    return isDesc ? Math.max(...priorities) : Math.min(...priorities);
+  }
+  return 0;
+};
+
+// Sort tasks array by the specified criteria
+const sortTasks = (tasks, sortBy) => {
+  if (sortBy === "none") return tasks;
+  const isDesc = sortBy.endsWith("-desc");
+
+  if (sortBy.startsWith("dueDate")) {
+    return tasks.sort((a, b) => {
+      const aDate = a.due?.toString() || (isDesc ? "0000-00-00" : "9999-99-99");
+      const bDate = b.due?.toString() || (isDesc ? "0000-00-00" : "9999-99-99");
+      return isDesc ? bDate.localeCompare(aDate) : aDate.localeCompare(bDate);
+    });
+  }
+
+  if (sortBy.startsWith("priority")) {
+    return tasks.sort((a, b) => {
+      const aPri = getTaskPriority(a);
+      const bPri = getTaskPriority(b);
+      return isDesc ? bPri - aPri : aPri - bPri;
+    });
+  }
+  return tasks;
 };
 
 // Get today's date for comparison
@@ -97,6 +145,49 @@ if (searchFilter) {
   allTasks = allTasks.where(t => t.text.toLowerCase().includes(searchFilter));
 }
 
+// Context-specific filters (only apply in context mode)
+if (viewMode === "context") {
+  // Filter Project tasks by project status
+  if (projectStatusFilter && projectStatusFilter.length > 0) {
+    allTasks = allTasks.where(t => {
+      if (getTaskContext(t) !== "Project") return true; // Don't filter non-project tasks
+      const page = dv.page(t.path);
+      return page && projectStatusFilter.includes(page.status);
+    });
+  }
+
+  // Filter Inbox tasks by inbox status
+  if (inboxStatusFilter && inboxStatusFilter !== "All") {
+    allTasks = allTasks.where(t => {
+      if (getTaskContext(t) !== "Inbox") return true;
+      const page = dv.page(t.path);
+      if (!page) return true;
+      const isActive = page.status !== "Complete";
+      return inboxStatusFilter === "Active" ? isActive : !isActive;
+    });
+  }
+
+  // Filter Meeting tasks by meeting date
+  if (meetingDateFilter && meetingDateFilter !== "All") {
+    allTasks = allTasks.where(t => {
+      if (getTaskContext(t) !== "Meeting") return true;
+      const page = dv.page(t.path);
+      if (!page || !page.date) return meetingDateFilter === "All";
+      const meetingDate = dv.date(page.date);
+      switch (meetingDateFilter) {
+        case "Today":
+          return meetingDate.equals(today);
+        case "This Week":
+          return meetingDate >= today && meetingDate <= weekEnd;
+        case "Past":
+          return meetingDate < today;
+        default:
+          return true;
+      }
+    });
+  }
+}
+
 // Check if we have any tasks
 if (allTasks.length === 0) {
   dv.paragraph("*No tasks match the current filters.*");
@@ -125,11 +216,11 @@ if (allTasks.length === 0) {
 function renderByContext(tasks) {
   const contexts = ["Project", "Person", "Meeting", "Inbox", "Daily Notes", "Other"];
 
+  // Build context groups with sort keys
+  const contextGroups = [];
   for (const context of contexts) {
     const contextTasks = tasks.where(t => getTaskContext(t) === context);
     if (contextTasks.length === 0) continue;
-
-    dv.header(2, context);
 
     // Group by file within context
     const byFile = {};
@@ -139,12 +230,58 @@ function renderByContext(tasks) {
       byFile[fileName].push(task);
     }
 
+    // Calculate sort key for the entire context (based on "best" task)
+    const contextSortKey = getGroupSortKey([...contextTasks], sortBy);
+
+    contextGroups.push({
+      context,
+      byFile,
+      sortKey: contextSortKey
+    });
+  }
+
+  // Sort context groups if sorting is enabled
+  if (sortBy !== "none") {
+    const isDesc = sortBy.endsWith("-desc");
+    contextGroups.sort((a, b) => {
+      if (typeof a.sortKey === "string") {
+        return isDesc ? b.sortKey.localeCompare(a.sortKey) : a.sortKey.localeCompare(b.sortKey);
+      }
+      return isDesc ? b.sortKey - a.sortKey : a.sortKey - b.sortKey;
+    });
+  }
+
+  // Render each context group
+  for (const group of contextGroups) {
+    dv.header(2, group.context);
+
+    // Build file groups with sort keys
+    const fileGroups = Object.entries(group.byFile).map(([filePath, fileTasks]) => ({
+      filePath,
+      fileTasks,
+      sortKey: getGroupSortKey(fileTasks, sortBy)
+    }));
+
+    // Sort file groups within context
+    if (sortBy !== "none") {
+      const isDesc = sortBy.endsWith("-desc");
+      fileGroups.sort((a, b) => {
+        if (typeof a.sortKey === "string") {
+          return isDesc ? b.sortKey.localeCompare(a.sortKey) : a.sortKey.localeCompare(b.sortKey);
+        }
+        return isDesc ? b.sortKey - a.sortKey : a.sortKey - b.sortKey;
+      });
+    }
+
     // Render each file's tasks
-    for (const [filePath, fileTasks] of Object.entries(byFile)) {
-      const page = dv.page(filePath);
-      const displayName = page ? page.file.name : filePath;
-      dv.header(3, dv.fileLink(filePath, false, displayName));
-      dv.taskList(fileTasks, false);
+    for (const fileGroup of fileGroups) {
+      const page = dv.page(fileGroup.filePath);
+      const displayName = page ? page.file.name : fileGroup.filePath;
+      dv.header(3, dv.fileLink(fileGroup.filePath, false, displayName));
+
+      // Sort tasks within each file group
+      const sortedTasks = sortTasks([...fileGroup.fileTasks], sortBy);
+      dv.taskList(sortedTasks, false);
     }
   }
 }

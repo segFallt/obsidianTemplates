@@ -96,11 +96,18 @@ Central task dashboard organized by:
 - Completed tasks
 
 ### Task Dashboard
-Advanced task management with interactive filtering:
+Advanced task management with interactive filtering and sorting:
 - **View Modes**: Context, Due Date, Priority, Tag
-- **Filters**: Context type, due date range, priority level, text search
-- **Show/hide completed tasks**
+- **Sorting**: Sort by Due Date or Priority (ascending/descending)
+  - In Context mode, sorting reorders context groups, files within contexts, and tasks within files
+  - Contexts and files with "best" matching tasks bubble to the top
+- **Filters**: Organized into collapsible panels
+  - *Global*: Text search, show/hide completed tasks
+  - *Context-specific*: Project status (New/Active/On Hold), Inbox status (Active/Inactive), Meeting date (Today/This Week/Past)
+  - *Date*: Due date range (Today/This Week/Overdue/No Date)
+  - *Priority*: Priority levels (Urgent/High/Medium/Low/Someday)
 - Groups tasks by source file within each category
+- **Clear Filters** button resets all filters and sorting to defaults
 
 ### Task Query By Project
 View tasks grouped by project with filters for:
