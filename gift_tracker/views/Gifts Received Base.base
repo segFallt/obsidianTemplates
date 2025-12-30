@@ -13,6 +13,7 @@ views:
       - individuals
       - date
       - occasion
+      - estimated-cost
       - thank-you-sent
     sort:
       - property: date
@@ -29,6 +30,7 @@ views:
       - individuals
       - date
       - occasion
+      - estimated-cost
     sort:
       - property: date
         direction: ASC

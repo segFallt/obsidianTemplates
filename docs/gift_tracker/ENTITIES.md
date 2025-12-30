@@ -277,6 +277,7 @@ tags:
 | `individuals` | list | Links to Individual records (givers) |
 | `date` | date | Date gift was received |
 | `occasion` | text | Occasion for the gift |
+| `estimated-cost` | number | Estimated value of gift |
 | `notes` | text | Free-form notes |
 | `thank-you-sent` | boolean | Whether thank-you was sent |
 
@@ -290,6 +291,7 @@ individuals:
   - "[[Mom]]"
 date: 2024-12-25
 occasion: Christmas
+estimated-cost: 35
 notes: Italian recipes
 thank-you-sent: true
 ---
@@ -299,6 +301,7 @@ thank-you-sent: true
 - `individuals`: `INPUT[listSuggester(optionQuery(#individual)):individuals]`
 - `date`: `INPUT[date:date]`
 - `occasion`: `INPUT[suggester(option(Birthday), ...):occasion]`
+- `estimated-cost`: `INPUT[number:estimated-cost]`
 - `thank-you-sent`: `INPUT[toggle:thank-you-sent]`
 - `notes`: `INPUT[textArea:notes]`
 
