@@ -66,11 +66,12 @@ if (giftsGiven.length > 0) {
 if (giftsReceived.length > 0) {
   dv.header(2, "Gifts Received");
   dv.table(
-    ["Gift", "Date", "Occasion", "Thank You"],
+    ["Gift", "Date", "Occasion", "Est. Cost", "Thank You"],
     giftsReceived.map(g => [
       g.file.link,
       g.date,
       g.occasion || "",
+      g['estimated-cost'] ? `$${g['estimated-cost']}` : "",
       g['thank-you-sent'] ? "✓" : ""
     ])
   );
