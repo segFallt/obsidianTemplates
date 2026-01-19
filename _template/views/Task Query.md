@@ -52,6 +52,11 @@ obsidianUIMode: preview
 > not done
 
 # Completed
+> [!check] Done Today
+> ```tasks
+> done today
+> ```
+
 > [!check]- Done
 > ```tasks
 > done
