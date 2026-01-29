@@ -1,0 +1,30 @@
+properties:
+  file.name:
+    displayName: Item
+views:
+  - type: table
+    name: inbox_active
+    filters:
+      and:
+        - file.inFolder("inbox")
+        - status == "Active"
+    order:
+      - file.name
+      - file.ctime
+      - file.mtime
+    sort:
+      - property: file.mtime
+        direction: DESC
+  - type: table
+    name: inbox_inactive
+    filters:
+      and:
+        - file.inFolder("inbox")
+        - status != "Active"
+    order:
+      - file.name
+      - file.ctime
+      - file.mtime
+    sort:
+      - property: file.mtime
+        direction: DESC
