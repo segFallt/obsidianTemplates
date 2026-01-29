@@ -10,11 +10,17 @@ views:
         - status == "Active"
     order:
       - file.name
+      - engagement
       - file.ctime
       - file.mtime
     sort:
       - property: file.mtime
         direction: DESC
+    columnSize:
+      file.name: 304
+      note.engagement: 180
+      file.ctime: 114
+      file.mtime: 118
   - type: table
     name: inbox_inactive
     filters:
@@ -23,8 +29,16 @@ views:
         - status != "Active"
     order:
       - file.name
+      - engagement
       - file.ctime
       - file.mtime
     sort:
       - property: file.mtime
-        direction: DESC
+        direction: ASC
+      - property: engagement
+        direction: ASC
+    columnSize:
+      file.name: 288
+      note.engagement: 166
+      file.ctime: 122
+      file.mtime: 143

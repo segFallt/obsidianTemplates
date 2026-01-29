@@ -9,9 +9,12 @@ views:
         - file.inFolder("meetings/single")
     order:
       - file.name
+      - engagement
       - date
     sort:
       - property: date
         direction: DESC
     columnSize:
-      file.name: 123
+      file.name: 346
+      note.engagement: 212
+      note.date: 171

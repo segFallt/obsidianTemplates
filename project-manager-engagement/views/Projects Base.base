@@ -14,6 +14,7 @@ views:
       - end-date
       - status
       - priority
+      - engagement
     sort:
       - property: file.name
         direction: ASC
@@ -37,6 +38,7 @@ views:
       - start-date
       - priority
       - file.mtime
+      - engagement
     sort:
       - property: file.name
         direction: ASC
@@ -64,6 +66,7 @@ views:
       - file.name
       - start-date
       - priority
+      - engagement
       - file.mtime
     sort:
       - property: file.mtime
@@ -76,8 +79,9 @@ views:
         direction: ASC
     columnSize:
       file.name: 273
-      note.start-date: 135
+      note.start-date: 130
       note.priority: 66
+      note.engagement: 214
   - type: table
     name: projects_new
     filters:
@@ -90,6 +94,7 @@ views:
       - start-date
       - priority
       - file.mtime
+      - engagement
     sort:
       - property: file.mtime
         direction: DESC
@@ -117,6 +122,7 @@ views:
       - end-date
       - priority
       - file.mtime
+      - engagement
     sort:
       - property: file.mtime
         direction: DESC

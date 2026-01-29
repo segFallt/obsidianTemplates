@@ -11,11 +11,17 @@ views:
             - note["end-date"].isEmpty()
     order:
       - file.name
+      - engagement
       - start-date
       - file.mtime
-    sort: []
+    sort:
+      - property: file.mtime
+        direction: DESC
     columnSize:
-      note.start-date: 160
+      file.name: 274
+      note.engagement: 177
+      note.start-date: 122
+      file.mtime: 168
   - type: table
     name: meetings_past
     filters:
