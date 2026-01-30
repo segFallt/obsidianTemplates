@@ -1,0 +1,399 @@
+{
+  "choices": [
+    {
+      "id": "86ac20bd-04a7-48c9-802e-ee69c463a4a9",
+      "name": "Meeting - Recurring",
+      "type": "Template",
+      "command": true,
+      "templatePath": "utility/templates/Recurring Meeting - Page.md",
+      "fileNameFormat": {
+        "enabled": false,
+        "format": ""
+      },
+      "folder": {
+        "enabled": true,
+        "folders": [
+          "meetings/recurring"
+        ],
+        "chooseWhenCreatingNote": false,
+        "createInSameFolderAsActiveFile": false,
+        "chooseFromSubfolders": false
+      },
+      "appendLink": false,
+      "openFileInNewTab": {
+        "enabled": false,
+        "direction": "vertical",
+        "focus": true
+      },
+      "openFile": true,
+      "openFileInMode": "default",
+      "fileExistsMode": "Increment the file name",
+      "setFileExistsBehavior": false,
+      "fileOpening": {
+        "location": "tab",
+        "direction": "vertical",
+        "focus": true,
+        "mode": "default"
+      }
+    },
+    {
+      "id": "0a2a4774-9583-44c2-b98e-fcb7db2bfe43",
+      "name": "Meeting - Single",
+      "type": "Template",
+      "command": true,
+      "templatePath": "utility/templates/Single Meeting.md",
+      "fileNameFormat": {
+        "enabled": false,
+        "format": ""
+      },
+      "folder": {
+        "enabled": true,
+        "folders": [
+          "meetings/single"
+        ],
+        "chooseWhenCreatingNote": false,
+        "createInSameFolderAsActiveFile": false,
+        "chooseFromSubfolders": false
+      },
+      "appendLink": false,
+      "openFileInNewTab": {
+        "enabled": false,
+        "direction": "vertical",
+        "focus": true
+      },
+      "openFile": true,
+      "openFileInMode": "default",
+      "fileExistsMode": "Increment the file name",
+      "setFileExistsBehavior": false,
+      "fileOpening": {
+        "location": "tab",
+        "direction": "vertical",
+        "focus": true,
+        "mode": "default"
+      }
+    },
+    {
+      "id": "882a5b1a-2655-4c37-841a-fa5d8ca6b033",
+      "name": "Project - New",
+      "type": "Macro",
+      "command": true,
+      "macro": {
+        "id": "a1b2c3d4-e5f6-7890-abcd-project123456",
+        "name": "Project - New",
+        "commands": [
+          {
+            "name": "create-project-with-notes-dir",
+            "type": "UserScript",
+            "id": "b2c3d4e5-f6a7-8901-bcde-project789012",
+            "path": "utility/scripts/quickadd/create-project-with-notes-dir.js",
+            "settings": {}
+          }
+        ]
+      },
+      "runOnStartup": false
+    },
+    {
+      "id": "c3d4e5f6-a7b8-9012-cdef-inbox12345678",
+      "name": "Convert Inbox to Project",
+      "type": "Macro",
+      "command": true,
+      "macro": {
+        "id": "d4e5f6a7-b8c9-0123-defa-inbox23456789",
+        "name": "Convert Inbox to Project",
+        "commands": [
+          {
+            "name": "convert-inbox-to-project",
+            "type": "UserScript",
+            "id": "e5f6a7b8-c9d0-1234-efab-inbox34567890",
+            "path": "utility/scripts/quickadd/convert-inbox-to-project.js",
+            "settings": {}
+          }
+        ]
+      },
+      "runOnStartup": false
+    },
+    {
+      "id": "3dadef8b-f0b6-4120-b611-e0e69be2e496",
+      "name": "Inbox - New",
+      "type": "Template",
+      "command": true,
+      "templatePath": "utility/templates/New Inbox Note.md",
+      "fileNameFormat": {
+        "enabled": false,
+        "format": ""
+      },
+      "folder": {
+        "enabled": true,
+        "folders": [
+          "inbox"
+        ],
+        "chooseWhenCreatingNote": false,
+        "createInSameFolderAsActiveFile": false,
+        "chooseFromSubfolders": false
+      },
+      "appendLink": false,
+      "openFileInNewTab": {
+        "enabled": false,
+        "direction": "vertical",
+        "focus": true
+      },
+      "openFile": true,
+      "openFileInMode": "default",
+      "fileExistsMode": "Increment the file name",
+      "setFileExistsBehavior": false,
+      "fileOpening": {
+        "location": "tab",
+        "direction": "vertical",
+        "focus": true,
+        "mode": "default"
+      }
+    },
+    {
+      "id": "bed17231-efe8-4dae-9d54-78321c81634e",
+      "name": "Create Project Note",
+      "type": "Macro",
+      "command": true,
+      "macro": {
+        "id": "0c75809d-eb76-46c3-a665-8f7db769167e",
+        "name": "Create Project Note",
+        "commands": [
+          {
+            "name": "create-project-note",
+            "type": "UserScript",
+            "id": "d02aaa36-43b9-40c1-82c9-aa96c787c6f7",
+            "path": "utility/scripts/quickadd/create-project-note.js",
+            "settings": {}
+          }
+        ]
+      },
+      "runOnStartup": false
+    },
+    {
+      "id": "f1a2b3c4-d5e6-7890-abcd-ef1234567890",
+      "name": "Person - New",
+      "type": "Template",
+      "command": true,
+      "templatePath": "utility/templates/New Person.md",
+      "fileNameFormat": {
+        "enabled": false,
+        "format": ""
+      },
+      "folder": {
+        "enabled": true,
+        "folders": [
+          "people"
+        ],
+        "chooseWhenCreatingNote": false,
+        "createInSameFolderAsActiveFile": false,
+        "chooseFromSubfolders": false
+      },
+      "appendLink": false,
+      "openFileInNewTab": {
+        "enabled": false,
+        "direction": "vertical",
+        "focus": true
+      },
+      "openFile": true,
+      "openFileInMode": "default",
+      "fileExistsMode": "Increment the file name",
+      "setFileExistsBehavior": false,
+      "fileOpening": {
+        "location": "tab",
+        "direction": "vertical",
+        "focus": true,
+        "mode": "default"
+      }
+    },
+    {
+      "id": "a1b2c3d4-e5f6-7890-client-123456789",
+      "name": "Client - New",
+      "type": "Template",
+      "command": true,
+      "templatePath": "utility/templates/New Client.md",
+      "fileNameFormat": {
+        "enabled": false,
+        "format": ""
+      },
+      "folder": {
+        "enabled": true,
+        "folders": [
+          "clients"
+        ],
+        "chooseWhenCreatingNote": false,
+        "createInSameFolderAsActiveFile": false,
+        "chooseFromSubfolders": false
+      },
+      "appendLink": false,
+      "openFileInNewTab": {
+        "enabled": false,
+        "direction": "vertical",
+        "focus": true
+      },
+      "openFile": true,
+      "openFileInMode": "default",
+      "fileExistsMode": "Increment the file name",
+      "setFileExistsBehavior": false,
+      "fileOpening": {
+        "location": "tab",
+        "direction": "vertical",
+        "focus": true,
+        "mode": "default"
+      }
+    },
+    {
+      "id": "b2c3d4e5-f6a7-8901-engagement-234567890",
+      "name": "Engagement - New",
+      "type": "Template",
+      "command": true,
+      "templatePath": "utility/templates/New Engagement.md",
+      "fileNameFormat": {
+        "enabled": false,
+        "format": ""
+      },
+      "folder": {
+        "enabled": true,
+        "folders": [
+          "engagements"
+        ],
+        "chooseWhenCreatingNote": false,
+        "createInSameFolderAsActiveFile": false,
+        "chooseFromSubfolders": false
+      },
+      "appendLink": false,
+      "openFileInNewTab": {
+        "enabled": false,
+        "direction": "vertical",
+        "focus": true
+      },
+      "openFile": true,
+      "openFileInMode": "default",
+      "fileExistsMode": "Increment the file name",
+      "setFileExistsBehavior": false,
+      "fileOpening": {
+        "location": "tab",
+        "direction": "vertical",
+        "focus": true,
+        "mode": "default"
+      }
+    }
+  ],
+  "inputPrompt": "single-line",
+  "devMode": false,
+  "templateFolderPath": "utility/templates",
+  "announceUpdates": "all",
+  "version": "2.9.0",
+  "globalVariables": {},
+  "onePageInputEnabled": false,
+  "disableOnlineFeatures": true,
+  "enableRibbonIcon": false,
+  "showCaptureNotification": true,
+  "showInputCancellationNotification": false,
+  "enableTemplatePropertyTypes": false,
+  "ai": {
+    "defaultModel": "Ask me",
+    "defaultSystemPrompt": "As an AI assistant within Obsidian, your primary goal is to help users manage their ideas and knowledge more effectively. Format your responses using Markdown syntax. Please use the [[Obsidian]] link format. You can write aliases for the links by writing [[Obsidian|the alias after the pipe symbol]]. To use mathematical notation, use LaTeX syntax. LaTeX syntax for larger equations should be on separate lines, surrounded with double dollar signs ($$). You can also inline math expressions by wrapping it in $ symbols. For example, use $$w_{ij}^{\text{new}}:=w_{ij}^{\text{current}}+etacdotdelta_jcdot x_{ij}$$ on a separate line, but you can write \"($eta$ = learning rate, $delta_j$ = error term, $x_{ij}$ = input)\" inline.",
+    "promptTemplatesFolderPath": "",
+    "showAssistant": true,
+    "providers": [
+      {
+        "name": "OpenAI",
+        "endpoint": "https://api.openai.com/v1",
+        "apiKey": "",
+        "models": [
+          {
+            "name": "text-davinci-003",
+            "maxTokens": 4096
+          },
+          {
+            "name": "gpt-3.5-turbo",
+            "maxTokens": 4096
+          },
+          {
+            "name": "gpt-3.5-turbo-16k",
+            "maxTokens": 16384
+          },
+          {
+            "name": "gpt-3.5-turbo-1106",
+            "maxTokens": 16385
+          },
+          {
+            "name": "gpt-4",
+            "maxTokens": 8192
+          },
+          {
+            "name": "gpt-4-32k",
+            "maxTokens": 32768
+          },
+          {
+            "name": "gpt-4-1106-preview",
+            "maxTokens": 128000
+          },
+          {
+            "name": "gpt-4-turbo",
+            "maxTokens": 128000
+          },
+          {
+            "name": "gpt-4o",
+            "maxTokens": 128000
+          }
+        ],
+        "modelSource": "auto"
+      }
+    ]
+  },
+  "migrations": {
+    "migrateToMacroIDFromEmbeddedMacro": true,
+    "useQuickAddTemplateFolder": true,
+    "incrementFileNameSettingMoveToDefaultBehavior": true,
+    "mutualExclusionInsertAfterAndWriteToBottomOfFile": true,
+    "setVersionAfterUpdateModalRelease": true,
+    "addDefaultAIProviders": true,
+    "removeMacroIndirection": true,
+    "migrateFileOpeningSettings": true,
+    "setProviderModelDiscoveryMode": true
+  },
+  "macros": [
+    {
+      "name": "Create Project Note",
+      "id": "0c75809d-eb76-46c3-a665-8f7db769167e",
+      "commands": [
+        {
+          "name": "create-project-note",
+          "type": "UserScript",
+          "id": "d02aaa36-43b9-40c1-82c9-aa96c787c6f7",
+          "path": "utility/scripts/quickadd/create-project-note.js",
+          "settings": {}
+        }
+      ],
+      "runOnStartup": false
+    },
+    {
+      "name": "Project - New",
+      "id": "a1b2c3d4-e5f6-7890-abcd-project123456",
+      "commands": [
+        {
+          "name": "create-project-with-notes-dir",
+          "type": "UserScript",
+          "id": "b2c3d4e5-f6a7-8901-bcde-project789012",
+          "path": "utility/scripts/quickadd/create-project-with-notes-dir.js",
+          "settings": {}
+        }
+      ],
+      "runOnStartup": false
+    },
+    {
+      "name": "Convert Inbox to Project",
+      "id": "d4e5f6a7-b8c9-0123-defa-inbox23456789",
+      "commands": [
+        {
+          "name": "convert-inbox-to-project",
+          "type": "UserScript",
+          "id": "e5f6a7b8-c9d0-1234-efab-inbox34567890",
+          "path": "utility/scripts/quickadd/convert-inbox-to-project.js",
+          "settings": {}
+        }
+      ],
+      "runOnStartup": false
+    }
+  ]
+}

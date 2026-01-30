@@ -1,0 +1,32 @@
+properties:
+  file.name:
+    displayName: Name
+views:
+  - type: table
+    name: clients_active
+    filters:
+      and:
+        - file.inFolder("clients")
+        - file.hasTag("client")
+        - status == "Active"
+    order:
+      - file.name
+      - contact-name
+      - contact-email
+    sort:
+      - property: file.name
+        direction: ASC
+  - type: table
+    name: clients_inactive
+    filters:
+      and:
+        - file.inFolder("clients")
+        - file.hasTag("client")
+        - status == "Inactive"
+    order:
+      - file.name
+      - contact-name
+      - contact-email
+    sort:
+      - property: file.name
+        direction: ASC

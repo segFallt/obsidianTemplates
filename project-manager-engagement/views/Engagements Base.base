@@ -1,0 +1,36 @@
+properties:
+  file.name:
+    displayName: Name
+  client:
+    displayName: Client
+views:
+  - type: table
+    name: engagements_active
+    filters:
+      and:
+        - file.inFolder("engagements")
+        - file.hasTag("engagement")
+        - status == "Active"
+    order:
+      - file.name
+      - client
+      - start-date
+      - end-date
+    sort:
+      - property: file.name
+        direction: ASC
+  - type: table
+    name: engagements_inactive
+    filters:
+      and:
+        - file.inFolder("engagements")
+        - file.hasTag("engagement")
+        - status == "Inactive"
+    order:
+      - file.name
+      - client
+      - start-date
+      - end-date
+    sort:
+      - property: file.name
+        direction: ASC

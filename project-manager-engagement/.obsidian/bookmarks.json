@@ -1,0 +1,57 @@
+{
+  "items": [
+    {
+      "type": "group",
+      "ctime": 1714954954358,
+      "items": [
+        {
+          "type": "file",
+          "ctime": 1715190087986,
+          "path": "views/Inbox.md"
+        },
+        {
+          "type": "file",
+          "ctime": 1714954936381,
+          "path": "views/Task Query.md",
+          "title": "Task Query"
+        },
+        {
+          "type": "file",
+          "ctime": 1720536216473,
+          "path": "views/Tasks By Tag.md"
+        },
+        {
+          "type": "file",
+          "ctime": 1733625600000,
+          "path": "views/Task Query By Project.md"
+        },
+        {
+          "type": "file",
+          "ctime": 1715189949071,
+          "path": "views/Single Meeting Index.md"
+        },
+        {
+          "type": "file",
+          "ctime": 1715189967414,
+          "path": "views/Recurring Meeting Index.md"
+        },
+        {
+          "type": "file",
+          "ctime": 1715190101179,
+          "path": "views/Projects.md"
+        },
+        {
+          "type": "file",
+          "ctime": 1765505326235,
+          "path": "views/Projects Base View.md"
+        },
+        {
+          "type": "file",
+          "ctime": 1765505308543,
+          "path": "views/People.md"
+        }
+      ],
+      "title": "Common Views"
+    }
+  ]
+}

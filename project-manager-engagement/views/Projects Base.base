@@ -1,0 +1,142 @@
+properties:
+  file.name:
+    displayName: Title
+views:
+  - type: table
+    name: projects_all
+    filters:
+      and:
+        - file.inFolder("projects")
+        - file.hasTag("project")
+    order:
+      - file.name
+      - start-date
+      - end-date
+      - status
+      - priority
+      - engagement
+    sort:
+      - property: file.name
+        direction: ASC
+      - property: start-date
+        direction: DESC
+      - property: priority
+        direction: ASC
+      - property: status
+        direction: DESC
+      - property: end-date
+        direction: ASC
+  - type: table
+    name: projects_onhold
+    filters:
+      and:
+        - file.inFolder("projects")
+        - file.hasTag("project")
+        - status == "On Hold"
+    order:
+      - file.name
+      - start-date
+      - priority
+      - file.mtime
+      - engagement
+    sort:
+      - property: file.name
+        direction: ASC
+      - property: file.mtime
+        direction: DESC
+      - property: start-date
+        direction: DESC
+      - property: priority
+        direction: ASC
+      - property: status
+        direction: DESC
+      - property: end-date
+        direction: ASC
+    columnSize:
+      note.start-date: 143
+      note.priority: 54
+  - type: table
+    name: projects_active
+    filters:
+      and:
+        - file.inFolder("projects")
+        - file.hasTag("project")
+        - status == "Active"
+    order:
+      - file.name
+      - start-date
+      - priority
+      - engagement
+      - file.mtime
+    sort:
+      - property: file.mtime
+        direction: DESC
+      - property: priority
+        direction: ASC
+      - property: start-date
+        direction: DESC
+      - property: status
+        direction: ASC
+    columnSize:
+      file.name: 273
+      note.start-date: 130
+      note.priority: 66
+      note.engagement: 214
+  - type: table
+    name: projects_new
+    filters:
+      and:
+        - file.inFolder("projects")
+        - file.hasTag("project")
+        - status == "New"
+    order:
+      - file.name
+      - start-date
+      - priority
+      - file.mtime
+      - engagement
+    sort:
+      - property: file.mtime
+        direction: DESC
+      - property: start-date
+        direction: DESC
+      - property: priority
+        direction: ASC
+      - property: status
+        direction: DESC
+      - property: end-date
+        direction: ASC
+    columnSize:
+      note.start-date: 142
+      note.priority: 77
+  - type: table
+    name: projects_complete
+    filters:
+      and:
+        - file.inFolder("projects")
+        - file.hasTag("project")
+        - status == "Complete"
+    order:
+      - file.name
+      - start-date
+      - end-date
+      - priority
+      - file.mtime
+      - engagement
+    sort:
+      - property: file.mtime
+        direction: DESC
+      - property: file.name
+        direction: ASC
+      - property: start-date
+        direction: DESC
+      - property: priority
+        direction: ASC
+      - property: status
+        direction: DESC
+      - property: end-date
+        direction: ASC
+    columnSize:
+      note.start-date: 136
+      note.end-date: 117
+      note.priority: 50

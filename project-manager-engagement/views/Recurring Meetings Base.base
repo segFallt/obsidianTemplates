@@ -1,0 +1,41 @@
+properties:
+  file.name:
+    displayName: Meeting
+views:
+  - type: table
+    name: meetings_active
+    filters:
+      and:
+        - file.inFolder("meetings/recurring")
+        - and:
+            - note["end-date"].isEmpty()
+    order:
+      - file.name
+      - engagement
+      - start-date
+      - file.mtime
+    sort:
+      - property: file.mtime
+        direction: DESC
+    columnSize:
+      file.name: 274
+      note.engagement: 177
+      note.start-date: 122
+      file.mtime: 168
+  - type: table
+    name: meetings_past
+    filters:
+      and:
+        - and:
+            - file.inFolder("meetings/recurring")
+            - '!note["end-date"].isEmpty()'
+    order:
+      - file.name
+      - start-date
+      - end-date
+    sort:
+      - property: end-date
+        direction: DESC
+    columnSize:
+      file.name: 182
+      note.start-date: 160
