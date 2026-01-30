@@ -5,6 +5,8 @@ projectFilter: ""
 selectedStatuses:
   - Active
 showCompletedTasks: false
+clientFilter: []
+engagementFilter: []
 ---
 
 # Tasks By Project
@@ -25,6 +27,17 @@ INPUT[multiSelect(option(New), option(Active), option(On Hold), option(Complete)
 INPUT[toggle:showCompletedTasks]
 ```
 
+> [!filter]- Client/Engagement Filters
+> **Client:**
+> ```meta-bind
+> INPUT[multiSelect(optionQuery(#client), option((Unassigned))):clientFilter]
+> ```
+>
+> **Engagement:**
+> ```meta-bind
+> INPUT[multiSelect(optionQuery(#engagement), option((Unassigned))):engagementFilter]
+> ```
+
 ```meta-bind-button
 style: destructive
 label: Clear Filters
@@ -41,6 +54,14 @@ actions:
     bindTarget: selectedStatuses
     evaluate: true
     value: '["Active"]'
+  - type: updateMetadata
+    bindTarget: clientFilter
+    evaluate: true
+    value: "[]"
+  - type: updateMetadata
+    bindTarget: engagementFilter
+    evaluate: true
+    value: "[]"
 ```
 
 ---
@@ -51,6 +72,8 @@ await dv.view("scripts/dataview/tasks-by-project", {
   selectedProjects: page.selectedProjects,
   projectFilter: page.projectFilter,
   selectedStatuses: page.selectedStatuses,
-  showCompleted: page.showCompletedTasks
+  showCompleted: page.showCompletedTasks,
+  clientFilter: page.clientFilter,
+  engagementFilter: page.engagementFilter
 })
 ```

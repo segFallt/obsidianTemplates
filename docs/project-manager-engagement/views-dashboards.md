@@ -101,7 +101,8 @@ All views use `obsidianUIMode: preview` frontmatter to prevent accidental editin
 - Groups tasks hierarchically by project
 - Sub-groups by project notes within each project
 - Completed tasks shown in a separate section per project
-- **Interactive filtering** via dropdown and text search
+- **Interactive filtering** via dropdown, text search, client, and engagement filters
+- **Collapsible Client/Engagement filter panel**
 
 **Query Type**: External DataviewJS script
 
@@ -111,26 +112,62 @@ All views use `obsidianUIMode: preview` frontmatter to prevent accidental editin
 ```yaml
 ---
 obsidianUIMode: preview
-selectedProjects: []   # Bound to multi-select filter (array)
-projectFilter: ""      # Bound to text search filter
+selectedProjects: []      # Bound to multi-select filter (array)
+projectFilter: ""         # Bound to text search filter
+selectedStatuses:         # Project statuses to include
+  - Active
+showCompletedTasks: false # Whether to show completed tasks
+clientFilter: []          # Array of clients (includes (Unassigned) option)
+engagementFilter: []      # Array of engagements (includes (Unassigned) option)
 ---
 ```
 
 **Filter UI**:
 ```markdown
-**Select Projects:**
+**Filter by Projects:**
 ```meta-bind
 INPUT[listSuggester(optionQuery(#project)):selectedProjects]
 ```
 **Search:** `INPUT[text:projectFilter]`
+
+**Filter by Project Status:**
+```meta-bind
+INPUT[multiSelect(option(New), option(Active), option(On Hold), option(Complete)):selectedStatuses]
+```
+
+**Show Completed Tasks**
+```meta-bind
+INPUT[toggle:showCompletedTasks]
+```
+
+> [!filter]- Client/Engagement Filters
+> **Client:**
+> ```meta-bind
+> INPUT[multiSelect(optionQuery(#client), option((Unassigned))):clientFilter]
+> ```
+>
+> **Engagement:**
+> ```meta-bind
+> INPUT[multiSelect(optionQuery(#engagement), option((Unassigned))):engagementFilter]
+> ```
 ```
 
 Note: `listSuggester` requires a code block, not inline syntax.
 
 | Filter | Type | Behavior |
 |--------|------|----------|
-| Select Projects | Multi-select list | Shows all #project files, filters to selected projects |
+| Filter by Projects | Multi-select list | Shows all #project files, filters to selected projects |
 | Search | Text | Fuzzy matches project names (case-insensitive) |
+| Filter by Project Status | Multi-select | Shows projects with selected statuses (default: Active) |
+| Show Completed Tasks | Toggle | Whether to show completed tasks section per project |
+| Client | Multi-select | Filters projects by client (directly or via engagement) |
+| Engagement | Multi-select | Filters projects by engagement property |
+
+**Client/Engagement Filtering**:
+- Client filter derives client from engagement if not directly set on project
+- Selecting "(Unassigned)" shows projects without client/engagement
+- Multiple clients/engagements can be selected simultaneously
+- Filters operate with AND logic (projects must match both if both are set)
 
 **DataviewJS Call**:
 ```markdown
@@ -138,7 +175,11 @@ Note: `listSuggester` requires a code block, not inline syntax.
 const page = dv.current();
 await dv.view("scripts/dataview/tasks-by-project", {
   selectedProjects: page.selectedProjects,
-  projectFilter: page.projectFilter
+  projectFilter: page.projectFilter,
+  selectedStatuses: page.selectedStatuses,
+  showCompleted: page.showCompletedTasks,
+  clientFilter: page.clientFilter,
+  engagementFilter: page.engagementFilter
 })
 ```
 ```
