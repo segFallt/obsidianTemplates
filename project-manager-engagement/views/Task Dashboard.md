@@ -12,6 +12,8 @@ inboxStatusFilter: All
 meetingDateFilter: All
 clientFilter: []
 engagementFilter: []
+includeUnassignedClients: false
+includeUnassignedEngagements: false
 ---
 
 # Task Dashboard
@@ -44,13 +46,15 @@ INPUT[inlineSelect(option(none, None), option(dueDate-asc, Due Date ↑), option
 >
 > **Client:**
 > ```meta-bind
-> INPUT[multiSelect(optionQuery(#client), option((Unassigned))):clientFilter]
+> INPUT[inlineListSuggester(optionQuery(#client)):clientFilter]
 > ```
+> **Include Unassigned Clients:** `INPUT[toggle:includeUnassignedClients]`
 >
 > **Engagement:**
 > ```meta-bind
-> INPUT[multiSelect(optionQuery(#engagement), option((Unassigned))):engagementFilter]
+> INPUT[inlineListSuggester(optionQuery(#engagement)):engagementFilter]
 > ```
+> **Include Unassigned Engagements:** `INPUT[toggle:includeUnassignedEngagements]`
 >
 > **Project Status:**
 > ```meta-bind
@@ -127,6 +131,14 @@ actions:
     bindTarget: engagementFilter
     evaluate: true
     value: "[]"
+  - type: updateMetadata
+    bindTarget: includeUnassignedClients
+    evaluate: true
+    value: "false"
+  - type: updateMetadata
+    bindTarget: includeUnassignedEngagements
+    evaluate: true
+    value: "false"
 ```
 
 ---
@@ -147,6 +159,8 @@ await dv.view("scripts/dataview/tasks-dashboard", {
   inboxStatusFilter: page.inboxStatusFilter,
   meetingDateFilter: page.meetingDateFilter,
   clientFilter: page.clientFilter,
-  engagementFilter: page.engagementFilter
+  engagementFilter: page.engagementFilter,
+  includeUnassignedClients: page.includeUnassignedClients,
+  includeUnassignedEngagements: page.includeUnassignedEngagements
 });
 ```

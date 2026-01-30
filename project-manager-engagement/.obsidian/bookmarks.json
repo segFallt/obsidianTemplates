@@ -17,6 +17,11 @@
         },
         {
           "type": "file",
+          "ctime": 1769743112246,
+          "path": "views/Task Dashboard.md"
+        },
+        {
+          "type": "file",
           "ctime": 1720536216473,
           "path": "views/Tasks By Tag.md"
         },
@@ -49,6 +54,16 @@
           "type": "file",
           "ctime": 1765505308543,
           "path": "views/People.md"
+        },
+        {
+          "type": "file",
+          "ctime": 1769743143640,
+          "path": "views/Clients.md"
+        },
+        {
+          "type": "file",
+          "ctime": 1769743154380,
+          "path": "views/Engagements.md"
         }
       ],
       "title": "Common Views"

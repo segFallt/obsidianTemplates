@@ -18,6 +18,8 @@ const inboxStatusFilter = config.inboxStatusFilter || "All";
 const meetingDateFilter = config.meetingDateFilter || "All";
 const clientFilter = config.clientFilter || [];
 const engagementFilter = config.engagementFilter || [];
+const includeUnassignedClients = config.includeUnassignedClients ?? false;
+const includeUnassignedEngagements = config.includeUnassignedEngagements ?? false;
 
 // Priority emoji mapping
 const PRIORITY_EMOJI = {
@@ -46,18 +48,30 @@ const getTaskContext = (task) => {
   return "Other";
 };
 
+// Helper to normalize any link/name format to a comparable string
+const normalizeToComparableName = (item) => {
+  if (!item) return null;
+  // If it's a Link object, get the path
+  if (item.path) return item.path.split('/').pop().replace(/\.md$/, '');
+  // If it's a string, remove [[]] and .md
+  const str = String(item);
+  return str.replace(/^\[\[/, '').replace(/\]\]$/, '').split('/').pop().replace(/\.md$/, '');
+};
+
 // Helper to extract client from engagement
 const getClientFromEngagement = (engagementLink) => {
   if (!engagementLink) return null;
-  // Extract engagement name from [[link]]
-  const engagementName = engagementLink.replace(/\[\[|\]\]/g, '');
+  // Handle Link objects and string formats
+  const engagementName = normalizeToComparableName(engagementLink);
+  if (!engagementName) return null;
   const engagementPage = dv.page(`engagements/${engagementName}`);
   return engagementPage?.client || null;
 };
 
 // Helper to check if task matches client filter
-const matchesClientFilter = (task, clientFilter) => {
-  if (!clientFilter || clientFilter.length === 0) return true;
+const matchesClientFilter = (task, clientFilter, includeUnassigned) => {
+  // If no filter and not including unassigned, show all
+  if ((!clientFilter || clientFilter.length === 0) && !includeUnassigned) return true;
 
   const page = dv.page(task.path);
   if (!page) return false;
@@ -69,17 +83,19 @@ const matchesClientFilter = (task, clientFilter) => {
   }
 
   // Normalize client value for comparison
-  const normalizedClient = taskClient ? taskClient.replace(/\[\[|\]\]/g, '') : null;
+  const normalizedClient = normalizeToComparableName(taskClient);
 
-  // Check if "(Unassigned)" is in filter
-  if (clientFilter.includes("(Unassigned)")) {
-    if (!normalizedClient) return true;
+  // Check if should include unassigned
+  if (includeUnassigned && !normalizedClient) return true;
+
+  // If no specific clients selected, only show unassigned if toggle is on
+  if (!clientFilter || clientFilter.length === 0) {
+    return includeUnassigned ? !normalizedClient : false;
   }
 
   // Check against specific clients
   for (const filterClient of clientFilter) {
-    if (filterClient === "(Unassigned)") continue;
-    const normalizedFilter = filterClient.replace(/\[\[|\]\]/g, '');
+    const normalizedFilter = normalizeToComparableName(filterClient);
     if (normalizedClient === normalizedFilter) return true;
   }
 
@@ -87,24 +103,27 @@ const matchesClientFilter = (task, clientFilter) => {
 };
 
 // Helper to check if task matches engagement filter
-const matchesEngagementFilter = (task, engagementFilter) => {
-  if (!engagementFilter || engagementFilter.length === 0) return true;
+const matchesEngagementFilter = (task, engagementFilter, includeUnassigned) => {
+  // If no filter and not including unassigned, show all
+  if ((!engagementFilter || engagementFilter.length === 0) && !includeUnassigned) return true;
 
   const page = dv.page(task.path);
   if (!page) return false;
 
   const taskEngagement = page.engagement;
-  const normalizedEngagement = taskEngagement ? taskEngagement.replace(/\[\[|\]\]/g, '') : null;
+  const normalizedEngagement = normalizeToComparableName(taskEngagement);
 
-  // Check if "(Unassigned)" is in filter
-  if (engagementFilter.includes("(Unassigned)")) {
-    if (!normalizedEngagement) return true;
+  // Check if should include unassigned
+  if (includeUnassigned && !normalizedEngagement) return true;
+
+  // If no specific engagements selected, only show unassigned if toggle is on
+  if (!engagementFilter || engagementFilter.length === 0) {
+    return includeUnassigned ? !normalizedEngagement : false;
   }
 
   // Check against specific engagements
   for (const filterEngagement of engagementFilter) {
-    if (filterEngagement === "(Unassigned)") continue;
-    const normalizedFilter = filterEngagement.replace(/\[\[|\]\]/g, '');
+    const normalizedFilter = normalizeToComparableName(filterEngagement);
     if (normalizedEngagement === normalizedFilter) return true;
   }
 
@@ -213,13 +232,13 @@ if (searchFilter) {
 }
 
 // Filter by client
-if (clientFilter && clientFilter.length > 0) {
-  allTasks = allTasks.where(t => matchesClientFilter(t, clientFilter));
+if (clientFilter.length > 0 || includeUnassignedClients) {
+  allTasks = allTasks.where(t => matchesClientFilter(t, clientFilter, includeUnassignedClients));
 }
 
 // Filter by engagement
-if (engagementFilter && engagementFilter.length > 0) {
-  allTasks = allTasks.where(t => matchesEngagementFilter(t, engagementFilter));
+if (engagementFilter.length > 0 || includeUnassignedEngagements) {
+  allTasks = allTasks.where(t => matchesEngagementFilter(t, engagementFilter, includeUnassignedEngagements));
 }
 
 // Context-specific filters (only apply in context mode)

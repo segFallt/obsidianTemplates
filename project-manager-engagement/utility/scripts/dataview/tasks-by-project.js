@@ -15,6 +15,8 @@
 //   showCompleted    - Whether to show completed tasks section (default: true)
 //   clientFilter     - Array of client names to filter projects by (multi-select)
 //   engagementFilter - Array of engagement names to filter projects by (multi-select)
+//   includeUnassignedClients - Boolean to include projects without clients (default: false)
+//   includeUnassignedEngagements - Boolean to include projects without engagements (default: false)
 //
 // Note: Frontmatter values must be passed explicitly from the calling page
 //       since dv.current() context changes in external scripts
@@ -30,6 +32,8 @@ const showCompleted = config.showCompleted ?? true;
 const selectedStatuses = config.selectedStatuses || CONSTANTS.DEFAULT_TASK_VIEW_STATUSES;
 const clientFilter = config.clientFilter || [];
 const engagementFilter = config.engagementFilter || [];
+const includeUnassignedClients = config.includeUnassignedClients ?? false;
+const includeUnassignedEngagements = config.includeUnassignedEngagements ?? false;
 
 // Normalize selected projects to file names (handles links, paths, or plain names)
 const normalizeToName = (item) => {
@@ -63,8 +67,9 @@ const normalizeToComparableName = (item) => {
 };
 
 // Helper to check if project matches client filter
-const matchesClientFilter = (project, clientFilter) => {
-  if (!clientFilter || clientFilter.length === 0) return true;
+const matchesClientFilter = (project, clientFilter, includeUnassigned) => {
+  // If no filter and not including unassigned, show all
+  if ((!clientFilter || clientFilter.length === 0) && !includeUnassigned) return true;
 
   // Get client - either directly or through engagement
   let projectClient = project.client;
@@ -75,14 +80,16 @@ const matchesClientFilter = (project, clientFilter) => {
   // Normalize client value for comparison
   const normalizedClient = normalizeToComparableName(projectClient);
 
-  // Check if "(Unassigned)" is in filter
-  if (clientFilter.includes("(Unassigned)")) {
-    if (!normalizedClient) return true;
+  // Check if should include unassigned
+  if (includeUnassigned && !normalizedClient) return true;
+
+  // If no specific clients selected, only show unassigned if toggle is on
+  if (!clientFilter || clientFilter.length === 0) {
+    return includeUnassigned ? !normalizedClient : false;
   }
 
   // Check against specific clients
   for (const filterClient of clientFilter) {
-    if (filterClient === "(Unassigned)") continue;
     const normalizedFilter = normalizeToComparableName(filterClient);
     if (normalizedClient === normalizedFilter) return true;
   }
@@ -91,20 +98,23 @@ const matchesClientFilter = (project, clientFilter) => {
 };
 
 // Helper to check if project matches engagement filter
-const matchesEngagementFilter = (project, engagementFilter) => {
-  if (!engagementFilter || engagementFilter.length === 0) return true;
+const matchesEngagementFilter = (project, engagementFilter, includeUnassigned) => {
+  // If no filter and not including unassigned, show all
+  if ((!engagementFilter || engagementFilter.length === 0) && !includeUnassigned) return true;
 
   const projectEngagement = project.engagement;
   const normalizedEngagement = normalizeToComparableName(projectEngagement);
 
-  // Check if "(Unassigned)" is in filter
-  if (engagementFilter.includes("(Unassigned)")) {
-    if (!normalizedEngagement) return true;
+  // Check if should include unassigned
+  if (includeUnassigned && !normalizedEngagement) return true;
+
+  // If no specific engagements selected, only show unassigned if toggle is on
+  if (!engagementFilter || engagementFilter.length === 0) {
+    return includeUnassigned ? !normalizedEngagement : false;
   }
 
   // Check against specific engagements
   for (const filterEngagement of engagementFilter) {
-    if (filterEngagement === "(Unassigned)") continue;
     const normalizedFilter = normalizeToComparableName(filterEngagement);
     if (normalizedEngagement === normalizedFilter) return true;
   }
@@ -130,13 +140,13 @@ if (filterText) {
 }
 
 // Apply client filter
-if (clientFilter && clientFilter.length > 0) {
-  projects = projects.where(p => matchesClientFilter(p, clientFilter));
+if (clientFilter.length > 0 || includeUnassignedClients) {
+  projects = projects.where(p => matchesClientFilter(p, clientFilter, includeUnassignedClients));
 }
 
 // Apply engagement filter
-if (engagementFilter && engagementFilter.length > 0) {
-  projects = projects.where(p => matchesEngagementFilter(p, engagementFilter));
+if (engagementFilter.length > 0 || includeUnassignedEngagements) {
+  projects = projects.where(p => matchesEngagementFilter(p, engagementFilter, includeUnassignedEngagements));
 }
 
 for (const project of projects) {

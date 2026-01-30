@@ -112,13 +112,15 @@ All views use `obsidianUIMode: preview` frontmatter to prevent accidental editin
 ```yaml
 ---
 obsidianUIMode: preview
-selectedProjects: []      # Bound to multi-select filter (array)
-projectFilter: ""         # Bound to text search filter
-selectedStatuses:         # Project statuses to include
+selectedProjects: []              # Bound to multi-select filter (array)
+projectFilter: ""                 # Bound to text search filter
+selectedStatuses:                 # Project statuses to include
   - Active
-showCompletedTasks: false # Whether to show completed tasks
-clientFilter: []          # Array of clients (includes (Unassigned) option)
-engagementFilter: []      # Array of engagements (includes (Unassigned) option)
+showCompletedTasks: false         # Whether to show completed tasks
+clientFilter: []                  # Array of selected clients
+engagementFilter: []              # Array of selected engagements
+includeUnassignedClients: false   # Toggle to include projects without clients
+includeUnassignedEngagements: false # Toggle to include projects without engagements
 ---
 ```
 
@@ -143,16 +145,18 @@ INPUT[toggle:showCompletedTasks]
 > [!filter]- Client/Engagement Filters
 > **Client:**
 > ```meta-bind
-> INPUT[multiSelect(optionQuery(#client), option((Unassigned))):clientFilter]
+> INPUT[inlineListSuggester(optionQuery(#client)):clientFilter]
 > ```
+> **Include Unassigned Clients:** `INPUT[toggle:includeUnassignedClients]`
 >
 > **Engagement:**
 > ```meta-bind
-> INPUT[multiSelect(optionQuery(#engagement), option((Unassigned))):engagementFilter]
+> INPUT[inlineListSuggester(optionQuery(#engagement)):engagementFilter]
 > ```
+> **Include Unassigned Engagements:** `INPUT[toggle:includeUnassignedEngagements]`
 ```
 
-Note: `listSuggester` requires a code block, not inline syntax.
+Note: `listSuggester` requires a code block, not inline syntax. `inlineListSuggester` is used for client/engagement filters to support dynamic querying.
 
 | Filter | Type | Behavior |
 |--------|------|----------|
@@ -160,12 +164,16 @@ Note: `listSuggester` requires a code block, not inline syntax.
 | Search | Text | Fuzzy matches project names (case-insensitive) |
 | Filter by Project Status | Multi-select | Shows projects with selected statuses (default: Active) |
 | Show Completed Tasks | Toggle | Whether to show completed tasks section per project |
-| Client | Multi-select | Filters projects by client (directly or via engagement) |
-| Engagement | Multi-select | Filters projects by engagement property |
+| Client | Inline list suggester | Type to search and select clients from vault |
+| Include Unassigned Clients | Toggle | Shows projects without client (directly or via engagement) |
+| Engagement | Inline list suggester | Type to search and select engagements from vault |
+| Include Unassigned Engagements | Toggle | Shows projects without engagement property |
 
 **Client/Engagement Filtering**:
 - Client filter derives client from engagement if not directly set on project
-- Selecting "(Unassigned)" shows projects without client/engagement
+- Use suggester to select specific clients/engagements (supports multiple selections)
+- Use toggles to include items without assignments
+- Toggles work independently of suggester selections
 - Multiple clients/engagements can be selected simultaneously
 - Filters operate with AND logic (projects must match both if both are set)
 
@@ -179,7 +187,9 @@ await dv.view("scripts/dataview/tasks-by-project", {
   selectedStatuses: page.selectedStatuses,
   showCompleted: page.showCompletedTasks,
   clientFilter: page.clientFilter,
-  engagementFilter: page.engagementFilter
+  engagementFilter: page.engagementFilter,
+  includeUnassignedClients: page.includeUnassignedClients,
+  includeUnassignedEngagements: page.includeUnassignedEngagements
 })
 ```
 ```
@@ -382,18 +392,20 @@ SORT date DESC, time DESC
 ```yaml
 ---
 obsidianUIMode: preview
-viewMode: context          # context | date | priority | tag
-sortBy: none               # none | dueDate-asc | dueDate-desc | priority-asc | priority-desc
-contextFilter: []          # Array of contexts to show
-dueDateFilter: All         # All | Today | This Week | Overdue | No Date
-priorityFilter: []         # Array of priority levels (1-5)
-showCompleted: false       # Whether to include completed tasks
-searchFilter: ""           # Text search filter
-projectStatusFilter: []    # Array of project statuses (New, Active, On Hold)
-inboxStatusFilter: All     # All | Active | Inactive
-meetingDateFilter: All     # All | Today | This Week | Past
-clientFilter: []           # Array of clients (includes (Unassigned) option)
-engagementFilter: []       # Array of engagements (includes (Unassigned) option)
+viewMode: context                   # context | date | priority | tag
+sortBy: none                        # none | dueDate-asc | dueDate-desc | priority-asc | priority-desc
+contextFilter: []                   # Array of contexts to show
+dueDateFilter: All                  # All | Today | This Week | Overdue | No Date
+priorityFilter: []                  # Array of priority levels (1-5)
+showCompleted: false                # Whether to include completed tasks
+searchFilter: ""                    # Text search filter
+projectStatusFilter: []             # Array of project statuses (New, Active, On Hold)
+inboxStatusFilter: All              # All | Active | Inactive
+meetingDateFilter: All              # All | Today | This Week | Past
+clientFilter: []                    # Array of selected clients
+engagementFilter: []                # Array of selected engagements
+includeUnassignedClients: false     # Toggle to include tasks without clients
+includeUnassignedEngagements: false # Toggle to include tasks without engagements
 ---
 ```
 
@@ -430,15 +442,19 @@ These filters only apply when `viewMode: context` and only affect their respecti
 
 | Property | Affects | Values | Behavior |
 |----------|---------|--------|----------|
-| `clientFilter` | All tasks | Client names, (Unassigned) | Filters by client (directly or via engagement) |
-| `engagementFilter` | All tasks | Engagement names, (Unassigned) | Filters by engagement property |
+| `clientFilter` | All tasks | Array of client names | Filters by client (directly or via engagement) |
+| `includeUnassignedClients` | All tasks | Boolean toggle | Shows tasks without client when enabled |
+| `engagementFilter` | All tasks | Array of engagement names | Filters by engagement property |
+| `includeUnassignedEngagements` | All tasks | Boolean toggle | Shows tasks without engagement when enabled |
 | `projectStatusFilter` | Project tasks | New, Active, On Hold | Filter by project's status property |
 | `inboxStatusFilter` | Inbox tasks | All, Active, Inactive | Active = status ≠ Complete |
 | `meetingDateFilter` | Meeting tasks | All, Today, This Week, Past | Filter by meeting's date property |
 
 **Client/Engagement Filtering**:
 - Client filter derives client from engagement if not directly set on task
-- Selecting "(Unassigned)" shows tasks without client/engagement
+- Use suggester to select specific clients/engagements (supports multiple selections)
+- Use toggles to include items without assignments
+- Toggles work independently of suggester selections
 - Multiple clients/engagements can be selected simultaneously
 - Tasks from other contexts pass through unfiltered
 
@@ -522,6 +538,22 @@ actions:
   - type: updateMetadata
     bindTarget: meetingDateFilter
     value: "All"
+  - type: updateMetadata
+    bindTarget: clientFilter
+    evaluate: true
+    value: "[]"
+  - type: updateMetadata
+    bindTarget: engagementFilter
+    evaluate: true
+    value: "[]"
+  - type: updateMetadata
+    bindTarget: includeUnassignedClients
+    evaluate: true
+    value: "false"
+  - type: updateMetadata
+    bindTarget: includeUnassignedEngagements
+    evaluate: true
+    value: "false"
 ```
 ```
 
@@ -539,7 +571,11 @@ await dv.view("scripts/dataview/tasks-dashboard", {
   sortBy: page.sortBy,
   projectStatusFilter: page.projectStatusFilter,
   inboxStatusFilter: page.inboxStatusFilter,
-  meetingDateFilter: page.meetingDateFilter
+  meetingDateFilter: page.meetingDateFilter,
+  clientFilter: page.clientFilter,
+  engagementFilter: page.engagementFilter,
+  includeUnassignedClients: page.includeUnassignedClients,
+  includeUnassignedEngagements: page.includeUnassignedEngagements
 });
 ```
 ```

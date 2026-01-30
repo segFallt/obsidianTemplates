@@ -20,17 +20,18 @@ The **Task Query By Project** view (`views/Task Query By Project.md`) provides p
 The Client and Engagement filters are located in a collapsible panel and offer advanced filtering capabilities:
 
 - **Client Filter**:
-  - Select one or more clients from your vault
-  - Choose "(Unassigned)" to show projects without a client
+  - Use the suggester to select one or more clients from your vault (type to search)
+  - Toggle "Include Unassigned Clients" to show projects without a client
   - If a project doesn't have a direct client but has an engagement, the client is derived from the engagement
 
 - **Engagement Filter**:
-  - Select one or more engagements from your vault
-  - Choose "(Unassigned)" to show projects without an engagement
+  - Use the suggester to select one or more engagements from your vault (type to search)
+  - Toggle "Include Unassigned Engagements" to show projects without an engagement
 
 - **Combined Filtering**:
   - When both client and engagement filters are active, projects must match **both** criteria (AND logic)
   - You can select multiple clients or engagements within each filter (OR logic within the same filter)
+  - The toggles work independently - you can show unassigned clients without selecting specific clients, or combine them
 
 #### Clear Filters
 
@@ -39,6 +40,7 @@ Use the **Clear Filters** button to reset all filters to their default values:
 - Clears search text
 - Resets status to "Active"
 - Clears client and engagement filters
+- Resets "Include Unassigned" toggles to off
 
 ### Task Dashboard
 
