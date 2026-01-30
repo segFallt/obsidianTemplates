@@ -58,6 +58,19 @@ const normalizeToComparableName = (item) => {
   return str.replace(/^\[\[/, '').replace(/\]\]$/, '').split('/').pop().replace(/\.md$/, '');
 };
 
+// Helper to get the parent project for a page (if it's a project note)
+const getParentProject = (pagePath) => {
+  const page = dv.page(pagePath);
+  if (!page || !page.relatedProject) return null;
+  // relatedProject is a link to the parent project
+  const projectLink = page.relatedProject;
+  if (projectLink?.path) return projectLink.path;
+  // Handle string format
+  const str = String(projectLink);
+  const match = str.match(/\[\[([^\]]+)\]\]/);
+  return match ? `projects/${match[1]}.md` : null;
+};
+
 // Helper to extract client from engagement
 const getClientFromEngagement = (engagementLink) => {
   if (!engagementLink) return null;
@@ -76,10 +89,24 @@ const matchesClientFilter = (task, clientFilter, includeUnassigned) => {
   const page = dv.page(task.path);
   if (!page) return false;
 
-  // Get client - either directly or through engagement
+  // Get client - either directly, through engagement, or from parent project
   let taskClient = page.client;
   if (!taskClient && page.engagement) {
     taskClient = getClientFromEngagement(page.engagement);
+  }
+
+  // If still no client, check parent project (for project notes)
+  if (!taskClient && page.relatedProject) {
+    const parentProjectPath = getParentProject(task.path);
+    if (parentProjectPath) {
+      const parentProject = dv.page(parentProjectPath);
+      if (parentProject) {
+        taskClient = parentProject.client;
+        if (!taskClient && parentProject.engagement) {
+          taskClient = getClientFromEngagement(parentProject.engagement);
+        }
+      }
+    }
   }
 
   // Normalize client value for comparison
@@ -110,7 +137,19 @@ const matchesEngagementFilter = (task, engagementFilter, includeUnassigned) => {
   const page = dv.page(task.path);
   if (!page) return false;
 
-  const taskEngagement = page.engagement;
+  let taskEngagement = page.engagement;
+
+  // If no engagement, check parent project (for project notes)
+  if (!taskEngagement && page.relatedProject) {
+    const parentProjectPath = getParentProject(task.path);
+    if (parentProjectPath) {
+      const parentProject = dv.page(parentProjectPath);
+      if (parentProject) {
+        taskEngagement = parentProject.engagement;
+      }
+    }
+  }
+
   const normalizedEngagement = normalizeToComparableName(taskEngagement);
 
   // Check if should include unassigned
@@ -318,12 +357,35 @@ function renderByContext(tasks) {
     const contextTasks = tasks.where(t => getTaskContext(t) === context);
     if (contextTasks.length === 0) continue;
 
-    // Group by file within context
+    // Group by file within context (with parent project handling)
     const byFile = {};
+    const projectNoteMapping = {}; // Maps project path -> { note path -> [tasks] }
+
     for (const task of contextTasks) {
-      const fileName = task.link.path;
-      if (!byFile[fileName]) byFile[fileName] = [];
-      byFile[fileName].push(task);
+      const filePath = task.link.path;
+
+      // For Project context, check if this is a project note
+      if (context === "Project") {
+        const parentProject = getParentProject(filePath);
+        if (parentProject) {
+          // Group under parent project
+          if (!byFile[parentProject]) {
+            byFile[parentProject] = [];
+            projectNoteMapping[parentProject] = {};
+          }
+          // Track tasks by their source note
+          if (!projectNoteMapping[parentProject][filePath]) {
+            projectNoteMapping[parentProject][filePath] = [];
+          }
+          projectNoteMapping[parentProject][filePath].push(task);
+          byFile[parentProject].push(task);
+          continue;
+        }
+      }
+
+      // Default: group by file
+      if (!byFile[filePath]) byFile[filePath] = [];
+      byFile[filePath].push(task);
     }
 
     // Calculate sort key for the entire context (based on "best" task)
@@ -332,6 +394,7 @@ function renderByContext(tasks) {
     contextGroups.push({
       context,
       byFile,
+      projectNoteMapping,
       sortKey: contextSortKey
     });
   }
@@ -375,9 +438,29 @@ function renderByContext(tasks) {
       const displayName = page ? page.file.name : fileGroup.filePath;
       dv.header(3, dv.fileLink(fileGroup.filePath, false, displayName));
 
-      // Sort tasks within each file group
-      const sortedTasks = sortTasks([...fileGroup.fileTasks], sortBy);
-      dv.taskList(sortedTasks, false);
+      // For Project context with notes mapping
+      if (group.context === "Project" && group.projectNoteMapping[fileGroup.filePath]) {
+        // First render direct project tasks (tasks where source === project file)
+        const directTasks = fileGroup.fileTasks.filter(t => t.link.path === fileGroup.filePath);
+        if (directTasks.length > 0) {
+          const sortedDirect = sortTasks([...directTasks], sortBy);
+          dv.taskList(sortedDirect, false);
+        }
+
+        // Then render each project note's tasks as sub-section
+        const noteTasks = group.projectNoteMapping[fileGroup.filePath];
+        for (const [notePath, tasks] of Object.entries(noteTasks)) {
+          const notePage = dv.page(notePath);
+          const noteDisplayName = notePage ? notePage.file.name : notePath;
+          dv.header(4, dv.fileLink(notePath, false, noteDisplayName));
+          const sortedNoteTasks = sortTasks([...tasks], sortBy);
+          dv.taskList(sortedNoteTasks, false);
+        }
+      } else {
+        // Standard rendering for non-project or projects without notes
+        const sortedTasks = sortTasks([...fileGroup.fileTasks], sortBy);
+        dv.taskList(sortedTasks, false);
+      }
     }
   }
 }
