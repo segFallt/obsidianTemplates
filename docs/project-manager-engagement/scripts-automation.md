@@ -336,7 +336,10 @@ await dv.view("Scripts/Dataview/mentions-table", 3)
 |-----------|------|-------------|
 | selectedProjects | array | Array of project names to filter (multi-select) |
 | projectFilter | string | Fuzzy match filter (case-insensitive contains) |
+| selectedStatuses | array | Array of project statuses to include (default: New, Active, On Hold) |
 | showCompleted | boolean | Whether to show completed tasks section (default: true) |
+| clientFilter | array | Array of client names to filter projects by (multi-select) |
+| engagementFilter | array | Array of engagement names to filter projects by (multi-select) |
 
 Frontmatter values must be passed explicitly from the calling page (see usage examples).
 
@@ -347,7 +350,11 @@ Frontmatter values must be passed explicitly from the calling page (see usage ex
 const page = dv.current();
 await dv.view("scripts/dataview/tasks-by-project", {
   selectedProjects: page.selectedProjects,
-  projectFilter: page.projectFilter
+  projectFilter: page.projectFilter,
+  selectedStatuses: page.selectedStatuses,
+  showCompleted: page.showCompletedTasks,
+  clientFilter: page.clientFilter,
+  engagementFilter: page.engagementFilter
 })
 
 // Filter to specific projects (hardcoded array)
@@ -357,10 +364,27 @@ await dv.view("scripts/dataview/tasks-by-project", {
 
 // Hide completed tasks
 await dv.view("scripts/dataview/tasks-by-project", { showCompleted: false })
+
+// Filter by client
+await dv.view("scripts/dataview/tasks-by-project", {
+  clientFilter: ["Acme Corp", "(Unassigned)"]
+})
 ```
 ```
 
 **Note**: Frontmatter values must be passed explicitly via `dv.current()` in the calling page, as `dv.current()` context changes when executing external scripts.
+
+**Client/Engagement Filtering**:
+- Client filter derives client from engagement if not directly set on project
+- Selecting "(Unassigned)" shows projects without client/engagement
+- Multiple clients/engagements can be selected simultaneously
+- Filters operate with AND logic (projects must match both if both are set)
+
+**Helper Functions**:
+- `getClientFromEngagement(engagementLink)`: Extracts client from engagement page
+- `normalizeToComparableName(item)`: Normalizes Link objects and string formats for comparison
+- `matchesClientFilter(project, clientFilter)`: Checks if project matches client filter
+- `matchesEngagementFilter(project, engagementFilter)`: Checks if project matches engagement filter
 
 **Output**:
 - H2: Project name (clickable link)
@@ -370,10 +394,14 @@ await dv.view("scripts/dataview/tasks-by-project", { showCompleted: false })
 - H4: Completed section with count (if showCompleted is true)
 
 **Query Logic**:
-1. Gets non-Complete projects from `#project` tag (excluding utility folder)
-2. Applies filters if provided
-3. For each project, finds related project notes via `relatedProject` frontmatter
-4. Renders hierarchical task lists
+1. Gets projects from `#project` tag (excluding utility folder)
+2. Filters by status (default: New, Active, On Hold)
+3. Applies selected projects filter if provided
+4. Applies text filter if provided
+5. Applies client filter if provided (checks project.client or derives from project.engagement)
+6. Applies engagement filter if provided
+7. For each project, finds related project notes via `relatedProject` frontmatter
+8. Renders hierarchical task lists
 
 ---
 

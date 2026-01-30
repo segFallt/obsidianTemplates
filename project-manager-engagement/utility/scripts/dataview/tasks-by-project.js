@@ -13,6 +13,10 @@
 //   projectFilter    - Fuzzy match filter (case-insensitive contains)
 //   selectedStatuses - Array of statuses to include (default: New, Active, On Hold)
 //   showCompleted    - Whether to show completed tasks section (default: true)
+//   clientFilter     - Array of client names to filter projects by (multi-select)
+//   engagementFilter - Array of engagement names to filter projects by (multi-select)
+//   includeUnassignedClients - Boolean to include projects without clients (default: false)
+//   includeUnassignedEngagements - Boolean to include projects without engagements (default: false)
 //
 // Note: Frontmatter values must be passed explicitly from the calling page
 //       since dv.current() context changes in external scripts
@@ -26,6 +30,10 @@ const selectedProjects = config.selectedProjects || [];
 const filterText = (config.projectFilter || "").toLowerCase();
 const showCompleted = config.showCompleted ?? true;
 const selectedStatuses = config.selectedStatuses || CONSTANTS.DEFAULT_TASK_VIEW_STATUSES;
+const clientFilter = config.clientFilter || [];
+const engagementFilter = config.engagementFilter || [];
+const includeUnassignedClients = config.includeUnassignedClients ?? false;
+const includeUnassignedEngagements = config.includeUnassignedEngagements ?? false;
 
 // Normalize selected projects to file names (handles links, paths, or plain names)
 const normalizeToName = (item) => {
@@ -37,6 +45,82 @@ const normalizeToName = (item) => {
   return str.replace(/^\[\[/, '').replace(/\]\]$/, '').split('/').pop().replace(/\.md$/, '');
 };
 const selectedNames = selectedProjects.map(normalizeToName).filter(Boolean);
+
+// Helper to extract client from engagement
+const getClientFromEngagement = (engagementLink) => {
+  if (!engagementLink) return null;
+  // Handle Link objects and string formats
+  const engagementName = normalizeToComparableName(engagementLink);
+  if (!engagementName) return null;
+  const engagementPage = dv.page(`engagements/${engagementName}`);
+  return engagementPage?.client || null;
+};
+
+// Helper to normalize any link/name format to a comparable string
+const normalizeToComparableName = (item) => {
+  if (!item) return null;
+  // If it's a Link object, get the path
+  if (item.path) return item.path.split('/').pop().replace(/\.md$/, '');
+  // If it's a string, remove [[]] and .md
+  const str = String(item);
+  return str.replace(/^\[\[/, '').replace(/\]\]$/, '').split('/').pop().replace(/\.md$/, '');
+};
+
+// Helper to check if project matches client filter
+const matchesClientFilter = (project, clientFilter, includeUnassigned) => {
+  // If no filter and not including unassigned, show all
+  if ((!clientFilter || clientFilter.length === 0) && !includeUnassigned) return true;
+
+  // Get client - either directly or through engagement
+  let projectClient = project.client;
+  if (!projectClient && project.engagement) {
+    projectClient = getClientFromEngagement(project.engagement);
+  }
+
+  // Normalize client value for comparison
+  const normalizedClient = normalizeToComparableName(projectClient);
+
+  // Check if should include unassigned
+  if (includeUnassigned && !normalizedClient) return true;
+
+  // If no specific clients selected, only show unassigned if toggle is on
+  if (!clientFilter || clientFilter.length === 0) {
+    return includeUnassigned ? !normalizedClient : false;
+  }
+
+  // Check against specific clients
+  for (const filterClient of clientFilter) {
+    const normalizedFilter = normalizeToComparableName(filterClient);
+    if (normalizedClient === normalizedFilter) return true;
+  }
+
+  return false;
+};
+
+// Helper to check if project matches engagement filter
+const matchesEngagementFilter = (project, engagementFilter, includeUnassigned) => {
+  // If no filter and not including unassigned, show all
+  if ((!engagementFilter || engagementFilter.length === 0) && !includeUnassigned) return true;
+
+  const projectEngagement = project.engagement;
+  const normalizedEngagement = normalizeToComparableName(projectEngagement);
+
+  // Check if should include unassigned
+  if (includeUnassigned && !normalizedEngagement) return true;
+
+  // If no specific engagements selected, only show unassigned if toggle is on
+  if (!engagementFilter || engagementFilter.length === 0) {
+    return includeUnassigned ? !normalizedEngagement : false;
+  }
+
+  // Check against specific engagements
+  for (const filterEngagement of engagementFilter) {
+    const normalizedFilter = normalizeToComparableName(filterEngagement);
+    if (normalizedEngagement === normalizedFilter) return true;
+  }
+
+  return false;
+};
 
 // Query projects filtered by status
 let projects = dv.pages('#project AND !"utility"')
@@ -53,6 +137,16 @@ if (filterText) {
   projects = projects.where(p =>
     p.file.name.toLowerCase().includes(filterText)
   );
+}
+
+// Apply client filter
+if (clientFilter.length > 0 || includeUnassignedClients) {
+  projects = projects.where(p => matchesClientFilter(p, clientFilter, includeUnassignedClients));
+}
+
+// Apply engagement filter
+if (engagementFilter.length > 0 || includeUnassignedEngagements) {
+  projects = projects.where(p => matchesEngagementFilter(p, engagementFilter, includeUnassignedEngagements));
 }
 
 for (const project of projects) {
