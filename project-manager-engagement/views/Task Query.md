@@ -27,10 +27,10 @@ obsidianUIMode: preview
 > not done
 > ```
 
-## This Week
-> [!check] This Week
+## Next 7 Days
+> [!check] Next 7 Days
 > ```tasks
-> due this week
+> (due today) OR ((due after today) AND (due before in 8 days))
 > not done
 > sort by due
 > sort by priority
