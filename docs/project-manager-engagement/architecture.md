@@ -338,6 +338,36 @@ System Files (Template-Managed)
                               └───────────────────────┘
 ```
 
+## Dynamic Option Filtering
+
+Selection dialogs (suggesters) for clients, engagements, and persons are filtered to show only **active** items. This is implemented via a shared module (`utility/scripts/meta-bind/active-suggester.js`) that is imported into each `meta-bind-js-view` code block using `engine.importJs()`.
+
+**How it works**:
+1. Each `meta-bind-js-view` block imports the `activeSuggester` function from the shared module
+2. The function queries the Dataview API for pages with the relevant tag (e.g., `#client`)
+3. Filters by `status === 'Active'`
+4. Generates `option()` entries dynamically
+5. Outputs inline Meta Bind syntax via `engine.markdown.create()`
+
+**Shared module**: `utility/scripts/meta-bind/active-suggester.js`
+- Single source of truth for all dynamic option filtering logic
+- Parameterized by tag, bind target, input type, and empty-state label
+- See [scripts-automation.md](./scripts-automation.md#active-suggesterjs) for full API documentation
+
+**Dependencies**: Requires **JS Engine** (v0.3.3+, provides `engine.importJs()`), **Dataview**, and **Meta Bind** plugins.
+
+**Affected files**:
+- Component files: `engagement-properties.md`, `person-properties.md`, `project-properties.md`, `inbox-properties.md`
+- Dashboard filters: `Task Dashboard.md`, `Task Query By Project.md`
+- Meeting template: `Single Meeting.md`
+- QuickAdd script: `create-project-with-notes-dir.js` (uses Obsidian Metadata Cache API directly — not part of the shared module)
+
+**Known limitations**:
+- Option lists are generated at page load; status changes require a page refresh to update the dropdown
+- If a note is linked to an inactive item, the value is preserved in frontmatter but the item won't appear in the dropdown
+
+---
+
 ## Extension Points
 
 ### Adding New Note Type

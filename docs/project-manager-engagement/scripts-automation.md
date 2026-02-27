@@ -198,12 +198,15 @@ await app.fileManager.processFrontMatter(activeFile, (fm) => {
 
 **Flow**:
 1. Prompt for project name
-2. Generate `notesDirectory` as lowercase snake_case of project name
-3. Load and process `New Project.md` template
-4. Handle filename conflicts (add numeric suffix)
-5. Create project file
-6. Update frontmatter with `notesDirectory`
-7. Open new project in tab
+2. Query active engagements (filtered by `status === 'Active'`) and prompt for selection
+3. Generate `notesDirectory` as lowercase snake_case of project name
+4. Load and process `New Project.md` template
+5. Handle filename conflicts (add numeric suffix)
+6. Create project file
+7. Update frontmatter with `notesDirectory` and selected engagement
+8. Open new project in tab
+
+**Note**: Only active engagements are shown in the selection dialog. Inactive engagements are excluded.
 
 **notesDirectory Generation**:
 ```javascript
@@ -501,6 +504,86 @@ By Tag:
 ---
 
 ## Meta Bind Scripts
+
+### active-suggester.js
+
+**Purpose**: Shared module that generates a Meta Bind suggester INPUT with options filtered to active items. Centralizes the repeated inline Dataview query logic used across component files, dashboard filters, and meeting templates.
+
+**Location**: `utility/scripts/meta-bind/active-suggester.js`
+
+**Used In**: All `meta-bind-js-view` blocks that render dynamic suggesters:
+- Component files: `engagement-properties.md`, `person-properties.md`, `project-properties.md`, `inbox-properties.md`
+- Dashboard filters: `Task Dashboard.md`, `Task Query By Project.md`
+- Meeting template: `Single Meeting.md`
+
+**Exported Function**: `activeSuggester(engine, app, tag, bindTarget, inputType, noItemsLabel)`
+
+**Parameters**:
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| engine | object | JS Engine `engine` object (from `meta-bind-js-view` context) |
+| app | object | Obsidian `app` object |
+| tag | string | Dataview source tag (e.g. `'#client'`) |
+| bindTarget | string | Frontmatter property to bind to (e.g. `'client'`) |
+| inputType | string | Meta Bind input type: `'suggester'`, `'listSuggester'`, or `'inlineListSuggester'` |
+| noItemsLabel | string | Label for empty state (e.g. `'clients'`) |
+
+**Returns**: For inline types (`suggester`, `inlineListSuggester`), returns `engine.markdown.create()` with backtick-wrapped syntax. For block-only types (`listSuggester`), returns an `engine.markdown.createBuilder()` with a fenced code block. Returns a placeholder message if no active items are found.
+
+**Code**:
+```javascript
+export function activeSuggester(engine, app, tag, bindTarget, inputType, noItemsLabel) {
+  const dv = app.plugins.plugins['dataview']?.api;
+  if (!dv) return engine.markdown.create('*Dataview not loaded*');
+  const pages = dv.pages(tag)
+    .where(p => p.status === 'Active')
+    .sort(p => p.file.name, 'asc');
+  const options = pages
+    .map(p => `option('[[${p.file.name}]]', '${p.file.name}')`)
+    .join(', ');
+  if (!options) {
+    return engine.markdown.create(`*No active ${noItemsLabel} found*`);
+  }
+
+  const inputDecl = `INPUT[${inputType}(${options}):${bindTarget}]`;
+
+  // listSuggester requires code block syntax; inline types use backtick syntax
+  if (inputType === 'listSuggester') {
+    const mb = engine.markdown.createBuilder();
+    mb.createCodeBlock('meta-bind', inputDecl);
+    return mb;
+  }
+  return engine.markdown.create(`\`${inputDecl}\``);
+}
+```
+
+**Calling Pattern** (in `meta-bind-js-view` blocks):
+
+Component files (no `> ` prefix):
+````markdown
+```meta-bind-js-view
+
+---
+const {activeSuggester} = await engine.importJs('utility/scripts/meta-bind/active-suggester.js');
+return activeSuggester(engine, app, '#client', 'client', 'suggester', 'clients');
+```
+````
+
+Dashboard files inside callouts (with `> ` prefix):
+````markdown
+> ```meta-bind-js-view
+>
+> ---
+> const {activeSuggester} = await engine.importJs('utility/scripts/meta-bind/active-suggester.js');
+> return activeSuggester(engine, app, '#client', 'clientFilter', 'inlineListSuggester', 'clients');
+> ```
+````
+
+**Dependencies**:
+- **JS Engine** plugin (v0.3.3+) — provides `engine.importJs()` for ES module imports
+- **Dataview** plugin — provides the page query API
+
+---
 
 ### add-create-project-note-button.js
 

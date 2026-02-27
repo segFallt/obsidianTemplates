@@ -144,19 +144,25 @@ INPUT[toggle:showCompletedTasks]
 
 > [!filter]- Client/Engagement Filters
 > **Client:**
-> ```meta-bind
-> INPUT[inlineListSuggester(optionQuery(#client)):clientFilter]
+> ```meta-bind-js-view
+>
+> ---
+> const {activeSuggester} = await engine.importJs('utility/scripts/meta-bind/active-suggester.js');
+> return activeSuggester(engine, app, '#client', 'clientFilter', 'inlineListSuggester', 'clients');
 > ```
 > **Include Unassigned Clients:** `INPUT[toggle:includeUnassignedClients]`
 >
 > **Engagement:**
-> ```meta-bind
-> INPUT[inlineListSuggester(optionQuery(#engagement)):engagementFilter]
+> ```meta-bind-js-view
+>
+> ---
+> const {activeSuggester} = await engine.importJs('utility/scripts/meta-bind/active-suggester.js');
+> return activeSuggester(engine, app, '#engagement', 'engagementFilter', 'inlineListSuggester', 'engagements');
 > ```
 > **Include Unassigned Engagements:** `INPUT[toggle:includeUnassignedEngagements]`
 ```
 
-Note: `listSuggester` requires a code block, not inline syntax. `inlineListSuggester` is used for client/engagement filters to support dynamic querying.
+Note: Client and engagement filters use `meta-bind-js-view` with the shared `active-suggester.js` module to dynamically filter to only active items. `listSuggester` requires a code block, not inline syntax. `inlineListSuggester` is used for client/engagement filters. Requires JS Engine and Dataview plugins.
 
 | Filter | Type | Behavior |
 |--------|------|----------|
@@ -490,6 +496,8 @@ INPUT[inlineSelect(option(none, None), option(dueDate-asc, Due Date ↑), option
 
 > [!filter]- Context Filters
 > **Context Type:** `INPUT[multiSelect(...):contextFilter]`
+> **Client:** `meta-bind-js-view` (via `active-suggester.js`, renders `inlineListSuggester`)
+> **Engagement:** `meta-bind-js-view` (via `active-suggester.js`, renders `inlineListSuggester`)
 > **Project Status:** `INPUT[multiSelect(...):projectStatusFilter]`
 > **Inbox Status:** `INPUT[inlineSelect(...):inboxStatusFilter]`
 > **Meeting Date:** `INPUT[inlineSelect(...):meetingDateFilter]`
