@@ -376,8 +376,11 @@ attendees: []
 **Body**:
 ```markdown
 # Attendees
-```meta-bind
-INPUT[listSuggester(optionQuery(#person)):attendees]
+```meta-bind-js-view
+
+---
+const {activeSuggester} = await engine.importJs('utility/scripts/meta-bind/active-suggester.js');
+return activeSuggester(engine, app, '#person', 'attendees', 'listSuggester', 'persons');
 ```
 
 # Invitation Message
@@ -388,13 +391,14 @@ INPUT[listSuggester(optionQuery(#person)):attendees]
 ```
 
 **Sections**:
-- Attendees: Interactive list with auto-suggestion from `#person` tagged notes
+- Attendees: Interactive list with auto-suggestion from active `#person` tagged notes
 - Invitation Message: Calendar invite content
 - Notes: Meeting discussion
 
 **Features**:
-- `attendees` property uses `listSuggester` to auto-suggest from people with `#person` tag
+- `attendees` property uses `meta-bind-js-view` with the shared `active-suggester.js` module to show only active persons in the list suggester
 - Selected attendees are stored as links in frontmatter
+- Requires JS Engine and Dataview plugins
 
 ---
 
@@ -478,6 +482,13 @@ Component files are reusable UI elements stored in `utility/templates/components
 
 **Content**:
 ```markdown
+## Engagement
+```meta-bind-js-view
+
+---
+const {activeSuggester} = await engine.importJs('utility/scripts/meta-bind/active-suggester.js');
+return activeSuggester(engine, app, '#engagement', 'engagement', 'suggester', 'engagements');
+```
 ## Start Date
 `INPUT[date:start-date]`
 ## End Date
@@ -495,10 +506,13 @@ INPUT[select(option(New), option(Active), option(On Hold), option(Complete)):sta
 **Inputs Provided**:
 | Input | Type | Binds To |
 |-------|------|----------|
+| Engagement | suggester (via `active-suggester.js` module) | `engagement` frontmatter |
 | Start Date | date picker | `start-date` frontmatter |
 | End Date | date picker | `end-date` frontmatter |
 | Priority | select (1-5) | `priority` frontmatter |
 | Status | select | `status` frontmatter |
+
+**Note**: The Engagement field uses `meta-bind-js-view` with the shared `active-suggester.js` module to dynamically filter to only active engagements. Requires JS Engine and Dataview plugins.
 
 ---
 
@@ -531,6 +545,13 @@ action:
 
 **Content**:
 ```markdown
+## Engagement
+```meta-bind-js-view
+
+---
+const {activeSuggester} = await engine.importJs('utility/scripts/meta-bind/active-suggester.js');
+return activeSuggester(engine, app, '#engagement', 'engagement', 'suggester', 'engagements');
+```
 ## Status
 ```meta-bind
 INPUT[select(option(Active), option(Inactive)):status]
@@ -540,7 +561,10 @@ INPUT[select(option(Active), option(Inactive)):status]
 **Inputs Provided**:
 | Input | Type | Binds To |
 |-------|------|----------|
+| Engagement | suggester (via `active-suggester.js` module) | `engagement` frontmatter |
 | Status | select (Active/Inactive) | `status` frontmatter |
+
+**Note**: The Engagement field uses `meta-bind-js-view` with the shared `active-suggester.js` module to dynamically filter to only active engagements. Requires JS Engine and Dataview plugins.
 
 ---
 
@@ -551,6 +575,13 @@ INPUT[select(option(Active), option(Inactive)):status]
 
 **Content**:
 ```markdown
+## Client
+```meta-bind-js-view
+
+---
+const {activeSuggester} = await engine.importJs('utility/scripts/meta-bind/active-suggester.js');
+return activeSuggester(engine, app, '#client', 'client', 'suggester', 'clients');
+```
 ## Status
 ```meta-bind
 INPUT[select(option(Active), option(Inactive)):status]
@@ -558,8 +589,11 @@ INPUT[select(option(Active), option(Inactive)):status]
 ## Title
 `INPUT[text:title]`
 ## Reports To
-```meta-bind
-INPUT[suggester(optionQuery(#person)):reports-to]
+```meta-bind-js-view
+
+---
+const {activeSuggester} = await engine.importJs('utility/scripts/meta-bind/active-suggester.js');
+return activeSuggester(engine, app, '#person', 'reports-to', 'suggester', 'persons');
 ```
 ## Notes
 `INPUT[textArea:notes]`
@@ -568,10 +602,13 @@ INPUT[suggester(optionQuery(#person)):reports-to]
 **Inputs Provided**:
 | Input | Type | Binds To |
 |-------|------|----------|
+| Client | suggester (via `active-suggester.js` module) | `client` frontmatter |
 | Status | select (Active/Inactive) | `status` frontmatter |
 | Title | text | `title` frontmatter |
-| Reports To | suggester (queries #person) | `reports-to` frontmatter |
+| Reports To | suggester (via `active-suggester.js` module) | `reports-to` frontmatter |
 | Notes | textArea | `notes` frontmatter |
+
+**Note**: The Client and Reports To fields use `meta-bind-js-view` with the shared `active-suggester.js` module to dynamically filter to only active items. Requires JS Engine and Dataview plugins.
 
 ---
 
@@ -615,8 +652,11 @@ INPUT[select(option(Active), option(Inactive)):status]
 **Content**:
 ```markdown
 ## Client
-```meta-bind
-INPUT[suggester(optionQuery(#client)):client]
+```meta-bind-js-view
+
+---
+const {activeSuggester} = await engine.importJs('utility/scripts/meta-bind/active-suggester.js');
+return activeSuggester(engine, app, '#client', 'client', 'suggester', 'clients');
 ```
 ## Status
 ```meta-bind
@@ -633,11 +673,13 @@ INPUT[select(option(Active), option(Inactive)):status]
 **Inputs Provided**:
 | Input | Type | Binds To |
 |-------|------|----------|
-| Client | suggester (queries #client) | `client` frontmatter |
+| Client | suggester (via `active-suggester.js` module) | `client` frontmatter |
 | Status | select (Active/Inactive) | `status` frontmatter |
 | Start Date | date picker | `start-date` frontmatter |
 | End Date | date picker | `end-date` frontmatter |
 | Description | textArea | `description` frontmatter |
+
+**Note**: The Client field uses `meta-bind-js-view` with the shared `active-suggester.js` module to dynamically filter to only active clients. Requires JS Engine and Dataview plugins.
 
 ---
 

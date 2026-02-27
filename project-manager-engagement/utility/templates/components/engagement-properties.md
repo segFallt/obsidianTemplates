@@ -1,6 +1,9 @@
 ## Client
-```meta-bind
-INPUT[suggester(optionQuery(#client)):client]
+```meta-bind-js-view
+
+---
+const {activeSuggester} = await engine.importJs('utility/scripts/meta-bind/active-suggester.js');
+return activeSuggester(engine, app, '#client', 'client', 'suggester', 'clients');
 ```
 ## Status
 ```meta-bind

@@ -25,20 +25,16 @@ module.exports = async (params) => {
         hasTag: cache?.tags?.some(t => t.tag === '#engagement') || false
       };
     })
-    .filter(e => e.hasTag);
+    .filter(e => e.hasTag && e.status === 'Active');
 
-  // Sort: Active first, then Inactive, then by name
-  engagements.sort((a, b) => {
-    if (a.status === 'Active' && b.status !== 'Active') return -1;
-    if (a.status !== 'Active' && b.status === 'Active') return 1;
-    return a.name.localeCompare(b.name);
-  });
+  // Sort by name
+  engagements.sort((a, b) => a.name.localeCompare(b.name));
 
   // Build engagement options
   const engagementOptions = ['(No Engagement)'].concat(
     engagements.map(e => {
       const clientName = e.client ? ` - ${e.client.replace(/\[\[|\]\]/g, '')}` : '';
-      return `${e.name} [${e.status}]${clientName}`;
+      return `${e.name}${clientName}`;
     })
   );
 
@@ -51,9 +47,10 @@ module.exports = async (params) => {
     );
 
     if (engagementChoice && engagementChoice !== '(No Engagement)') {
-      // Extract engagement name from selection
-      const engagementName = engagementChoice.split(' [')[0];
-      const engagement = engagements.find(e => e.name === engagementName);
+      // Find engagement whose name matches the start of the selection
+      const engagement = engagements.find(e =>
+        engagementChoice === e.name || engagementChoice.startsWith(e.name + ' - ')
+      );
       if (engagement) {
         selectedEngagement = `[[${engagement.name}]]`;
       }

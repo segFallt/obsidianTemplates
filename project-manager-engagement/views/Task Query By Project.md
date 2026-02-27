@@ -31,14 +31,20 @@ INPUT[toggle:showCompletedTasks]
 
 > [!filter]- Client/Engagement Filters
 > **Client:**
-> ```meta-bind
-> INPUT[inlineListSuggester(optionQuery(#client)):clientFilter]
+> ```meta-bind-js-view
+>
+> ---
+> const {activeSuggester} = await engine.importJs('utility/scripts/meta-bind/active-suggester.js');
+> return activeSuggester(engine, app, '#client', 'clientFilter', 'inlineListSuggester', 'clients');
 > ```
 > **Include Unassigned Clients:** `INPUT[toggle:includeUnassignedClients]`
 >
 > **Engagement:**
-> ```meta-bind
-> INPUT[inlineListSuggester(optionQuery(#engagement)):engagementFilter]
+> ```meta-bind-js-view
+>
+> ---
+> const {activeSuggester} = await engine.importJs('utility/scripts/meta-bind/active-suggester.js');
+> return activeSuggester(engine, app, '#engagement', 'engagementFilter', 'inlineListSuggester', 'engagements');
 > ```
 > **Include Unassigned Engagements:** `INPUT[toggle:includeUnassignedEngagements]`
 

@@ -5,8 +5,11 @@ attendees: []
 ---
 
 # Attendees
-```meta-bind
-INPUT[listSuggester(optionQuery(#person)):attendees]
+```meta-bind-js-view
+
+---
+const {activeSuggester} = await engine.importJs('utility/scripts/meta-bind/active-suggester.js');
+return activeSuggester(engine, app, '#person', 'attendees', 'listSuggester', 'persons');
 ```
 
 # Invitation Message
