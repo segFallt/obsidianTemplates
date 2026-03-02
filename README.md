@@ -1,5 +1,44 @@
 # Obsidian Templates
 
+## Client-Engagement-Project Hierarchy
+
+The vault uses a three-level hierarchy to organise work:
+
+```
+Client
+  └── Engagement
+        └── Project
+```
+
+- **Client** (`clients/` folder, `#client` tag): The organisation or individual you are working with.
+- **Engagement** (`engagements/` folder, `#engagement` tag): A contract, retainer, or scope of work under a client.
+- **Project** (`projects/` folder, `#project` tag): A discrete unit of work delivered within an engagement.
+
+### Establishing Relationships
+
+Relationships are set via frontmatter wikilinks on the child entity:
+
+| Child entity | Frontmatter property | Points to |
+|---|---|---|
+| Engagement | `client` | `[[Client Name]]` |
+| Project | `engagement` | `[[Engagement Name]]` |
+
+When you create a project via the **Project - New** QuickAdd action, it prompts you to select an active engagement and writes the `engagement` link automatically.
+
+### Auto-Populating Relationship Tables
+
+Each entity page displays a table of its children, populated automatically by Dataview render scripts:
+
+| Page | Script | Table shown |
+|---|---|---|
+| Client | `client-engagements-table.js` | Engagements linked to this client |
+| Client | `client-people-table.js` | People linked to this client |
+| Engagement | `engagement-projects-table.js` | Projects linked to this engagement |
+
+The tables update in real time as you add or modify frontmatter links — no manual maintenance required.
+
+---
+
 ## Task Views and Filtering
 
 ### Task Query By Project

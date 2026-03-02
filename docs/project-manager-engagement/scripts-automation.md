@@ -45,6 +45,8 @@ triggerQuickAddAction();
 
 | Script | Action Name | Purpose |
 |--------|-------------|---------|
+| `trigger_quickadd_create_client.js` | "Client - New" | Create new client |
+| `trigger_quickadd_create_engagement.js` | "Engagement - New" | Create new engagement |
 | `trigger_quickadd_create_project.js` | "Project - New" | Create new project |
 | `trigger_quickadd_create_person.js` | "Person - New" | Create new person |
 | `trigger_quickadd_create_inbox_note.js` | "Inbox - New" | Create inbox note |
@@ -321,6 +323,146 @@ dv.table(
 ```markdown
 ```dataviewjs
 await dv.view("Scripts/Dataview/mentions-table", 3)
+```
+```
+
+---
+
+### client-engagements-table.js
+
+**Purpose**: Show engagements linked to the current client
+
+**Location**: `utility/scripts/dataview/client-engagements-table.js`
+
+**Used In**: `New Client.md` template
+
+**Parameters**: None
+
+**Code**:
+```javascript
+let currentFileLink = dv.current().file.link;
+
+dv.table(
+	["Engagement", "Status", "Start Date", "End Date"],
+	dv.pages()
+        .where(b => b.file.folder === "engagements" && b.file.tags.includes("#engagement") && dv.func.contains(b.client, currentFileLink))
+		.sort(b => b.status === "Active" ? 0 : 1, 'asc')
+		.sort(b => b["start-date"], 'desc')
+		.map(b => [
+			b.file.link,
+			b.status,
+			b["start-date"],
+			b["end-date"]
+		])
+)
+```
+
+**Query Logic**:
+1. Gets the current file's link
+2. Filters pages to `engagements/` folder with `#engagement` tag
+3. Keeps only engagements whose `client` frontmatter contains a link to the current file
+4. Sorts by status (Active first), then by start date descending
+
+**Output**: Table of engagements linked to the current client with status and date columns
+
+**Usage**:
+```markdown
+```dataviewjs
+await dv.view("scripts/dataview/client-engagements-table")
+```
+```
+
+---
+
+### client-people-table.js
+
+**Purpose**: Show people linked to the current client
+
+**Location**: `utility/scripts/dataview/client-people-table.js`
+
+**Used In**: `New Client.md` template
+
+**Parameters**: None
+
+**Code**:
+```javascript
+let currentFileLink = dv.current().file.link;
+
+dv.table(
+	["Person", "Status", "Title"],
+	dv.pages()
+        .where(b => b.file.folder === "people" && b.file.tags.includes("#person") && dv.func.contains(b.client, currentFileLink))
+		.sort(b => b.status === "Active" ? 0 : 1, 'asc')
+		.sort(b => b.file.name, 'asc')
+		.map(b => [
+			b.file.link,
+			b.status,
+			b.title
+		])
+)
+```
+
+**Query Logic**:
+1. Gets the current file's link
+2. Filters pages to `people/` folder with `#person` tag
+3. Keeps only people whose `client` frontmatter contains a link to the current file
+4. Sorts by status (Active first), then alphabetically by name
+
+**Output**: Table of people linked to the current client with status and title columns
+
+**Usage**:
+```markdown
+```dataviewjs
+await dv.view("scripts/dataview/client-people-table")
+```
+```
+
+---
+
+### engagement-projects-table.js
+
+**Purpose**: Show projects linked to the current engagement
+
+**Location**: `utility/scripts/dataview/engagement-projects-table.js`
+
+**Used In**: `New Engagement.md` template
+
+**Parameters**: None
+
+**Code**:
+```javascript
+let currentFileLink = dv.current().file.link;
+
+dv.table(
+	["Project", "Status", "Priority", "Start Date"],
+	dv.pages()
+        .where(b => b.file.folder === "projects" && b.file.tags.includes("#project") && dv.func.contains(b.engagement, currentFileLink))
+		.sort(b => {
+			const statusOrder = { "New": 1, "Active": 2, "On Hold": 3, "Complete": 4 };
+			return statusOrder[b.status] || 5;
+		}, 'asc')
+		.sort(b => b.priority || 99, 'asc')
+		.map(b => [
+			b.file.link,
+			b.status,
+			b.priority,
+			b["start-date"]
+		])
+)
+```
+
+**Query Logic**:
+1. Gets the current file's link
+2. Filters pages to `projects/` folder with `#project` tag using strict equality (`=== "projects"`) — note: Dataview's `file.folder` returns paths **without** a trailing slash
+3. Keeps only projects whose `engagement` frontmatter contains a link to the current file
+4. Sorts by status order (New → Active → On Hold → Complete), then by priority ascending
+
+**Output**: Table of projects linked to the current engagement with status, priority, and start date columns
+
+**Usage**:
+```markdown
+```dataviewjs
+await dv.view("scripts/dataview/engagement-projects-table")
 ```
 ```
 
